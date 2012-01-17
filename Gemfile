@@ -36,4 +36,4 @@ group :test do
 end
 
 gem 'execjs'
-gem 'therubyracer'
+gem 'will_paginate'

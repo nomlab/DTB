@@ -1,0 +1,9 @@
+<%# -*- coding: utf-8 -*-  %>
+<% @title = "仕事情報の入力" %>
+
+<h2>仕事情報を入力してください</h2>
+
+<%= form_for(@bookmark, :url => {:controller => "bookmarks", :action => "create"}) do |f| %>
+<%= render :partial => "form", :locals => {:f => f} %>
+<%= submit_tag "仕事状態を保存", :confirm => "仕事状態を保存しますか．" %>
+<% end %>

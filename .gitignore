@@ -4,3 +4,7 @@ log/*.log
 tmp/
 .sass-cache/
 *.lock
+db/schema.rb
+config/database.yml
+.bundle
+.DS_Store

@@ -1,0 +1,12 @@
+<%# -*- coding:utf-8 -*- %>
+<%= error_messages_for 'bookmark' %>
+
+<!--[form:upfile]-->
+<em><font color="red">不要なWebページ</font></em>にチェックしてください<br /><br />
+<% @histories.each_with_index do |h, index| %>
+  <%= check_box_tag('histories[]', h.id, false) %>
+  <%= make_html_to_url(h) %>
+  <% if (index%3 == 0) %><br /><% end %>
+<% end %>
+<br />
+<!--[eoform:upfile]-->

@@ -1,0 +1,42 @@
+<%# -*- coding: utf-8 -*-  %>
+<% @title = "仕事情報の詳細画面" %>
+
+<script type="text/script">
+  <!--
+      function link()
+      {
+      document.location = "<%= "/desktop_bookmark/bookmark/#{@bookmark.id}/phoenix" %>";
+      }
+      // -->
+</script>
+
+<p>
+  <font size="5"><b>
+      <%= @bookmark.name %> (<%= jtime(@bookmark.created_at) %>)
+    </b></font>
+  <div align=right>
+    <form action="#">
+      <input type="button" value="デスクトップ復元" onclick="link()">
+    </form>
+  </div>
+  <font size="4"><b> keyword: <%= @bookmark.keyword %> </b></font>
+
+  <% unless ["", nil].include? @bookmark.comment %>
+  <br><br>
+  コメント:<br>
+  <div style="border:1px solid gray; padding:5px; padding: 6px;">
+    <%= @bookmark.comment.gsub(/\n/){"<br>"} %>
+  </div>
+  <% end %>
+
+</br>
+<b><h2> 参照した計算機内部のデータ <%= link_to image_edit("計算機内部の履歴情報の編集"), :controller => "file_histories", :action => "edit", :bookmark_id => @bookmark %></h2></b>
+<font size="+1"><%= getpath(@bookmark) %></font><br>
+<b><h2> 参照した計算機外部のデータ <%= link_to image_edit("計算機外部の履歴情報の編集"), :controller => "web_histories", :action => "edit", :bookmark_id => @bookmark %></h2></b>
+<%= getpic(@bookmark) %><br>
+
+<hr>
+<%= link_to "削除", {:action => "destroy", :id => @bookmark },
+:confirm => "本当に削除してよろしいですか", :methods => :delete %> &nbsp;
+<%= link_to "仕事情報を編集", :action => "edit", :id => @bookmark %> &nbsp;
+<%= link_to "戻る", :controller => "desktop_bookmark", :action => "index" %>

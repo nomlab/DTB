@@ -1,14 +1,18 @@
+<%# -*- coding: utf-8 -*- %>
 <!DOCTYPE html>
 <html>
-<head>
-  <title>DesktopBookmark</title>
-  <%= stylesheet_link_tag    "application" %>
-  <%= javascript_include_tag "application" %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
-
-<%= yield %>
-
-</body>
+  <head>
+    <title><%= @title %></title>
+    <%= stylesheet_link_tag    "desktop_bookmark" %>
+    <% javascript_include_tag "application" %>
+    <%= csrf_meta_tags %>
+  </head>
+  <body>
+    
+    <h1><%= link_to "Desktop Bookmark", {:controller => "desktop_bookmark", :action => "index"}, :class => "h1" %></h1>
+  
+    <p style="color: green"><%= flash[:notice] %></p>
+    <%= yield %>
+    
+  </body>
 </html>

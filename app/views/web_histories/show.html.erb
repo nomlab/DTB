@@ -1,0 +1,8 @@
+<b><h2> 参照していた計算機外部のデータ <%= link_to image_edit("計算機外部の履歴情報の編集"), :action => 'edit', :id => @bookmark %></h2></b> 
+<%= getpic(@bookmark) %> <br />
+
+
+<%= link_to '編集', edit_dtb_web_history_path(@bookmark) %> &nbsp;
+<%= link_to '追加', new_dtb_web_history_path(@bookmark) %> &nbsp;
+<%= link_to '仕事状態詳細画面へ', dtb_path(@bookmark) %> &nbsp;
+<%= link_to '仕事状態一覧画面へ', dtb_index_path %>

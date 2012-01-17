@@ -1,2 +1,54 @@
-<h1>DesktopBookmark#index</h1>
-<p>Find me in app/views/desktop_bookmark/index.html.erb</p>
+<%# -*- coding: utf-8 -*- %>
+<% @title = "仕事状態一覧" %>
+
+<script type="text/javascript">
+<!--
+function link(id){
+  document.location = "http://localhost:3000/desktop_bookmark/"+id+"phoenix"
+}
+//-->
+</script>
+
+<%= link_to "仕事状態を保存", :controller => "bookmarks", :action => "new" %>
+
+<h2>仕事状態一覧</h2>
+
+<table>
+  <% for bookmark in @bookmarks %>
+  <tr>
+    <% bookmark.name == "" ? name = "無題" : name = bookmark.name %>
+    <td align="left"><%= link_to name, :controller => "bookmarks", :action => "show", :id => bookmark %></td>
+    <td> (<%= bookmark.start_time.strftime("%Y/%m/%d %H:%M") %> 〜 <%= bookmark.end_time.strftime("%Y/%m/%d %H:%M") %>)</td>
+    <td>
+      <%= link_to image_tag("edit.gif", :title => "仕事情報編集"), :controller => "bookmarks", :action => "edit", :id => bookmark %>
+      <%= link_to image_destroy('仕事状態削除'), { :controller => "bookmarks", :action => "destroy", :id => bookmark},
+      :confirm => '本当に削除してよろしいですか?', :method => :delete %>
+      <form action="#">
+        <input type="button" value="仕事状態復元" onclick="link(<%= bookmark.id %>)">
+      </form>
+    </td>
+  </tr>
+  <% end %>
+</table>
+
+<%= will_paginate @bookmarks, :prev_label=>'&#171;前', :next_label=>'次&#187;' %>
+
+<%= form_tag({:action => 'discover'}, :method => :get) do %>
+  <p><h2><label for="bookmark_work">仕事状態の検索</label></h2><br>
+  <%= text_field :bookmark, :work, { :size => 50} %></p>
+  <%= submit_tag 'Open' %>
+<% end %>
+
+<br>
+<hr>
+
+<a href="/explication/tips.html">Tips</a>
+
+<% if false %>
+  <%= form_tag :action => 'discover_keyword' do %>
+    <p><label for="bookmark_keyword">キーワードのインクリメンタルサーチ(実験版)</label><br>
+    <%= text_field_with_auto_complete :bookmark, :keyword %></p>
+  <% end %>
+<% end %>
+
+

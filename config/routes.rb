@@ -1,22 +1,4 @@
 DesktopBookmark::Application.routes.draw do
-  get "desktop_bookmark/init"
-
-  get "desktop_bookmark/index"
-
-  get "desktop_bookmark/show"
-
-  get "desktop_bookmark/new"
-
-  get "desktop_bookmark/edit"
-
-  get "desktop_bookmark/create"
-
-  get "desktop_bookmark/update"
-
-  get "desktop_bookmark/destroy"
-
-  get "desktop_bookmark/phoenix"
-
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
@@ -72,5 +54,21 @@ DesktopBookmark::Application.routes.draw do
 
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
-  # match ':controller(/:action(/:id(.:format)))'
+  root :to => "desktop_bookmark#index"
+
+  scope "desktop_bookmark" do
+    root  :to => "desktop_bookmark#index"
+    resources :bookmark, :controller => :bookmarks do
+      match "file_history/edit", :to => "file_histories#edit"
+      resources :file_history, :controller => :file_histories, :except => ["destroy", "edit"]
+      delete "file_history/destroy", :to => "file_histories#destroy"
+      match 'file_history/:id/link', :controller => :file_histories, :action => :link
+
+      match "web_history/edit", :to => "web_histories#edit"
+      resources :web_history, :controller => :web_histories, :except => ["destroy", "edit"]
+      delete "web_history/destroy", :to => "web_histories#destroy"
+    end
+  end
+  
+  match "desktop_bookmark/:action", :controller => "desktop_bookmark"
 end

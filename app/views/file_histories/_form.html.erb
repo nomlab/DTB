@@ -1,0 +1,10 @@
+<%# -*- coding:utf-8 -*- %>
+<%= error_messages_for 'bookmark' %>
+
+<!--[form:upfile]-->
+<em><font color="red">不要なパス</font></em>にチェックしてください<br /><br />
+<% @histories.each do |h| %>
+  <%= check_box_tag('histories[]', h.id, false) %>
+  <%= h.path %><br />
+<% end %>
+<!--[eoform:upfile]-->

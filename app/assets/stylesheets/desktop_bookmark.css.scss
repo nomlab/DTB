@@ -1,3 +1,242 @@
 // Place all the styles related to the desktop_bookmark controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+/*
+  デスクトップブックマーク スタイルシートファイル
+  最終更新日：2008年9月29日
+  小笠原 良
+*/
+
+body { 
+  margin: 0px; 
+  padding: 0px; 
+  color: black;
+  background-color: white;
+  font-size: 100%;
+  /*
+  text-align: center;
+  font-family: Verdana,Arial;
+  letter-spacing: 0px;
+  line-height: 1.05em;
+  padding-top: 0.5em;
+  */
+  margin-right: 4%;
+  margin-left:  4%;
+}
+
+a { 
+  text-decoration: underline;
+}
+a:link { 
+  background: transparent none repeat;
+  color: royalblue;
+}
+a:visited {
+  background: transparent none repeat;
+  color: darkslategray;
+}
+a:hover, a:active { 
+  background: transparent none repeat; 
+  color: darkblue;
+}
+a img { 
+  border-width: 0px;
+  text-decoration: none;
+}
+a.h1{
+  text-decoration: none;
+  color: darkblue;
+}
+a.h2{
+  text-decoration: none;
+  color: seagreen;
+}
+
+h1 { 
+  border-bottom: 1px solid darkblue;
+  margin: 0em 0em 1em;
+  font-size: 150%;
+  color: darkblue;
+  text-align: center;
+}
+h2 {
+  border-bottom: 1px dotted seagreen;
+  margin: 1.3em 0.5em 0.2em 0em; 
+  background: transparent none repeat;
+  font-size: 130%;
+  color: seagreen;
+}
+h3 { 
+  border-bottom: 1px dotted darkorange;
+  margin: 1.3em 1em 0.2em 0em;
+  background: transparent none repeat;
+  font-size: 100%;
+  font-weight: normal;
+  color: darkorange;
+}
+h4 { 
+  margin: 1.3em 1.5em 0.2em 0em;
+  background: transparent none repeat;
+  font-size: 90%;
+  font-weight: bold;
+  color: black;
+}
+
+  /*
+div.directory { margin-bottom: 2em; }
+
+p { line-height: 150%; }
+
+div.bottom_navi { text-align: right; margin-top: 1em; clear: both; }
+
+div.bottom_navi ul { list-style-type: none; list-style-image: none; list-style-position: outside; }
+
+div.bottom_navi li { display: inline; margin-left: 0.3em; }
+
+hr { height: 1px; }
+
+ul ul, ol { margin-top: 0.3em; }
+
+li { line-height: 140%; margin-bottom: 0.3em; }
+
+table { border-collapse: collapse; }
+
+table th, td { border: 1px solid gray; padding: 0.2em 0.5em; vertical-align: middle; }
+
+table.list, table.postinfo { margin-top: 0.5em; }
+
+table.list th { text-align: right; background-color: gainsboro; width: 15em; }
+
+table.list td { text-align: center; width: 7em; }
+
+table.list td.none { border: medium none ; }
+
+table {
+  border-width: 0px;
+  border-color: black;
+  border-style: solid;
+  background-color: black;
+  margin: 0px 0px 0px 0px;
+  padding: 0px 0px 0px 0px;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+td,tr {
+  border-color: black;
+  border-style: solid;
+  margin: 0px 0px 0px 0px;
+  padding: 0px 3px 0px 3px;
+  background-color: white;
+}
+
+th {
+  border-width: 0px;
+  border-color: black;
+  border-style: solid;
+  margin: 0px 0px 0px 0px;
+  padding: 0px 3px 0px 3px;
+  background-color: palegreen;
+}
+
+
+
+
+ul {
+  margin-top: 0.2em;
+  margin-bottom: 0.2em;
+}
+
+em { 
+  color: red; 
+  font-style: normal;
+  font-weight: bold;
+}
+
+div { margin-bottom: 1em; }
+
+div.thumb a {
+  width: 150px;
+  background: green;
+  vartical-align: top;
+  float: right;
+  border-color: green;
+  border-style: solid;
+  border-width: 8px;
+  color: white;
+  letter-spacing: 0px;
+  line-height: 1em;
+  margin-right: 2px;
+  margin-left: 2px;
+  margin-bottom: 1em;
+  text-align: center;
+  text-decoration: none;
+}
+
+img {
+  border-width: 0px;
+  vartical-align: top;
+} 
+
+br { clear: both; }
+
+pre { 
+  letter-spacing: 0px;
+  line-height: 1em;
+  white-space:  pre;
+  padding:      0.5em;
+  background:   #ffeea0;
+  border-color: #ffeeb0;
+  border-style: outset;
+  border-width: 4px;
+ }
+
+code { 
+  letter-spacing: 0px;
+  line-height:    1em;
+  white-space:    pre;
+  padding:        0.5em;
+  background:     #ffeea0;
+  border-color:   #ffeeb0;
+ }
+ 
+span.tender,span.ant {
+  color: black;
+  font-style: italic;
+  font-weight: bold;
+  font-family: 'Times New Roman';
+  font-size: 120%;
+}
+  */
+
+.pagination {
+  padding: 3px;
+  margin: 3px;
+}
+.pagination a {
+  padding: 2px 5px 2px 5px;
+  margin: 2px;
+  border: 1px solid #aaaadd;
+  text-decoration: none;
+  color: #000099;
+}
+.pagination a:hover, .pagination a:active {
+  border: 1px solid #000099;
+  color: #000;
+}
+.pagination span.current {
+  padding: 2px 5px 2px 5px;
+  margin: 2px;
+  border: 1px solid #000099;
+  font-weight: bold;
+  background-color: #000099;
+  color: #FFF;
+}
+.pagination span.disabled {
+  padding: 2px 5px 2px 5px;
+  margin: 2px;
+  border: 1px solid #eee;
+  color: #ddd;
+}
+

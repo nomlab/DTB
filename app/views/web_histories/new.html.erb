@@ -1,0 +1,13 @@
+<% @title = "仕事情報の入力画面" %>
+
+<h1>仕事情報を入力してください</h1>
+
+<% form_tag(dtb_web_history_path(@bookmark), :method => :post) do %>
+  <p><label for="history_url">URL</label><br>
+  <%= text_field 'history','url' %></p>
+
+  <%= submit_tag 'URLの追加' %>
+<% end %>
+
+<br />
+<%= link_to '戻る', dtb_index_path %>
