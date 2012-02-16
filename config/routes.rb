@@ -59,6 +59,8 @@ DesktopBookmark::Application.routes.draw do
   scope "desktop_bookmark" do
     root  :to => "desktop_bookmark#index"
     resources :bookmark, :controller => :bookmarks do
+      get "destroy", :to => "bookmarks#destroy"
+
       match "file_history/edit", :to => "file_histories#edit"
       resources :file_history, :controller => :file_histories, :except => ["destroy", "edit"]
       delete "file_history/destroy", :to => "file_histories#destroy"

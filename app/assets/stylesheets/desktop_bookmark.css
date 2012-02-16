@@ -117,7 +117,19 @@ table {
   padding: 0px 0px 0px 0px;
   margin-top: 1em;
   margin-bottom: 1em;
+  width: 100%;
 }
+
+
+col.title {
+}
+
+col.duration {
+}
+
+col.operations {
+}
+
 
 td,tr {
   border-color: black;
@@ -136,7 +148,22 @@ th {
   background-color: palegreen;
 }
 
+th.title,
+td.title{
+  white-space: nowrap;
+  overflow: hidden;
+  width: 40%;
+}
 
+th.duration,
+td.duration{
+  width: 40%;  
+}
+
+th.operations,
+td.operations{
+  width: 15%;  
+}
 
 
 ul {
@@ -213,7 +240,7 @@ span.tender,span.ant {
 .pagination a {
   padding: 2px 5px 2px 5px;
   margin: 2px;
-  border: 1px solid #aaaadd;
+  border: 0px solid #aaaadd;
   text-decoration: none;
   color: #000099;
 }
@@ -221,10 +248,11 @@ span.tender,span.ant {
   border: 1px solid #000099;
   color: #000;
 }
-.pagination span.current {
+.pagination *.current {
   padding: 2px 5px 2px 5px;
   margin: 2px;
-  border: 1px solid #000099;
+  border: 0px solid #000099;
+  font-style: normal;
   font-weight: bold;
   background-color: #000099;
   color: #FFF;
@@ -232,7 +260,7 @@ span.tender,span.ant {
 .pagination span.disabled {
   padding: 2px 5px 2px 5px;
   margin: 2px;
-  border: 1px solid #eee;
+  border: 0px solid #eee;
   color: #ddd;
 }
 

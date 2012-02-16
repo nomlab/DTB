@@ -7,15 +7,17 @@ class DesktopBookmarkController < ApplicationController
   
   def init
     reset_accesslog
-    bm = Bookmark.create(:visible => false)
+    bm = Bookmark.create(:visible => false, :start_time => DateTime.now)
     dirname = bm.created_at.strftime("%Y%m%d%H%M")
-    dir = WindowsLibs.make_path(["assets","images", "thumbnail", dirname])
+    dir = WindowsLibs.make_path(["app", "assets","images", "thumbnail", dirname])
     `mkdir #{dir}`
-#    HistoryInMachineBookmarks.create(:bookmark => bm)
-#    HistoryOutOfMachineBookmark.create(:thumbnail => dirname, :bookmark => bm)
-    
+
+#    BookmarksWebHistories.create(:bookmark => bm, :thumbnail_dir => dirname)
+#    BookmarksFileHistories.create(:bookmark => bm)
+
+
     if params[:id]
-      redirect_to :action => 'show', :id => params[:id]
+      redirect_to :controller => "bookmarks", :action => 'show', :id => params[:id]
     else
       redirect_to :action => 'index'
     end

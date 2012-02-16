@@ -14,6 +14,10 @@ require "./config/environment"
 
 IMAGE_ROOT = WindowsLibs.make_path(["app","assets","images"])
 
+def thumbnail_dir(bookmark)
+  return WindowsLibs.make_path(["thumbnail", bookmark.start_time.strftime("%Y%m%d%H%M")])
+end
+
 # 計算機外部の履歴情報収集
 def collect_web_history
   bookmark = Bookmark.last
@@ -27,10 +31,10 @@ def collect_web_history
   count = histories_old.size
   
   histories = selection_data(referer_filter(logfile), 0.0)
-  thumbnail_dir = WindowsLibs.make_path(["thumbnail", bookmark.start_time.strftime("%Y%m%d%H%M")])
+  thumb_dir = thumbnail_dir(bookmark)
   
   (histories - histories_old).each do |h|
-    thumbnail_file = WindowsLibs.make_path([thumbnail_dir, "thumbnail_#{count}"])
+    thumbnail_file = WindowsLibs.make_path([thumb_dir, "thumbnail_#{count}"])
     thumbnail_path = WindowsLibs.make_path([IMAGE_ROOT, thumbnail_file])
     WindowsLibs.screen_capture(thumbnail_path, h)
     history = WebHistory.create(:path => h, :thumbnail => thumbnail_file)

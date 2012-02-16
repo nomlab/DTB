@@ -6,5 +6,4 @@ tmp/
 *.lock
 db/schema.rb
 config/database.yml
-.bundle
 .DS_Store

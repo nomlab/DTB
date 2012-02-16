@@ -1,5 +1,5 @@
 <%# -*- coding: utf-8 -*- %>
-<% @title = "仕事状態一覧" %>
+<% @title = "作業状態一覧" %>
 
 <script type="text/javascript">
 <!--
@@ -9,32 +9,35 @@ function link(id){
 //-->
 </script>
 
-<%= link_to "仕事状態を保存", :controller => "bookmarks", :action => "new" %>
+<%= link_to "作業を開始", :controller => "bookmarks", :action => "new" %>　<%# link_to "作業を中断", :controller => "bookmarks", :action => "stop" %>
 
-<h2>仕事状態一覧</h2>
+<h2>作業状態一覧</h2>
 
 <table>
+  <col class="title">
+  <col class="durations">
+  <col class="operations">
   <% for bookmark in @bookmarks %>
   <tr>
-    <% bookmark.name == "" ? name = "無題" : name = bookmark.name %>
-    <td align="left"><%= link_to name, :controller => "bookmarks", :action => "show", :id => bookmark %></td>
-    <td> (<%= bookmark.start_time.strftime("%Y/%m/%d %H:%M") %> 〜 <%= bookmark.end_time.strftime("%Y/%m/%d %H:%M") %>)</td>
-    <td>
-      <%= link_to image_tag("edit.gif", :title => "仕事情報編集"), :controller => "bookmarks", :action => "edit", :id => bookmark %>
-      <%= link_to image_destroy('仕事状態削除'), { :controller => "bookmarks", :action => "destroy", :id => bookmark},
-      :confirm => '本当に削除してよろしいですか?', :method => :delete %>
+    <% bookmark.name == nil ? name = "作業中" : name = bookmark.name %>
+    <td class="title"><%= link_to name, :controller => "bookmarks", :action => "show", :id => bookmark %></td>
+    <td class="duration"><nobr> (<%= bookmark.start_time.strftime("%Y/%m/%d %H:%M") %> 〜 <%= bookmark.end_time != nil ? bookmark.end_time.strftime("%Y/%m/%d %H:%M") : "" %>)</nobr></td>
+    <td class="operations">
+      <%= link_to image_tag("edit.gif", :title => "作業情報編集"), :controller => "bookmarks", :action => "edit", :id => bookmark %>
+      <%= link_to image_destroy('作業状態削除'),  {:controller => "bookmarks", :action => "destroy", :bookmark_id => bookmark},
+      :confirm => '本当に削除してよろしいですか?', :method => :get %>
       <form action="#">
-        <input type="button" value="仕事状態復元" onclick="link(<%= bookmark.id %>)">
+        <input type="button" value="作業状態復元" onclick="link(<%= bookmark.id %>)">
       </form>
     </td>
   </tr>
   <% end %>
 </table>
 
-<%= will_paginate @bookmarks, :prev_label=>'&#171;前', :next_label=>'次&#187;' %>
+<%= will_paginate(@bookmarks, :previous_label => '&#171;前', :next_label => '次&#187;') %>
 
 <%= form_tag({:action => 'discover'}, :method => :get) do %>
-  <p><h2><label for="bookmark_work">仕事状態の検索</label></h2><br>
+  <p><h2><label for="bookmark_work">作業状態の検索</label></h2><br>
   <%= text_field :bookmark, :work, { :size => 50} %></p>
   <%= submit_tag 'Open' %>
 <% end %>
@@ -50,5 +53,3 @@ function link(id){
     <%= text_field_with_auto_complete :bookmark, :keyword %></p>
   <% end %>
 <% end %>
-
-

@@ -8,12 +8,14 @@ class BookmarksController < ApplicationController
   end
   
   def create
-    @bookmark = Bookmark.new(params[:bookmark])
+    p = params[:bookmark]
+    p[:end_time] = DateTime.now
+    @bookmark = Bookmark.last
 
     respond_to do |format|
-      if @bookmark.save
+      if @bookmark.update_attributes(p)
         flash[:notice] = "仕事状態を保存しました．"
-        format.html { redirect_to( :controller => "desktop_bookmark", :action => "init" ) }
+        format.html { redirect_to( :controller => "desktop_bookmark", :action => "init", :id => @bookmark.id ) }
         format.xml { render :xml => @bookmark, :status => :created, :location => @bookmark }
       else
         flash[:notice] = "仕事状態の保存に失敗しました．"
@@ -58,7 +60,7 @@ class BookmarksController < ApplicationController
   end
   
   def destroy
-    @bookmark = Bookmark.find(params[:id])
+    @bookmark = Bookmark.find(params[:bookmark_id])
     @bookmark.destroy
 
     respond_to do |format|
