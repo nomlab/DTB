@@ -7,3 +7,5 @@ tmp/
 db/schema.rb
 config/database.yml
 .DS_Store
+app/assets/images/icons/
+app/assets/images/thumbnail/

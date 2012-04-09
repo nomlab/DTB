@@ -91,12 +91,12 @@ module ApplicationHelper
       ext = path.split(".").last
       icon = Exticon.find_by_ext(ext)
       if icon == nil
-        `lib\\GetIcon.exe \"#{NKF.nkf("-s", path)}\" app\\assets\\images\\#{ext}.bmp`
+        `lib\\GetIcon.exe \"#{NKF.nkf("-s", path)}\" app\\assets\\images\\icons\\#{ext}.bmp`
         i = Exticon.new
         i.ext = ext
         i.save
       end
-      obj << "<img src=\"/assets/#{ext}.bmp\" alt=\"\" title=\"#{path}\" height=25 weight=25> "
+      obj << "<img src=\"/assets/icons/#{ext}.bmp\" alt=\"\" title=\"#{path}\" height=25 weight=25> "
       obj << path.split("\\").last
 #      obj << "<a href = \"/file_history/" + "\"> <img src=\"/assets/open.png\" alt=\"\" title=\"現在の内容で開く\" height=20 weight=20>"
       obj << link_to(image_tag("open.png", :title => "現在の内容で開く", :size => "20x20"), :controller => "file_histories", :action => "link", :bookmark_id => bookmark.id, :id => history.id)
@@ -133,6 +133,7 @@ module ApplicationHelper
 
   def make_html_to_url(history)
     tag = '<a href = ' + history.path + "><img src=\"/assets/#{history.thumbnail}\.jpg\" alt=\"" + history.path + "\" height=200 width=250 title=\"" + history.path + "\"style=\"margin: 3px; border: 1px solid #606060;\" ><\/a>"
+
     tag.html_safe
   end 
   

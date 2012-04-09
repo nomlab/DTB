@@ -34,9 +34,11 @@ def collect_web_history
   thumb_dir = thumbnail_dir(bookmark)
   
   (histories - histories_old).each do |h|
+
     thumbnail_file = WindowsLibs.make_path([thumb_dir, "thumbnail_#{count}"])
     thumbnail_path = WindowsLibs.make_path([IMAGE_ROOT, thumbnail_file])
     WindowsLibs.screen_capture(thumbnail_path, h)
+
     history = WebHistory.create(:path => h, :thumbnail => thumbnail_file)
     BookmarksWebHistories.create(:bookmark => bookmark, :web_history => history)
     count += 1

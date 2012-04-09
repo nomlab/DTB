@@ -22,7 +22,7 @@
   <font size="4"><b> keyword: <%= @bookmark.keyword %> </b></font>
 
   <% unless ["", nil].include? @bookmark.comment %>
-  <br><br>
+    <br><br>
   コメント:<br>
   <div style="border:1px solid gray; padding:5px; padding: 6px;">
     <%= @bookmark.comment.gsub(/\n/){"<br>"} %>
