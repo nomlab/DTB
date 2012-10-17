@@ -11,12 +11,58 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111102072258) do
+ActiveRecord::Schema.define(:version => 20121015082201) do
 
   create_table "bookmarks", :force => true do |t|
     t.string   "name"
+    t.string   "keyword"
+    t.text     "comment"
     t.datetime "start_time"
     t.datetime "end_time"
+    t.string   "thumbnail"
+    t.integer  "task_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "exticons", :force => true do |t|
+    t.string   "ext"
+    t.datetime "created_on"
+    t.datetime "updated_on"
+  end
+
+  create_table "histories", :force => true do |t|
+    t.string   "path"
+    t.string   "title"
+    t.string   "type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "tasks", :force => true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.text     "keyword"
+    t.datetime "deadline"
+    t.boolean  "status"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "timelines", :force => true do |t|
+    t.integer  "bookmark_id"
+    t.integer  "history_id"
+    t.string   "thumbnail"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "works", :force => true do |t|
+    t.string   "name"
+    t.string   "description"
+    t.datetime "deadline"
+    t.boolean  "status"
+    t.string   "keyword"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

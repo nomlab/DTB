@@ -1,44 +1,40 @@
 class CreateModels < ActiveRecord::Migration
   def change
+    create_table :tasks do |t|
+      t.string :name
+      t.text :description
+      t.text :keyword
+      t.datetime :deadline
+      t.boolean :status
+
+      t.timestamps
+    end
+    
     create_table :bookmarks do |t|
       t.string :name
       t.string :keyword
       t.text :comment
-      t.boolean :visible
       t.datetime :start_time
       t.datetime :end_time
+      t.string :thumbnail
+      t.integer :task_id
 
       t.timestamps
     end
 
-    create_table :file_histories do |t|
+    create_table :histories do |t|
       t.string :path
       t.string :title
-      t.string :thumbnail
+      t.string :type
 
       t.timestamps
     end
 
-    create_table :web_histories do |t|
-      t.string :path
-      t.string :title
-      t.string :thumbnail
-
-      t.timestamps
-    end
-
-    create_table :bookmarks_file_histories do |t|
+    create_table :timelines do |t|
       t.integer :bookmark_id
-      t.integer :file_history_id
-
-      t.timestamps
-    end
-
-    create_table :bookmarks_web_histories do |t|
-      t.integer :bookmark_id
-      t.integer :web_history_id
-      t.string :thumbnail_dir
-
+      t.integer :history_id
+      t.string :thumbnail
+      
       t.timestamps
     end
 

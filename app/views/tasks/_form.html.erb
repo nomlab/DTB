@@ -1,0 +1,14 @@
+<%# -*- coding: utf-8 -*-  %>
+<%= error_messages_for "bookmark" %>
+
+<p><%= f.label "name" %><br>
+  <%= f.text_field "name", :size => 55 %></p>
+
+<p><%= f.label "keyword" %><br>
+  <%= f.text_field "keyword", :size => 55 %></p>
+
+<p><%= f.label "description" %><br>
+  <%= f.text_area "description", :cols => 40, :rows => 10 %></p>
+
+<p><%= f.label "deadline" %><br>
+  <%= f.text_field "deadline", :size => 55 %></p>

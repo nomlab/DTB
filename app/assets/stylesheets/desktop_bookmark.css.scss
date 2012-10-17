@@ -83,6 +83,32 @@ h4 {
   color: black;
 }
 
+#header {
+  width: 100%;
+  height: 100px;
+  z-index: 1;
+  margin-bottom: 1px;
+}
+
+#main {
+  width: 100%;
+}
+
+#side {
+  float: left;
+  width: 130px;
+  padding: 2px;
+  font-size: 90%;
+}
+
+#content {
+  background-color: white;
+  width: 80%;
+  float: left;
+  min-height: 500px;
+  padding: 6px 10px 10px;
+}
+
   /*
 div.directory { margin-bottom: 2em; }
 

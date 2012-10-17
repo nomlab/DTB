@@ -79,6 +79,79 @@ h4 {
   color: black;
 }
 
+/* --- layouts/application.html.erb --- */
+
+#header {
+  width: 100%;
+  height: 50px;
+  z-index: 1;
+  margin-bottom: 1px;
+}
+
+#main {
+  width: 100%;
+}
+
+#side {
+  float: left;
+  width: 130px;
+  padding: 2px;
+  font-size: 90%;
+}
+
+#content {
+  background-color: white;
+  width: 80%;
+  float: left;
+  min-height: 500px;
+  padding: 6px 10px 10px;
+}
+
+/* --- tasks/_list
+       tasks/_task_item --- */
+
+tr.task_item {
+  padding:5px 10px;
+}
+
+/* --- tasks/show --- */
+
+div.task_header h2{
+  float: left;
+  margin: 0 0 0 0;
+}
+
+div.title {
+  height: 30px;
+  width: 86%;
+  float: left;
+}
+
+div.restore {
+  align: center;
+  height: 30px;
+  width: 14%;
+  float: left;
+}
+
+div.keyword {
+  font-size: large;
+  font-weight: bold;
+  white-space: normal;
+}
+
+div.keyword_header {
+  width: 11%;
+  float: left;
+}
+
+div.keyword_body {
+  max-width: 69%;
+  float: left;
+  white-space: normal;
+  word-break: break-all;
+}
+
   /*
 div.directory { margin-bottom: 2em; }
 

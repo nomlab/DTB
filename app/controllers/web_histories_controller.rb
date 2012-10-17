@@ -19,7 +19,7 @@ class WebHistoriesController < ApplicationController
   def create
     @bookmark = Bookmark.find(params[:bookmark_id])
     @web_history = WebHistory.create(params[:web_history][:path])
-    BookmarksWebHistoriess.create(:bookmark_id => @bookmark, :web_history_id => @web_history)
+    Timeline.create(:bookmark_id => @bookmark, :history_id => @web_history)
     flash[:notice] = "計算機外部の履歴情報を追加しました．"
   end
 
@@ -30,7 +30,7 @@ class WebHistoriesController < ApplicationController
 
   def update
     @bookmark = Bookmark.find(params[:bookmark_id])
-    @bookmark.bookmarks_web_historiess.where(:web_history_id => params[:histories]).destroy_all
+    @bookmark.timelines.where(:history_id => params[:histories]).destroy_all
 
     respond_to do |format|
       flash[:notice] = "計算機外部の履歴情報を更新しました．"
@@ -41,7 +41,7 @@ class WebHistoriesController < ApplicationController
 
   def destroy
     @bookmark = Bookmark.find(params[:bookmark_id])
-    @bookmark.bookmarks_web_historiess.where(:web_history_id => params[:histories]).destroy_all
+    @bookmark.timelines.where(:history_id => params[:histories]).destroy_all
 
     respond_to do |format|
       flash[:notice] = "計算機外部の履歴情報を更新しました．"

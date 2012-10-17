@@ -3,16 +3,25 @@
 <html>
   <head>
     <title><%= @title %></title>
-    <%= stylesheet_link_tag    "desktop_bookmark" %>
+    <%= stylesheet_link_tag "desktop_bookmark" %>
     <% javascript_include_tag "application" %>
     <%= csrf_meta_tags %>
   </head>
   <body>
-    
-    <h1><%= link_to "Desktop Bookmark", {:controller => "desktop_bookmark", :action => "index"}, :class => "h1" %></h1>
-  
-    <p style="color: green"><%= flash[:notice] %></p>
-    <%= yield %>
-    
+    <div id="header">
+      <h1><%= link_to "Desktop Bookmark", {:controller => "desktop_bookmark", :action => "index"}, :class => "h1" %></h1>
+    </div>
+
+    <div id="main">
+      <div id="side">
+	<%= render(:partial => controller.controller_name + "/side") rescue nil %>
+      </div>
+      
+      <div id="content">
+	<% if flash[:notice] != nil %><p style="color: green"><%= flash[:notice] %></p><% end %>
+	<% if flash[:error] != nil %><p style="color: red"><%= flash[:error] %></p><% end %>
+	<%= yield %>
+      </div>
+    </div>
   </body>
 </html>

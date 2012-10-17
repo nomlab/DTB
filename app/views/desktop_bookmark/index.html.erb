@@ -1,44 +1,23 @@
 <%# -*- coding: utf-8 -*- %>
-<% @title = "作業状態一覧" %>
+<% @title = "作業一覧" %>
 
 <script type="text/javascript">
-<!--
-function link(id){
-  document.location = "http://localhost:3000/desktop_bookmark/"+id+"phoenix"
-}
-//-->
+  <!--
+      function link(id){
+      document.location = "http://localhost:3000/desktop_bookmark/"+id+"phoenix"
+      }
+      //-->
 </script>
+<div style="height:80px;width:80px;border-radius:40px;background: palegreen;"></div>
 
-<%= link_to "作業を開始", :controller => "bookmarks", :action => "new" %>　<%# link_to "作業を中断", :controller => "bookmarks", :action => "stop" %>
 
-<h2>作業状態一覧</h2>
+<%= render :partial => "time_edition" %>
 
-<table>
-  <col class="title">
-  <col class="durations">
-  <col class="operations">
-  <% for bookmark in @bookmarks %>
-    <tr>
-      <% bookmark.name == nil ? name = "作業中" : name = bookmark.name %>
-      <td class="title"><%= link_to name, :controller => "bookmarks", :action => "show", :id => bookmark %></td>
-      <td class="duration"><nobr> (<%= bookmark.start_time.strftime("%Y/%m/%d %H:%M") %> 〜 <%= bookmark.end_time != nil ? bookmark.end_time.strftime("%Y/%m/%d %H:%M") : "" %>)</nobr></td>
-      <td class="operations">
-        <%= link_to image_tag("edit.gif", :title => "作業情報編集"), :controller => "bookmarks", :action => "edit", :id => bookmark %>
-        <%= link_to image_destroy('作業状態削除'),  {:controller => "bookmarks", :action => "destroy", :bookmark_id => bookmark},
-	:confirm => '本当に削除してよろしいですか?', :method => :get %>
-        <form action="#">
-          <input type="button" value="作業状態復元" onclick="link(<%= bookmark.id %>)">
-        </form>
-      </td>
-    </tr>
-  <% end %>
-</table>
-
-<%= will_paginate(@bookmarks, :previous_label => '&#171;前', :next_label => '次&#187;') %>
+<%= render :partial => "tasks/list", :locals => {:tasks => @tasks} %>
 
 <%= form_tag({:action => 'discover'}, :method => :get) do %>
-  <p><h2><label for="bookmark_work">作業状態の検索</label></h2><br>
-  <%= text_field :bookmark, :work, { :size => 50} %></p>
+  <p><h2><label for="bookmark_work">検索</label></h2><br>
+    <%= text_field :bookmark, :work, { :size => 50} %></p>
   <%= submit_tag 'Open' %>
 <% end %>
 

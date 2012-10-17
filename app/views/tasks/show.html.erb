@@ -1,0 +1,52 @@
+<%# -*- coding: utf-8 -*-  %>
+<% @title = "作業の詳細画面" %>
+
+<script type="text/script">
+  <!--
+      function link()
+      {
+      document.location = "<%= "/desktop_bookmark/task/#{@task.id}/phoenix" %>";
+      }
+      // -->
+</script>
+<div class="task_header">
+  <div class="title">
+    <h2><%= @task.name %> (<%= jtime(@task.created_at) %>)</h2>
+  </div>
+  <div class="restore">
+    <form action="#">
+      <input type="button" value="作業を再開" onclick="link()">
+    </form>
+  </div>
+</div>
+<div style="clear: both"></div>
+<div class="keyword">
+  <div class="keyword_header">
+    keyword:
+  </div>
+  <div class="keyword_body">
+    <%= @task.keyword %>
+  </div>
+  <div class="keyword_blank">    
+  </div>
+  <div style="clear: both"></div>
+</div>  
+<% unless ["", nil].include? @task.description %>
+  <br>
+  <div class="task_description">
+    詳細:<br>
+    <div style="border:1px solid gray; padding:5px; padding: 6px;">
+      <%= @task.description.gsub(/\n/){"<br>"}.html_safe %>
+    </div>
+  </div>
+<% end %>
+
+</br>
+
+<%= render :partial => "bookmarks/list", :locals => {:task => @task} %>
+
+<hr>
+<%= link_to "削除", {:action => "destroy", :task_id => @task },
+:confirm => "本当に削除してよろしいですか" %> &nbsp;
+<%= link_to "作業情報を編集", :action => "edit", :id => @task %> &nbsp;
+<%= link_to "戻る", :controller => "desktop_bookmark", :action => "index" %>

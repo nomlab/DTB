@@ -1,0 +1,60 @@
+<%# -*- coding: utf-8 -*- %>
+
+<%= stylesheet_link_tag "timeedition" %>
+<div class="container">
+  <input id="start" name="controls" type="radio" />
+  <input id="stop" name="controls" type="radio" />
+  <div class="timer">
+    <div class="cell">
+      <div class="numbers tenhour moveten">0 1 2 3 4 5 6 7 8 9</div>
+    </div>
+    <div class="cell">
+      <div class="numbers hour moveten">0 1 2 3 4 5 6 7 8 9</div>
+    </div>
+    <div class="cell divider"><div class="numbers">:</div></div>
+    <div class="cell">
+      <div class="numbers tenminute movesix">0 1 2 3 4 5 6</div>
+    </div>
+    <div class="cell">
+      <div class="numbers minute moveten">0 1 2 3 4 5 6 7 8 9</div>
+    </div>
+    <div class="cell divider"><div class="numbers">:</div></div>
+    <div class="cell">
+      <div class="numbers tensecond movesix">0 1 2 3 4 5 6</div>
+    </div>
+    <div class="cell">
+      <div class="numbers second moveten">0 1 2 3 4 5 6 7 8 9</div>
+    </div>
+  </div>
+  <!-- Lables for the controls -->
+  <div id="timer_controls">
+    <label for="start">Start</label>
+    <label for="stop">Stop</label>
+  </div>
+</div>
+
+<!-- Lets load up prefixfree first -->
+<script src="http://thecodeplayer.com/uploads/js/prefixfree.js" type="text/javascript"></script>
+<!-- You can download it from http://leaverou.github.com/prefixfree/ -->
+
+<% if Task.current != nil
+     option_tag = options_for_select(Task.options_for_select, Task.current.id)
+   else
+     option_tag = options_for_select(Task.options_for_select)
+   end %>
+
+<% if Task.current == nil %>
+<div class="task_selecter">
+  <%= form_tag(:controller => "tasks", :action => "start") do %>
+    <%= select_tag("task", option_tag.html_safe) %>
+    <%= submit_tag("開始する") %>
+  <% end %>
+</div>
+<% else %>
+  <%= form_tag(:controller => "tasks", :action => "stop") do %>
+    <%= select_tag("task", option_tag.html_safe, {:disabled => true}) %>
+<br>
+    <%= text_field "詳細", :size => 55 %>
+    <%= submit_tag("中断する") %>
+  <% end %>
+<% end %>

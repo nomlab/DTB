@@ -1,0 +1,18 @@
+<%# -*- coding: utf-8 -*- %>
+<tr class="task_item">
+  <% task.name == nil ? name = "名称未設定" : name = task.name %>
+  <td class="title">
+    <%= link_to name, :controller => "tasks", :action => "show", :id => task %>
+  </td>
+  <td class="duration"><nobr>
+      (<%= task.created_at.strftime("%Y/%m/%d %H:%M") %> 〜 <%= task.last_update != nil ? task.last_update.strftime("%Y/%m/%d %H:%M") : "" %>)
+  </nobr></td>
+  <td class="operations">
+    <%= link_to image_tag("edit.gif", :title => "作業情報編集"), :controller => "tasks", :action => "edit", :id => task %>
+    <%= link_to image_destroy('作業状態削除'),  {:controller => "tasks", :action => "destroy", :task_id => task},
+    :confirm => '本当に削除してよろしいですか?', :method => :get %>
+    <form action="#">
+      <input type="button" value="作業状態復元" onclick="link(<%= task.id %>)">
+    </form>
+  </td>
+</tr>

@@ -62,9 +62,10 @@ class BookmarksController < ApplicationController
   def destroy
     @bookmark = Bookmark.find(params[:bookmark_id])
     @bookmark.destroy
-
+    #request.referer
     respond_to do |format|
-      format.html { redirect_to(:controller => "desktop_bookmark", :action => "index") }
+#      format.html { redirect_to(:controller => "desktop_bookmark", :action => "index") }
+      format.html { redirect_to(request.referer) }
       format.xml  { head :ok }
     end
   end

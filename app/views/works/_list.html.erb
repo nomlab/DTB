@@ -1,0 +1,13 @@
+<%# -*- coding: utf-8 -*-  %>
+<h2>仕事一覧</h2>
+
+<table class="work_table">
+  <col class="title">
+  <col class="deadline">
+  <col class="operations">
+  <% works.each do |work| %>
+    <%= render :partial => "works/work_item", :locals => {:work => work} %>
+  <% end %>
+</table>
+
+<%= will_paginate(@works, :previous_label => '&#171;前', :next_label => '次&#187;') %>

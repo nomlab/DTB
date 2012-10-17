@@ -125,16 +125,18 @@ module ApplicationHelper
 
     obj = ""
     history_array.each do |history|
-      obj << make_html_to_url(history)
+      obj << make_html_to_url(bookmark, history)
     end
 
     obj.html_safe
   end 
 
-  def make_html_to_url(history)
-    tag = '<a href = ' + history.path + "><img src=\"/assets/#{history.thumbnail}\.jpg\" alt=\"" + history.path + "\" height=200 width=250 title=\"" + history.path + "\"style=\"margin: 3px; border: 1px solid #606060;\" ><\/a>"
-
-    tag.html_safe
+  def make_html_to_url(bookmark, history)
+    "<a href=#{history.path}>" + 
+      image_tag("thumbnail/#{bookmark.thumbnail}/thumbnail_#{history.timelines.where(:bookmark_id => bookmark.id).first.thumbnail}.jpg", 
+                :alt => history.path, :height => 200, :width => 250, 
+                :title => history.path, :class => "thumbnail") + 
+      "</a>"
   end 
   
   def get_repostate(bookmark)

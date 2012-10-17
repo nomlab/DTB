@@ -18,7 +18,7 @@ class FileHistoriesController < ApplicationController
 
   def update
     @bookmark = Bookmark.find(params[:bookmark_id])
-    @bookmark.bookmarks_file_historiess.where(:file_history_id => params[:histories]).destroy_all
+    @bookmark.timelines.where(:history_id => params[:histories]).destroy_all
 
     respond_to do |format|
       flash[:notice] = "計算機内部の履歴情報を更新しました．"
@@ -29,7 +29,7 @@ class FileHistoriesController < ApplicationController
 
   def destroy
     @bookmark = Bookmark.find(params[:bookmark_id])
-    @bookmark.bookmarks_file_historiess.where(:file_history_id => params[:histories]).destroy_all
+    @bookmark.timelines.where(:history_id => params[:histories]).destroy_all
 
     respond_to do |format|
       flash[:notice] = "計算機内部の履歴情報を更新しました．"

@@ -1,0 +1,18 @@
+<%# -*- coding: utf-8 -*- %>
+<tr class="bookmark_item">
+  <% bookmark.name == nil ? name = "名称未設定" : name = bookmark.name %>
+  <td class="title">
+    <%= link_to name, :controller => "bookmarks", :action => "show", :task_id => bookmark.task_id, :id => bookmark.id %>
+  </td>
+  <td class="duration"><nobr>
+      (<%= bookmark.created_at.strftime("%Y/%m/%d %H:%M") %> 〜 <%= bookmark.updated_at != nil ? bookmark.updated_at.strftime("%Y/%m/%d %H:%M") : "" %>)
+  </nobr></td>
+  <td class="operations">
+    <%= link_to image_tag("edit.gif", :title => "作業情報編集"), :controller => "bookmarks", :action => "edit", :task_id => bookmark.task_id, :id => bookmark.id %>
+    <%= link_to image_destroy('作業状態削除'),  {:controller => "bookmarks", :action => "destroy", :task_id => bookmark.task_id, :bookmark_id => bookmark.id},
+    :confirm => '本当に削除してよろしいですか?', :method => :get %>
+    <form action="#">
+      <input type="button" value="作業状態復元" onclick="link(<%= bookmark.id %>)">
+    </form>
+  </td>
+</tr>

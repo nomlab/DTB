@@ -1,0 +1,13 @@
+<%# -*- coding: utf-8 -*-  %>
+<h2>作業状態一覧</h2>
+
+<table class="bookmark_table">
+  <col class="title">
+  <col class="durations">
+  <col class="operations">
+  <% task.bookmarks.each do |bookmark| %>
+    <%= render :partial => "bookmarks/item", :locals => {:bookmark => bookmark} %>
+  <% end %>
+</table>
+
+<%# will_paginate(bookmark, :previous_label => '&#171;前', :next_label => '次&#187;') %>

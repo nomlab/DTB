@@ -1,0 +1,9 @@
+<%# -*- coding: utf-8 -*-  %>
+<% @title = "作業の登録" %>
+
+<h2>作業情報を入力してください</h2>
+
+<%= form_for(@task, :url => {:controller => "tasks", :action => "create"}) do |f| %>
+<%= render :partial => "form", :locals => {:f => f} %>
+<%= submit_tag "登録", :confirm => "この作業を登録しますか．" %>
+<% end %>

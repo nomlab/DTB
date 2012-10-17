@@ -23,9 +23,9 @@ def collect_web_history
   bookmark = Bookmark.last
   #  logfile = WindowsLibs.make_path(["lib","squid","var","logs","access.log"])
   logfile = WindowsLibs.make_path(["", "squid", "var", "logs", "access.log"])
-
+  
   histories_old = []
-  bookmark.web_histories.each do |h|
+  bookmark.web_histories.select(:path).each do |h|
     histories_old << h.path
   end
   count = histories_old.size

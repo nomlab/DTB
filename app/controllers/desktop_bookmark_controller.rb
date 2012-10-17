@@ -11,11 +11,11 @@ class DesktopBookmarkController < ApplicationController
     dirname = bm.created_at.strftime("%Y%m%d%H%M")
     dir = WindowsLibs.make_path(["app", "assets","images", "thumbnail", dirname])
     `mkdir #{dir}`
-
+    
 #    BookmarksWebHistories.create(:bookmark => bm, :thumbnail_dir => dirname)
 #    BookmarksFileHistories.create(:bookmark => bm)
-
-
+    
+    
     if params[:id]
       redirect_to :controller => "bookmarks", :action => 'show', :id => params[:id]
     else
@@ -24,14 +24,14 @@ class DesktopBookmarkController < ApplicationController
   end
   
   def index
-    @bookmarks = Bookmark.paginate(:page => params[:page], :per_page => 8, :order => "id DESC")
+    @tasks = Task.paginate(:page => params[:page], :per_page => 8, :order => "id DESC")
     
     respond_to do |format|
       format.html # index.html.erb
       format.xml { render :xml => @bookmarks }
     end
   end
-
+  
   def discover
   end
 
@@ -44,5 +44,4 @@ class DesktopBookmarkController < ApplicationController
     dst = WindowsLibs.make_path(["", "squid", "var", "logs", "access.log"])
     `type nul > #{dst}`
   end
-
 end

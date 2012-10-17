@@ -1,0 +1,13 @@
+<%# -*- coding: utf-8 -*- %>
+<% @title = "作業情報の編集画面" %>
+
+<h2>作業情報の編集</h2>
+
+<%= form_for(@task, :url => {:controller => "tasks", :action => "update"}, :method => "put") do |f| %>
+  <%= render :partial => "form", :locals => {:f => f} %>
+  <%= submit_tag '更新' %>
+<% end %>
+
+<br />
+<%= link_to '作業の詳細画面へ', :controller => "tasks", :action => "show", :id => @task %> &nbsp;
+<%= link_to '作業の一覧画面へ', :controller => "desktop_bookmark", :action => "index" %>
