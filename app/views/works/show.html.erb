@@ -1,37 +1,33 @@
 <%# -*- coding: utf-8 -*-  %>
 <% @title = "仕事の詳細画面" %>
+<%= stylesheet_link_tag "work" %>
 
-<div class="work_header">
-  <div class="title">
-    <h2><%= @work.name %> (<%= jtime(@work.created_at) %>)</h2>
-  </div>
+<div id="name">
+  <h2><%= @work.name %></h2>
 </div>
-<div style="clear: both"></div>
-<div class="keyword">
-  <div class="keyword_header">
-    keyword:
-  </div>
-  <div class="keyword_body">
-    <%= @work.keyword %>
-  </div>
-  <div class="keyword_blank">    
-  </div>
-  <div style="clear: both"></div>
-</div>  
-<% unless ["", nil].include? @work.description %>
-  <br>
-  <div class="work_description">
-    詳細:<br>
-    <div style="border:1px solid gray; padding:5px; padding: 6px;">
-      <%= @work.description.gsub(/\n/){"<br>"}.html_safe %>
-    </div>
-  </div>
-<% end %>
 
+<div id="left">
+  <% unless ["", nil].include? @work.description %>
+    <br>
+    詳細:<br>
+    <div id="description">
+      <%= @work.description.gsub(/\r?\n/){"<br>"}.html_safe %>
+    </div>
+  <% end %>
+  
 </br>
 
-<%= render :partial => "bookmarks/list", :locals => {:work => @work} %>
+<%= render :partial => "tasks/list", :locals => {:tasks => @work.tasks} %>
+</div>
 
+<div id="right">
+  <div id="info">
+    登録：<%= @work.created_at.strftime("%Y/%m/%d (%a) %H:%M") %><br>
+    期限：<%= @work.deadline.strftime("%Y/%m/%d (%a) %H:%M") %><br>
+    (残り<%= ((@work.deadline - Time.now)/(3600*24)).to_i %>日)
+  </div>
+</div>
+<div class="reset"></div>
 <hr>
 <%= link_to "削除", {:action => "destroy", :work_id => @work },
 :confirm => "本当に削除してよろしいですか" %> &nbsp;

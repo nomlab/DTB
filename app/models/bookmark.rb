@@ -2,7 +2,7 @@
 class Bookmark < ActiveRecord::Base
   has_many :histories, :through => :timelines
   has_many :timelines, :dependent => :destroy
-  belongs_to :task
+  belongs_to :task, :touch => true
   
   def file_histories
     histories.where(:type => "FileHistory")

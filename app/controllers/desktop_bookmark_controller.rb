@@ -15,7 +15,6 @@ class DesktopBookmarkController < ApplicationController
 #    BookmarksWebHistories.create(:bookmark => bm, :thumbnail_dir => dirname)
 #    BookmarksFileHistories.create(:bookmark => bm)
     
-    
     if params[:id]
       redirect_to :controller => "bookmarks", :action => 'show', :id => params[:id]
     else
@@ -24,11 +23,11 @@ class DesktopBookmarkController < ApplicationController
   end
   
   def index
-    @tasks = Task.paginate(:page => params[:page], :per_page => 8, :order => "id DESC")
+    @works = Work.paginate(:page => params[:page], :per_page => 8, :order => "id DESC")
     
     respond_to do |format|
       format.html # index.html.erb
-      format.xml { render :xml => @bookmarks }
+      format.xml { render :xml => @works }
     end
   end
   
@@ -36,6 +35,17 @@ class DesktopBookmarkController < ApplicationController
   end
 
   def discover_keyword
+  end
+
+  def start
+    Work.current = params[:work]
+    Task.current = params[:task]
+    render
+  end
+  
+  def stop
+    Work.current = nil
+    Task.current = nil
   end
   
   private

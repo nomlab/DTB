@@ -62,24 +62,28 @@ DesktopBookmark::Application.routes.draw do
     post "tasks/start", :to => "tasks#start"
     post "tasks/stop", :to => "tasks#stop"
 
-    resources :task, :controller => :tasks do
-
-      get "destroy", :to => "tasks#destroy"
-
-      resources :bookmark, :controller => :bookmarks do
-        get "destroy", :to => "bookmarks#destroy"
+    resources :work, :controller => :works do
+      get "destroy", :to => "works#destroy"
+      
+      resources :task, :controller => :tasks do
         
-        match "file_history/edit", :to => "file_histories#edit"
-        resources :file_history, :controller => :file_histories, :except => ["destroy", "edit"]
-        delete "file_history/destroy", :to => "file_histories#destroy"
-        match 'file_history/:id/link', :controller => :file_histories, :action => :link
+        get "destroy", :to => "tasks#destroy"
         
-        match "web_history/edit", :to => "web_histories#edit"
-        resources :web_history, :controller => :web_histories, :except => ["destroy", "edit"]
-        delete "web_history/destroy", :to => "web_histories#destroy"
+        resources :bookmark, :controller => :bookmarks do
+          get "destroy", :to => "bookmarks#destroy"
+          
+          match "file_history/edit", :to => "file_histories#edit"
+          resources :file_history, :controller => :file_histories, :except => ["destroy", "edit"]
+          delete "file_history/destroy", :to => "file_histories#destroy"
+          match 'file_history/:id/link', :controller => :file_histories, :action => :link
+          
+          match "web_history/edit", :to => "web_histories#edit"
+          resources :web_history, :controller => :web_histories, :except => ["destroy", "edit"]
+          delete "web_history/destroy", :to => "web_histories#destroy"
+        end
       end
     end
   end
-  
   match "desktop_bookmark/:action", :controller => "desktop_bookmark"
 end
+  

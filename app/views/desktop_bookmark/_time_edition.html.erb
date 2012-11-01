@@ -1,5 +1,7 @@
 <%# -*- coding: utf-8 -*- %>
 
+
+<%= javascript_include_tag "time_edition" %>
 <%= stylesheet_link_tag "timeedition" %>
 <div class="container">
   <input id="start" name="controls" type="radio" />
@@ -26,10 +28,30 @@
       <div class="numbers second moveten">0 1 2 3 4 5 6 7 8 9</div>
     </div>
   </div>
-  <!-- Lables for the controls -->
-  <div id="timer_controls">
-    <label for="start">Start</label>
-    <label for="stop">Stop</label>
+
+  <% if Task.current != nil
+       work_option_tag = options_for_select(Work.options_for_select, Work.current.id).html_safe
+     else
+       work_option_tag = options_for_select(Task.options_for_select).html_safe
+     end %>
+
+  <div id="selector">
+    <div id="work_selector">
+      <% if Work.current == nil %>
+        <%= form_tag(:controller => "desktop_bookmark", :action => "start") do %>
+          <%= select_tag("work", work_option_tag) %>
+        <% end %>
+      <% else %>
+        <%= select_tag("work", work_option_tag, {:disabled => true}) %>
+      <% end %>
+    </div>
+    <div id="task_selector">
+      <%= select_tag("task", work_option_tag) %>
+    </div>
+  </div>
+  <% status = Task.current ? "stop" : "start" %>
+  <div class="button">
+    <label for="<%= status %>" id="start"></label>
   </div>
 </div>
 
@@ -37,24 +59,11 @@
 <script src="http://thecodeplayer.com/uploads/js/prefixfree.js" type="text/javascript"></script>
 <!-- You can download it from http://leaverou.github.com/prefixfree/ -->
 
-<% if Task.current != nil
-     option_tag = options_for_select(Task.options_for_select, Task.current.id)
-   else
-     option_tag = options_for_select(Task.options_for_select)
-   end %>
-
 <% if Task.current == nil %>
-<div class="task_selecter">
-  <%= form_tag(:controller => "tasks", :action => "start") do %>
-    <%= select_tag("task", option_tag.html_safe) %>
-    <%= submit_tag("開始する") %>
-  <% end %>
-</div>
 <% else %>
   <%= form_tag(:controller => "tasks", :action => "stop") do %>
-    <%= select_tag("task", option_tag.html_safe, {:disabled => true}) %>
+    <%= select_tag("task", work_option_tag, {:disabled => true}) %>
 <br>
-    <%= text_field "詳細", :size => 55 %>
-    <%= submit_tag("中断する") %>
+    <%= text_area "bookmark", "description", :cols => 20, :rows => 3 %>
   <% end %>
 <% end %>

@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8-with-signature -*-
+# -*- coding: utf-8 -*-
 class Work < ActiveRecord::Base
   has_many :tasks, :dependent => :destroy
 
@@ -12,25 +12,18 @@ class Work < ActiveRecord::Base
 
   def web_histories
     res = []
-    tasks.each do |task|
+    tasks.eac do |task|
       res += task.web_histories
     end
     return res.uniq
   end
-  
-  def self.options_for_seelct
-    res = [["-----仕事を選択してください-----", ""]]
+
+  def self.options_for_select
+    res = [["----- 仕事を選択してください -----", ""]]
     Work.all.each do |work|
       res << [work.name, work.id]
     end
     return res
-  end
-  
-  def last_update
-    res = updated_at
-    tasks.each do |task|
-      res = (res <= task.updated_at ? task.last_update : res)
-    end
   end
 
   def self.current
@@ -40,6 +33,4 @@ class Work < ActiveRecord::Base
   def self.current=(work)
     @current_work = work
   end
-
-
 end

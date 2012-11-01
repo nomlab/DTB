@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121015082201) do
+ActiveRecord::Schema.define(:version => 20121026055837) do
 
   create_table "bookmarks", :force => true do |t|
     t.string   "name"
@@ -47,6 +47,7 @@ ActiveRecord::Schema.define(:version => 20121015082201) do
     t.boolean  "status"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "work_id"
   end
 
   create_table "timelines", :force => true do |t|

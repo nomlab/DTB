@@ -1,13 +1,21 @@
 <%# -*- coding: utf-8 -*-  %>
+<%= stylesheet_link_tag "works" %>
 <h2>仕事一覧</h2>
 
+<!--
 <table class="work_table">
   <col class="title">
   <col class="deadline">
   <col class="operations">
   <% works.each do |work| %>
-    <%= render :partial => "works/work_item", :locals => {:work => work} %>
+    <% render :partial => "works/work_item", :locals => {:work => work} %>
   <% end %>
 </table>
+-->
 
+<div id="task_list">
+  <% works.each do |work| %>
+    <%= render :partial => "works/work_item", :locals => {:work => work} %>
+  <% end %>
+</div>
 <%= will_paginate(@works, :previous_label => '&#171;前', :next_label => '次&#187;') %>

@@ -4,24 +4,46 @@
   <head>
     <title><%= @title %></title>
     <%= stylesheet_link_tag "desktop_bookmark" %>
-    <% javascript_include_tag "application" %>
+    <%= javascript_include_tag "application" %>
     <%= csrf_meta_tags %>
   </head>
   <body>
-    <div id="header">
-      <h1><%= link_to "Desktop Bookmark", {:controller => "desktop_bookmark", :action => "index"}, :class => "h1" %></h1>
-    </div>
-
-    <div id="main">
-      <div id="side">
-	<%= render(:partial => controller.controller_name + "/side") rescue nil %>
+    <nav id="menu">
+      <div id="title">
+	<%= link_to "Desktop Bookmark", {:controller => "desktop_bookmark", :action => "index"}, :class => "h1" %>
       </div>
-      
-      <div id="content">
+      <div id="main_menu">
+	<ul>
+	  <li><%= link_to "Works", :controller => "desktop_bookmark", :action => "index" %></li>
+	  <li><a href="/explication/tips.html">Help</a></li>
+	  <li><a>Config</a></li>
+	</ul>
+      </div>
+      <div id="time_edition">
+	<%= render :partial => "desktop_bookmark/time_edition" %>
+      </div>
+      <div id="sub_menu_frame">
+	<div id="tabs">
+	  <ul>
+	    <li><a id="selected">めにう</a></li>
+	    <li><a>最近の仕事</a></li>
+	    <li><a>最近のファイル</a></li>
+	  </ul>
+	</div>
+        <div id="notice_frame">
+	  <div id="notice_area">
+	    ここはあとで
+	  </div>
+	</div>
+      </div>
+    </nav>
+    
+    <div id="main">
+      <div id="notice">
 	<% if flash[:notice] != nil %><p style="color: green"><%= flash[:notice] %></p><% end %>
 	<% if flash[:error] != nil %><p style="color: red"><%= flash[:error] %></p><% end %>
-	<%= yield %>
       </div>
+      <%= yield %>
     </div>
   </body>
 </html>

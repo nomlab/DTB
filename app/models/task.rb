@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 class Task < ActiveRecord::Base
   has_many :bookmarks, :dependent => :destroy
+  belongs_to :work, :touch => true
 
   def file_histories
     res = []
@@ -26,10 +27,6 @@ class Task < ActiveRecord::Base
     return res
   end
 
-  def last_update
-    bookmarks.last.updated_at rescue nil
-  end
-  
   def self.current
     @current_task
   end

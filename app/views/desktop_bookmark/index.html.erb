@@ -8,12 +8,8 @@
       }
       //-->
 </script>
-<div style="height:80px;width:80px;border-radius:40px;background: palegreen;"></div>
 
-
-<%= render :partial => "time_edition" %>
-
-<%= render :partial => "tasks/list", :locals => {:tasks => @tasks} %>
+<%= render :partial => "works/list", :locals => {:works => @works} %>
 
 <%= form_tag({:action => 'discover'}, :method => :get) do %>
   <p><h2><label for="bookmark_work">検索</label></h2><br>

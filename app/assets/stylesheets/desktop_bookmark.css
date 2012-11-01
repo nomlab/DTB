@@ -4,6 +4,8 @@
   小笠原 良
 */
 
+html, body { height: 100%;}
+
 body { 
   margin: 0px; 
   padding: 0px; 
@@ -24,26 +26,32 @@ body {
 a { 
   text-decoration: underline;
 }
+
 a:link { 
   background: transparent none repeat;
   color: royalblue;
 }
+
 a:visited {
   background: transparent none repeat;
   color: darkslategray;
 }
+
 a:hover, a:active { 
   background: transparent none repeat; 
   color: darkblue;
 }
+
 a img { 
   border-width: 0px;
   text-decoration: none;
 }
+
 a.h1{
   text-decoration: none;
   color: darkblue;
 }
+
 a.h2{
   text-decoration: none;
   color: seagreen;
@@ -56,6 +64,7 @@ h1 {
   color: darkblue;
   text-align: center;
 }
+
 h2 {
   border-bottom: 1px dotted seagreen;
   margin: 1.3em 0.5em 0.2em 0em; 
@@ -63,6 +72,7 @@ h2 {
   font-size: 130%;
   color: seagreen;
 }
+
 h3 { 
   border-bottom: 1px dotted darkorange;
   margin: 1.3em 1em 0.2em 0em;
@@ -71,6 +81,7 @@ h3 {
   font-weight: normal;
   color: darkorange;
 }
+
 h4 { 
   margin: 1.3em 1.5em 0.2em 0em;
   background: transparent none repeat;
@@ -81,34 +92,203 @@ h4 {
 
 /* --- layouts/application.html.erb --- */
 
-#header {
-  width: 100%;
-  height: 50px;
-  z-index: 1;
-  margin-bottom: 1px;
+nav#menu {
+    height: 100%;
+    width: 30%;
+    min-width: 290px;
+    max-width: 290px;
+    float: left;
+    top: 0px;
+    left: 0px;
+    position: fixed;
+    margin: 0;
+    background: #666;
+#    border: 1px solid red;
+    text-align: center;
+    border:1px solid #444;
+    box-shadow: 1px  0px 0px rgba(225,225,225,0.3) inset,
+               -1px  0px 0px rgba(225,225,225,0.3) inset,
+                0px  1px 1px rgba(0,0,0,0.1) inset,
+                0px -1px 1px rgba(0,0,0,0.3) inset,
+                0px  1px 3px #666;
+
 }
 
-#main {
-  width: 100%;
+div#title {
+    height: 80px;
+    vertical-align: middle;
 }
 
-#side {
-  float: left;
-  width: 130px;
-  padding: 2px;
-  font-size: 90%;
+div#title a {
+    color: #fff;
+    display:block;
+    height: 100%;
+    font-size: 20px;
+    line-height:80px;
+    font-weight:bold;
+    text-shadow: 0 -1px 0px #333, 0 1px 0px #555;
 }
 
-#content {
-  background-color: white;
-  width: 80%;
-  float: left;
-  min-height: 500px;
-  padding: 6px 10px 10px;
+div#main_menu {
+    width: 100%;
+    height: 50px;
+}
+
+#tabs ul,
+#main_menu ul{
+    width: 100%;
+    margin: 0;
+    list-style-type: none;
+}
+#tabs ul li,
+#main_menu ul li {
+    width: 33%;
+    float:left;
+    padding:0;
+    margin:0;
+    text-align: center;
+}
+
+#main_menu ul li a {
+    width: auto;
+    color: #fff;
+    font-size: 12px;
+    font-weight: bold;
+    text-shadow: 0 -1px 0px #333, 0 1px 0px #555;
+    padding: 10px 0;
+    text-decoration: none;
+    display: block;
+    background: #666;
+    background-image: -moz-linear-gradient(top, #888 0%, #777 50%, #666 50%, #777 100%);
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #888), color-stop(0.50, #777), color-stop(0.50, #666), color-stop(1, #777));
+    border-left:1px solid #444;
+    box-shadow: 1px  0px 0px rgba(225,225,225,0.3) inset,
+               -1px  0px 0px rgba(225,225,225,0.3) inset,
+                0px  1px 1px rgba(0,0,0,0.1) inset,
+                0px -1px 1px rgba(0,0,0,0.3) inset,
+                0px  1px 3px #666;
+}
+
+#main_menu ul li:first-child a {
+    border-left:0;
+    margin-left:2px;
+    box-shadow:-1px  0px 0px rgba(225,225,225,0.3) inset,
+                0px  1px 1px rgba(0,0,0,0.1) inset,
+                0px -1px 1px rgba(0,0,0,0.3) inset,
+                0px  1px 3px #666;
+}
+
+#main_menu ul li:last-child a {
+    box-shadow: 1px  0px 0px rgba(225,225,225,0.3) inset,
+                0px  1px 1px rgba(0,0,0,0.1) inset,
+                0px -1px 1px rgba(0,0,0,0.3) inset,
+                0px  1px 3px #666;    
+}
+
+
+#main_menu ul li a:hover {
+    background: #555;
+    background-image: -moz-linear-gradient(top, #555 0%, #444 50%, #333 50%, #444 100%);
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #555), color-stop(0.50, #444), color-stop(0.50, #333), color-stop(1, #444));
+    box-shadow: 1px  0px 0px rgba(225,225,225,0) inset,
+               -1px  0px 0px rgba(225,225,225,0) inset,
+                0px  1px 1px rgba(0,0,0,0.1) inset,
+                0px -1px 1px rgba(0,0,0,0.3) inset,
+                0px  1px 3px #666;
+}
+
+div#time_edition {
+    width: 98%;
+    height: 240px;
+    border: 1px solid #444;
+    margin: 0 auto;
+    margin-bottom: 10px;
+    box-shadow: 1px  0px 0px rgba(225,225,225,0.3) inset,
+               -1px  0px 0px rgba(225,225,225,0.3) inset,
+                0px  1px 1px rgba(0,0,0,0.1) inset,
+                0px -1px 1px rgba(0,0,0,0.3) inset,
+                0px  1px 3px #666;
+}
+
+div#sub_menu_frame {
+    height: auto;
+}
+
+div#tabs {
+    width: 98%;
+    height: 24px;
+    margin: auto;
+}
+
+#tabs ul{
+    margin: 0 auto;
+    padding: 0;
+    margin-left: 2px;
+}
+
+#tabs ul li a {
+    border: 1px 1px 1px 0px solid #444;
+    padding: 5px 0;
+    width: auto;
+    color: #fff;
+    font-size: 12px;
+    font-weight: bold;
+    text-shadow: 0 -1px 0px #333, 0 1px 0px #555;
+    text-decoration: none;
+    display: block;
+    background: #444;
+    border-left:1px solid #444;
+    box-shadow: 1px  0px 0px rgba(225,225,225,0.3) inset,
+               -1px  0px 0px rgba(225,225,225,0.3) inset,
+                0px  1px 1px rgba(0,0,0,0.1) inset,
+                0px -1px 1px rgba(0,0,0,0.3) inset,
+                0px  1px 3px #666;
+}
+
+#tabs ul li a#selected {
+    border: 1px 1px 1px 0px solid #444;
+    padding: 5px 0;
+    width: auto;
+    color: #fff;
+    font-size: 12px;
+    font-weight: bold;
+    text-shadow: 0 -1px 0px #333, 0 1px 0px #555;
+    text-decoration: none;
+    display: block;
+    background: #666;
+    border-left:1px solid #444;
+    background-image: -moz-linear-gradient(top, #888 0%, #666 100%);
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #888), color-stop(1, #666));
+    box-shadow: 1px  0px 0px rgba(225,225,225,0.3) inset,
+               -1px  0px 0px rgba(225,225,225,0.3) inset,
+                0px  1px 1px rgba(0,0,0,0.1) inset,
+                0px -1px 1px rgba(0,0,0,0.3) inset,
+                0px  1px 3px #666;
+}
+
+div#notice_frame {
+    width: 97%;
+    height: 100%;
+    margin: 0 auto;
+    margin-bottom: 1px;
+    border: 1px solid #444;
+    border-top: 0px;
+    color: #fff;
+    text-align: left;
+}
+
+div#notice_area {
+    padding: 10px;
+    width: auto;
 }
 
 /* --- tasks/_list
        tasks/_task_item --- */
+
+div#main {
+#    width: 100%;
+    padding-left: 300px;
+}
 
 tr.task_item {
   padding:5px 10px;
@@ -152,160 +332,6 @@ div.keyword_body {
   word-break: break-all;
 }
 
-  /*
-div.directory { margin-bottom: 2em; }
-
-p { line-height: 150%; }
-
-div.bottom_navi { text-align: right; margin-top: 1em; clear: both; }
-
-div.bottom_navi ul { list-style-type: none; list-style-image: none; list-style-position: outside; }
-
-div.bottom_navi li { display: inline; margin-left: 0.3em; }
-
-hr { height: 1px; }
-
-ul ul, ol { margin-top: 0.3em; }
-
-li { line-height: 140%; margin-bottom: 0.3em; }
-
-table { border-collapse: collapse; }
-
-table th, td { border: 1px solid gray; padding: 0.2em 0.5em; vertical-align: middle; }
-
-table.list, table.postinfo { margin-top: 0.5em; }
-
-table.list th { text-align: right; background-color: gainsboro; width: 15em; }
-
-table.list td { text-align: center; width: 7em; }
-
-table.list td.none { border: medium none ; }
-
-table {
-  border-width: 0px;
-  border-color: black;
-  border-style: solid;
-  background-color: black;
-  margin: 0px 0px 0px 0px;
-  padding: 0px 0px 0px 0px;
-  margin-top: 1em;
-  margin-bottom: 1em;
-  width: 100%;
-}
-
-
-col.title {
-}
-
-col.duration {
-}
-
-col.operations {
-}
-
-
-td,tr {
-  border-color: black;
-  border-style: solid;
-  margin: 0px 0px 0px 0px;
-  padding: 0px 3px 0px 3px;
-  background-color: white;
-}
-
-th {
-  border-width: 0px;
-  border-color: black;
-  border-style: solid;
-  margin: 0px 0px 0px 0px;
-  padding: 0px 3px 0px 3px;
-  background-color: palegreen;
-}
-
-th.title,
-td.title{
-  white-space: nowrap;
-  overflow: hidden;
-  width: 40%;
-}
-
-th.duration,
-td.duration{
-  width: 40%;  
-}
-
-th.operations,
-td.operations{
-  width: 15%;  
-}
-
-
-ul {
-  margin-top: 0.2em;
-  margin-bottom: 0.2em;
-}
-
-em { 
-  color: red; 
-  font-style: normal;
-  font-weight: bold;
-}
-
-div { margin-bottom: 1em; }
-
-div.thumb a {
-  width: 150px;
-  background: green;
-  vartical-align: top;
-  float: right;
-  border-color: green;
-  border-style: solid;
-  border-width: 8px;
-  color: white;
-  letter-spacing: 0px;
-  line-height: 1em;
-  margin-right: 2px;
-  margin-left: 2px;
-  margin-bottom: 1em;
-  text-align: center;
-  text-decoration: none;
-}
-
-img {
-  border-width: 0px;
-  vartical-align: top;
-} 
-
-br { clear: both; }
-
-pre { 
-  letter-spacing: 0px;
-  line-height: 1em;
-  white-space:  pre;
-  padding:      0.5em;
-  background:   #ffeea0;
-  border-color: #ffeeb0;
-  border-style: outset;
-  border-width: 4px;
- }
-
-code { 
-  letter-spacing: 0px;
-  line-height:    1em;
-  white-space:    pre;
-  padding:        0.5em;
-  background:     #ffeea0;
-  border-color:   #ffeeb0;
- }
- 
-span.tender,span.ant {
-  color: black;
-  font-style: italic;
-  font-weight: bold;
-  font-family: 'Times New Roman';
-  font-size: 120%;
-}
-  */
-
 .pagination {
   padding: 3px;
   margin: 3px;
@@ -335,5 +361,10 @@ span.tender,span.ant {
   margin: 2px;
   border: 0px solid #eee;
   color: #ddd;
+}
+
+div#button {
+    width: 100px;
+    background-color: palegreen;
 }
 
