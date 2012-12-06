@@ -37,3 +37,5 @@ end
 
 gem 'execjs'
 gem 'will_paginate'
+# to use git commands in ruby script
+gem "grit", "2.3.0"

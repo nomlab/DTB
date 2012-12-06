@@ -11,14 +11,13 @@ body {
   padding: 0px; 
   color: black;
   background-color: white;
+  background-color: #ddd;
   font-size: 100%;
-  /*
-  text-align: center;
-  font-family: Verdana,Arial;
-  letter-spacing: 0px;
-  line-height: 1.05em;
-  padding-top: 0.5em;
-  */
+#  text-align: center;
+#  font-family: Verdana,Arial;
+#  letter-spacing: 0px;
+#  line-height: 1.05em;
+#  padding-top: 0.5em;
   margin-right: 4%;
   margin-left:  4%;
 }
@@ -29,12 +28,12 @@ a {
 
 a:link { 
   background: transparent none repeat;
-  color: royalblue;
+  color: blue;
 }
 
 a:visited {
   background: transparent none repeat;
-  color: darkslategray;
+  color: purple;
 }
 
 a:hover, a:active { 
@@ -103,7 +102,6 @@ nav#menu {
     position: fixed;
     margin: 0;
     background: #666;
-#    border: 1px solid red;
     text-align: center;
     border:1px solid #444;
     box-shadow: 1px  0px 0px rgba(225,225,225,0.3) inset,
@@ -199,7 +197,6 @@ div#main_menu {
 
 div#time_edition {
     width: 98%;
-    height: 240px;
     border: 1px solid #444;
     margin: 0 auto;
     margin-bottom: 10px;
@@ -288,10 +285,11 @@ div#notice_area {
 div#main {
 #    width: 100%;
     padding-left: 300px;
+#    background-color: #ddd;
 }
 
 tr.task_item {
-  padding:5px 10px;
+    padding:5px 10px;
 }
 
 /* --- tasks/show --- */

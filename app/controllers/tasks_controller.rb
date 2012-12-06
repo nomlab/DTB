@@ -10,7 +10,8 @@ class TasksController < ApplicationController
   
   def create
     @task = Task.new(params[:task])
-    
+    @task.work_id = params[:work_id]
+
     respond_to do |format|
       if @task.save
         flash[:notice] = "作業を登録しました．"
@@ -79,7 +80,7 @@ class TasksController < ApplicationController
     redirect_to :action => "show", :id => @task
   end
 
-  def start
+  def start_orig
     if params[:task] != ""
       Task.current = Task.find_by_id(params[:task])
       $current_task = Task.current
@@ -95,7 +96,7 @@ class TasksController < ApplicationController
     redirect_to "/"
   end
 
-  def stop
+  def stop_orig
     Bookmark.last.touch
     Task.current != nil ? flash[:notice] = "#{Task.current.name} を中断しました．" : nil
     session[:task_id] = nil

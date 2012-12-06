@@ -148,3 +148,23 @@ module ApplicationHelper
     obj.html_safe
   end
 end
+
+
+#####################
+# <option>タグの生成
+
+def work_option_tag(work = nil)
+  option_tag(Work.all, work)
+end
+
+def task_option_tag(tasks, default_item = nil)
+  option_tag tasks, default_item
+end
+
+def option_tag(objs, default_item)
+  if default_item != nil
+    options_from_collection_for_select(objs, "id", "name", default_item.id)
+  else
+    options_from_collection_for_select(objs, "id", "name")
+  end
+end

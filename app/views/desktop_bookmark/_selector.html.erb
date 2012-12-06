@@ -1,0 +1,23 @@
+<div id="selector">
+  <% status = Task.current ? "stop" : "start"
+     value = Task.current ? "&#9632" : "&#9654" %>
+  <%= form_tag({:controller => "desktop_bookmark", :action => status},
+                :remote => true) do %>
+  <div id="work_selector">
+    <% if Work.current == nil %>
+      <%= select_tag("work_id", work_option_tag(work), 
+                     {:include_blank => true,
+                      :onchange => "$.post('#{url_for(:controller => "works", :action => "select")}', {'_method':'post', 'work_id':this.value});"}) %>
+    <% else %>
+      <%= select_tag("work_id", 
+                     work_option_tag(Work.current),
+                     {:disabled => true}) %>
+    <% end %>
+  </div>
+  <div id="task_selector">
+    <%= render :partial => "tasks/select", :locals => {:tasks => tasks} %>
+  </div>
+  <%= text_area("bookmark", "comment", :cols => 20, :rows => 3, :placeholder => "コメントを入力") unless Task.current == nil %>
+  <%= submit_tag value.html_safe, :class => status %>
+  <% end %>
+</div>

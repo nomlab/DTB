@@ -23,8 +23,8 @@
 <div id="right">
   <div id="info">
     登録：<%= @work.created_at.strftime("%Y/%m/%d (%a) %H:%M") %><br>
-    期限：<%= @work.deadline.strftime("%Y/%m/%d (%a) %H:%M") %><br>
-    (残り<%= ((@work.deadline - Time.now)/(3600*24)).to_i %>日)
+    期限：<%= @work.deadline.strftime("%Y/%m/%d (%a) %H:%M") rescue "未設定" %><br>
+    (残り<%= (@work.deadline.yday - Time.now.yday) rescue "?" %>日)
   </div>
 </div>
 <div class="reset"></div>

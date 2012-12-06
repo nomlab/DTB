@@ -2,20 +2,13 @@
 <%= stylesheet_link_tag "works" %>
 <h2>仕事一覧</h2>
 
-<!--
-<table class="work_table">
-  <col class="title">
+<table id="work_table">
+  <col class="check">
+  <col class="name">
   <col class="deadline">
-  <col class="operations">
+  <col class="edit">
+  <col class="delete">
   <% works.each do |work| %>
-    <% render :partial => "works/work_item", :locals => {:work => work} %>
+    <%= render :partial => "works/table_item", :locals => {:work => work} %>
   <% end %>
 </table>
--->
-
-<div id="task_list">
-  <% works.each do |work| %>
-    <%= render :partial => "works/work_item", :locals => {:work => work} %>
-  <% end %>
-</div>
-<%= will_paginate(@works, :previous_label => '&#171;前', :next_label => '次&#187;') %>

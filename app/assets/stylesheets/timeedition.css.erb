@@ -1,7 +1,6 @@
 * {margin: 0; padding: 0;}
 
 .container {
-#    padding: 200px;
     margin-top: 20px;
     text-align: center;
 }
@@ -37,8 +36,8 @@
     font-family: digital, arial, verdana;
     text-align: center;
     color: #fff;
-    
-    position: absolute;
+#    position: absolute;
+    position: relative;
     top: 0;
     left: 0;
     
@@ -80,18 +79,26 @@ input[name="controls"] {display: none;}
 
 /*Now we need to sync the animation speed with time speed*/
 /*One second per digit. 10 digits. Hence 10s*/
-.second {animation-duration: 10s;}
-.tensecond {animation-duration: 60s;} /*60 times .second*/
+.second {
+    animation-duration: 10s;
+}
+.tensecond {
+    animation-duration: 60s;
+} /*60 times .second*/
 
-.milisecond {animation-duration: 1s;} /*1/10th of .second*/
-.tenmilisecond {animation-duration: 0.1s;}
-.hundredmilisecond {animation-duration: 0.01s;}
+.minute {
+    animation-duration: 600s;
+} /*60 times .second*/
+.tenminute {
+    animation-duration: 3600s;
+} /*60 times .minute*/
 
-.minute {animation-duration: 600s;} /*60 times .second*/
-.tenminute {animation-duration: 3600s;} /*60 times .minute*/
-
-.hour {animation-duration: 36000s;} /*60 times .minute*/
-.tenhour {animation-duration: 360000s;} /*10 times .hour*/
+.hour {
+    animation-duration: 36000s;
+} /*60 times .minute*/
+.tenhour {
+    animation-duration: 360000s;
+} /*10 times .hour*/
 
 @keyframes moveten {
     0% {top: 0;}
@@ -128,32 +135,34 @@ div.button {
                 0px  1px 3px #666;
 }
 
-
-label#start:before {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    text-decoration: none;
-    text-align: center;
-    cursor:pointer;
-    display: block;
-    content: "\25B6";
+#time_edition input[type=submit] {
+    margin:10px 0;
+    width: 60px;
+    height: 60px;
+    border-radius: 30px;
+    text-align:center;
+}
+#time_edition input[type=submit].start {
+    font-size: 60px;
+    line-height: 40px;
+    vertical-align:middle;
 }
 
-label#stop: {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    text-decoration: none;
-    text-align:center;
-    cursor: pointer;
-    display: block;
-    font-size: 30px;
-    border: 0;
-    border-left: 10px solid black;
-    border-right: 10px solid black;
+#time_edition input[type=submit].stop {
+    font-size: 40px;
+    line-height: 40px;
+    vertical-align:middle;
 }
 
 select {
     width: 226px;
+}
+
+textarea#bookmark_comment {
+    top: 0;
+    left: 0;
+    
+    display:block;
+    margin: 10px auto 0 auto;
+    min-width: 226px;
 }

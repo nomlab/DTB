@@ -8,7 +8,7 @@
       }
       //-->
 </script>
-
+<%= render :partial => "works/partial_form", :locals => {:work => @work} %>
 <%= render :partial => "works/list", :locals => {:works => @works} %>
 
 <%= form_tag({:action => 'discover'}, :method => :get) do %>

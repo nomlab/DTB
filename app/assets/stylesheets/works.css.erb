@@ -1,52 +1,198 @@
 <%# -*- coding: utf-8 -*- %>
 
-.work_item {
-    height: 80px;
-#    background-color: palegreen;
-    border: 0;
-    border-left: 10px solid #cfc;
-    padding-left: 20px;
-    margin-bottom: 10px;
+a:link {
+    color: white;
 }
 
-.name {
-    height: 34px;
-    font-size: 24px;
-    float:left;
+a:visited {
+    color: white;
+}
+
+
+/* for table */
+#work_table {
+    background-color: #666;
+    width: 100%;
+    border-radius: 5px;
+    border-spacing: 0;
+    font-color: white;
+#    font-size: 12px;
+    background-image: -moz-linear-gradient(top, #888 0%, #777 50%, #666 50%, #777 100%);
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #888), color-stop(0.50, #777), color-stop(0.50, #666), color-stop(1, #777));
+}
+
+#work_table tr.item {
+    height: 30px;
+    line-height: 30px;
     vertical-align: middle;
-    line-height: 34px;
+    color: white;
+    font-weight: bold;
+    text-shadow: 0 -1px 0 #333, 0 1px 0 #555;
+
+    box-shadow: 0px  1px 0px rgba(225,225,225,0.3) inset,
+                0px -1px 0px rgba(225,225,225,0.3) inset,
+                0px  1px 3px #666;
+
 }
 
-.dates {
-    float:right;
-    height: 34px;
+#work_table tr.item:first-child {
+    border-radius: 5px 5px 0 0;
+    box-shadow: 0px -1px 0px rgba(225,225,225,0.3) inset,
+                0px  1px 3px #666;
 }
 
-.reset {
-    clear: both;
+#work_table tr.item:last-child {
+    border-radius: 0 0 5px 5px;
+    box-shadow: 0px  1px 0px rgba(225,225,225,0.3) inset,
+                0px  1px 3px #666;    
+}
+#work_table tr.item:only-child {
+    border-radius: 5px 5px 5px 5px;
+    box-shadow: 0px  1px 0px rgba(225,225,225,0.3) inset,
+                0px  1px 3px #666;    
 }
 
-.registed_at {
-    
+#work_table tr.item:first-child td{
+    border-left: 0;
+}
+#work_table tr.item:last-child td{
+    border-bottom: 0;
+}
+#work_table td {
+    border-bottom: 1px solid #444;
+}
+#work_table td.check {
+    width: 30px;
+    height: 30px;
+    border-right: 1px solid #777;
+    box-shadow: 1px 0px 0px rgba(225,225,225,0.3) inset,
+                -1px 0px 0px rgba(225,225,225,0.3) inset;
+}
+#work_table td.check a {
+    width: 30xp;
+    height: 30px;
+    display:block;
+    text-align:center;
+    text-decoration: none;
+}
+#work_table td.check a:hover {
+    cursor: pointer;
+    color: #87cefa;
+}
+#work_table td.check a:before {
+    content: "\2714";
 }
 
-.deadline {
-    
+#work_table td.name {
+    padding-left: 5px;
+    overflow: hidden;
+    white-space:nowrap;
+}
+#work_table td.name a {
+    text-decoration: none;
+    display:block;
+}
+#work_table td.name a:hover {
+    cursor:pointer;
+    color: palegreen;
 }
 
-.description {
-    margin-top: 10px;
-    width: 62%;
-    height: 34px;
-    overflow:auto;
-    background-color: #cec;
+#work_table td.deadline {
+    padding-left:5px;
+    width: 230px;
+    min-width: 230px;
+}
+
+#work_table td.yellow {
+    color:yellow;
+}
+
+#work_table td.red {
+    color:red;
+}
+
+#work_table td.edit {
+    width: 30px;
+}
+#work_table td.edit a{
+    display:block;
+    width: 30px;
+    height: 30px;
+    text-decoration: none;
+    text-align:center;
+}
+#work_table td.edit a:before {
+    content: "\270E";
+}
+#work_table td.edit a:hover {
+    cursor:pointer;
+    color: palegreen;
+}
+
+
+#work_table td.delete {
+    width: 30px;
+    border-right: 0;
+}
+#work_table td.delete a{
+    display:block;
+    width: 30px;
+    height: 30px;
+    text-decoration: none;
+    text-align:center;
+}
+#work_table td.delete a:before {
+    content: "\2718";
+}
+#work_table td.delete a:hover {
+    color: #ff3030;
+    cursor: pointer;
+}
+
+div#entry_form {
+    width: 100%;
+    max-width: 620px;
+    height: 90px;
+    border: 1px solid red;
+    border-radius: 5px;
+    padding: 5px 0px 5px 10px;
+}
+
+div#entry_form textarea{
+    border-radius: 5px;
+    height: 90px;
+    width: 330px;
+}
+
+div#entry_form input[type=text] {
+    border-radius: 2px;
+}
+
+div#left_area {
+    float:left;
+    height: 90px;
+    width: 200px;
+}
+
+div#left_area div#name_field{
+    margin-bottom: 20px;
+}
+
+div#center_area {
+    float: left;
+    height: 90px;
+    width: 330px;
+
+}
+
+div#right_area {
+    height: 90px;
+    width: 70px;
+    vertical-align: middle;
     float:left;
 }
 
-.commands {
-    margin-top:10px;
-    margin-left: 3%;
-    height: 34px;
-    width: 35%;
-    float:right;
+div#right_area input {
+    margin: 30px 15px;
+    padding: 2px;
 }

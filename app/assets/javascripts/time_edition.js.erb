@@ -1,0 +1,28 @@
+/* -*- coding: utf-8 -*- */
+/* javascript for stop_watch */
+<%
+  if Bookmark.current == nil
+    duration = 0
+  else
+    duration = (Time.now - Bookmark.current.created_at).to_i
+  end
+%>
+
+var stopWatch = function(){
+    $('#time_edition input:radio#stop').click();
+};
+var startWatch = function(){
+    $('#time_edition input:radio#start').click();
+};
+$('#time_edition input.start').live("click", startWatch);
+$('#time_edition input.stop').live("click", stopWatch);
+/*
+$(".numbers.second").css({"animation-deelay":"<%= duration %>s"});
+$(".numbers.tensecond").css({"animation-deelay":"<%= duration %>s"});
+$(".numbers.minute").css({"animation-deelay":"<%= duration %>s"});
+$(".numbers.tenminute").css({"animation-deelay":"<%= duration %>s"});
+$(".numbers.hour").css({"animation-deelay":"<%= duration %>s"});
+$(".numbers.tenhour").css({"animation-deelay":"<%= duration %>s"});
+
+
+*/

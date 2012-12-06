@@ -1,0 +1,6 @@
+<% if Task.current == nil %>
+  <%= select_tag "task_id", task_option_tag(tasks, tasks[0]) %>
+<% else %>
+  <%= select_tag "task_id", task_option_tag(tasks, Task.current),
+                 {:disabled=> true} %>
+<% end %>

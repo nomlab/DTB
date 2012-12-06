@@ -1,13 +1,10 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   
-  prepend_before_filter :working_task_setup
-  
-  def working_task_setup
-    if session[:task_id]
-      Task.current = Task.find(session[:task_id]) rescue nil
-    else
-      Task.current = nil
-    end
+  before_filter :selector_setup
+
+  def selector_setup
+    @selected_work = Work.current || Work.find_by_id(session[:work_id]) rescue nil
+    @selected_tasks = @selected_work.tasks rescue []
   end
 end

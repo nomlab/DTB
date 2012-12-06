@@ -1,69 +1,65 @@
 <%# -*- coding: utf-8 -*- %>
-
-
 <%= javascript_include_tag "time_edition" %>
 <%= stylesheet_link_tag "timeedition" %>
+
+<%
+  def array_to_cell(array, start)
+     array_size = array.size
+    (array[start-array_size..-1]+array[0..start-1]).uniq.map{|w| "#{w} "}.join.gsub(/\s$/, "")
+  end
+
+  ten = [0,1,2,3,4,5,6,7,8,9]
+  six = [0,1,2,3,4,5]
+
+  if Bookmark.current == nil
+   duration = 0
+  else
+    duration = (Time.now - Bookmark.current.created_at).to_i
+  end
+%>
+<!-- 
+     style="animation-delay:~~~" は，
+     ページ遷移時やタブを閉じた場合にもストップウォッチの表示をリセットしないための記述
+     jQueryでCSS書き換えてもアニメーションに反映されず，
+     css.erbで設定しようとしてもnot modifiedで更新できないので，
+     ここに無理矢理突っ込んだ．
+-->
 <div class="container">
   <input id="start" name="controls" type="radio" />
   <input id="stop" name="controls" type="radio" />
   <div class="timer">
     <div class="cell">
-      <div class="numbers tenhour moveten">0 1 2 3 4 5 6 7 8 9</div>
+      <div class="numbers tenhour moveten" style="animation-delay: <%= -(duration%360000) %>s">0 1 2 3 4 5 6 7 8 9</div>
     </div>
     <div class="cell">
-      <div class="numbers hour moveten">0 1 2 3 4 5 6 7 8 9</div>
+      <div class="numbers hour moveten" style="animation-delay: <%= -(duration%36000) %>s">0 1 2 3 4 5 6 7 8 9</div>
     </div>
     <div class="cell divider"><div class="numbers">:</div></div>
     <div class="cell">
-      <div class="numbers tenminute movesix">0 1 2 3 4 5 6</div>
+      <div class="numbers tenminute movesix" style="animation-delay: <%= -(duration%3600) %>s">0 1 2 3 4 5</div>
     </div>
     <div class="cell">
-      <div class="numbers minute moveten">0 1 2 3 4 5 6 7 8 9</div>
+      <div class="numbers minute moveten" style="animation-delay: <%= -(duration%600) %>s">0 1 2 3 4 5 6 7 8 9</div>
     </div>
     <div class="cell divider"><div class="numbers">:</div></div>
     <div class="cell">
-      <div class="numbers tensecond movesix">0 1 2 3 4 5 6</div>
+      <div class="numbers tensecond movesix" style="animation-delay: <%= -(duration%60) %>s">0 1 2 3 4 5</div>
     </div>
     <div class="cell">
-      <div class="numbers second moveten">0 1 2 3 4 5 6 7 8 9</div>
+      <div class="numbers second moveten" style="animation-delay: <%= -(duration%10) %>s">0 1 2 3 4 5 6 7 8 9</div>
     </div>
   </div>
-
-  <% if Task.current != nil
-       work_option_tag = options_for_select(Work.options_for_select, Work.current.id).html_safe
-     else
-       work_option_tag = options_for_select(Task.options_for_select).html_safe
-     end %>
-
-  <div id="selector">
-    <div id="work_selector">
-      <% if Work.current == nil %>
-        <%= form_tag(:controller => "desktop_bookmark", :action => "start") do %>
-          <%= select_tag("work", work_option_tag) %>
-        <% end %>
-      <% else %>
-        <%= select_tag("work", work_option_tag, {:disabled => true}) %>
-      <% end %>
-    </div>
-    <div id="task_selector">
-      <%= select_tag("task", work_option_tag) %>
-    </div>
-  </div>
-  <% status = Task.current ? "stop" : "start" %>
-  <div class="button">
-    <label for="<%= status %>" id="start"></label>
-  </div>
+  <%= render :partial => "desktop_bookmark/selector", :locals => {:work => @selected_work, :tasks => @selected_tasks} %>
 </div>
 
 <!-- Lets load up prefixfree first -->
 <script src="http://thecodeplayer.com/uploads/js/prefixfree.js" type="text/javascript"></script>
 <!-- You can download it from http://leaverou.github.com/prefixfree/ -->
 
-<% if Task.current == nil %>
-<% else %>
-  <%= form_tag(:controller => "tasks", :action => "stop") do %>
-    <%= select_tag("task", work_option_tag, {:disabled => true}) %>
-<br>
-    <%= text_area "bookmark", "description", :cols => 20, :rows => 3 %>
-  <% end %>
+<% if Bookmark.current != nil %>
+<script type="text/javascript">
+    $(document).ready(function(){
+	$('#time_edition input:radio#start').click();
+    });
+</script>
 <% end %>

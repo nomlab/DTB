@@ -5,25 +5,11 @@ class DesktopBookmarkController < ApplicationController
   
   require_dependency "lib/windows"
   
-  def init
-    reset_accesslog
-    bm = Bookmark.create(:visible => false, :start_time => DateTime.now)
-    dirname = bm.created_at.strftime("%Y%m%d%H%M")
-    dir = WindowsLibs.make_path(["app", "assets","images", "thumbnail", dirname])
-    `mkdir #{dir}`
-    
-#    BookmarksWebHistories.create(:bookmark => bm, :thumbnail_dir => dirname)
-#    BookmarksFileHistories.create(:bookmark => bm)
-    
-    if params[:id]
-      redirect_to :controller => "bookmarks", :action => 'show', :id => params[:id]
-    else
-      redirect_to :action => 'index'
-    end
-  end
-  
   def index
+    @work = Work.new
     @works = Work.paginate(:page => params[:page], :per_page => 8, :order => "id DESC")
+    @selected_work = Work.current || Work.find_by_id(session[:work_id])
+    @selected_tasks = @selected_work.tasks rescue []
     
     respond_to do |format|
       format.html # index.html.erb
@@ -38,14 +24,33 @@ class DesktopBookmarkController < ApplicationController
   end
 
   def start
-    Work.current = params[:work]
-    Task.current = params[:task]
-    render
+    Work.current = Work.find params[:work_id]
+    Task.current = Task.find params[:task_id]
+
+    @selected_work = Work.current
+    @selected_tasks = @selected_work.tasks
+    bookmark = Bookmark.create(:task_id => params[:task_id],
+                               :thumbnail => Time.now.strftime("%Y%m%d%H%M%S"))
+    Bookmark.current = bookmark
+    respond_to do |format|
+      format.js
+    end
   end
   
   def stop
+    # たぶんこれで動く．うごいてるはず
+    Bookmark.current.update_attributes(:comment => params[:bookmark][:comment])
+    reset_accesslog
+    
     Work.current = nil
     Task.current = nil
+    Bookmark.current = nil
+
+    @selected_work = nil
+    @selected_tasks = []
+    respond_to do |format|
+      format.js
+    end
   end
   
   private

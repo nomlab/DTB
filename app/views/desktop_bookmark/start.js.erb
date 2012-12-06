@@ -1,0 +1,5 @@
+/* -*- coding:utf-8 -*- */
+$('#selector').html(
+    "<%=j render :partial => "desktop_bookmark/selector",
+                 :locals => {:work => @selected_work, :tasks => @selected_tasks} %>"
+);

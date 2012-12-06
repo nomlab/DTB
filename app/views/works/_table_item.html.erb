@@ -1,0 +1,22 @@
+<%# -*- coding: utf-8 -*- %>
+<tr class="item">
+  <td class="check">
+    <a></a>
+  </td>
+  <td class="name">
+    <%= link_to work.name, :controller => "works", :action => "show", :id => work.id %>
+  </td>
+  <td class="deadline <%= work.level %>">
+    <%= if work.deadline == nil
+	  "締切未設定"
+	else
+	  work.deadline.strftime("%Y/%m/%d (%a)") + "(残り#{work.deadline.yday - Time.now.yday}日)"
+	end %>
+  </td>
+  <td class="edit">
+    <%= link_to "", :controller => "works", :action => "edit", :id => work.id %>
+  </td>
+  <td class="delete">
+<%= link_to "", {:controller => "works", :action => "destroy", :work_id => work.id}, :confirm => "本当に削除してよろしいですか？" %>
+  </td>
+</tr>

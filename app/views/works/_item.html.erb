@@ -1,0 +1,21 @@
+<%# -*- coding: utf-8 -*- %>
+<div class="work_item">
+  <div class="name"><%= link_to work.name, :controller => "works", :action => "show", :id => work.id %></div>
+  <div class="dates">
+    <div class="registed_at">
+      登録： <%= work.created_at.strftime("%Y/%m/%d (%a) %H:%M") %></div>
+    <div class="deadline">
+      締切： <%= work.deadline.strftime("%Y/%m/%d (%a) %H:%M") %></div>
+  </div>
+  <div class="reset"></div>
+  <div class="description"><%= work.description.gsub(/\r?\n/, "<br>").html_safe %></div>
+  <div class="commands">
+    <%= link_to image_tag("edit.gif", :title => "仕事情報編集"),
+          :controller => "works", :action => "edit",
+          :id => work.id %>
+    <%= link_to image_destroy("仕事削除"),
+	  {:controller => "works", :action => "destroy", :work_id => work.id},
+          :confirm => '本当に削除してよろしいですか?', :method => :get %>
+    あと完了とか．
+  </div>
+</div>
