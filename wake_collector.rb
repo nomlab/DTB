@@ -1,55 +1,47 @@
+# -*- coding: utf-8 -*-
 require "uri"
 require "./lib/windows"
 require "./lib/referer_filter"
+require "./config/environment"
 
-$current_task = nil
+$current_bookmark = nil
+$current_task     = nil
+$current_work     = nil
 
+ROOT = Rails.root.to_s.gsub(/\//, "\\")
 
-THUMBNAIL_DIR = WindowsLibs.make_path(["app","assets","images","thumbnail"]) # "app\\assets\\images\\thumbnail"
-LOG_FILE = WindowsLibs.make_path(["","squid","var","logs","access.log"])  # "\\squid\\var\\logs\\access.log"
+THUMBNAIL_DIR = WindowsLibs.make_path([ROOT,"app","assets","images","thumbnail"])
+PROXY_LOG = WindowsLibs.make_path(["","squid","var","logs","access.log"])
+DEBUGFILE = "debug.txt"
 ZERO = "0000"
 
-def thumbnail_dir(bookmark)
-  return WindowsLibs.make_path(["thumbnail", bookmark.start_time.strftime("%Y%m%d%H%M")]) # "thumbnail\\201204011200"
-end
-
-
-# ŒvZ‹@ŠO•”‚Ì—š—ğûW
 def collect_web_history
-  bookmark = Bookmark.last
-  
-  histories_old = []
-  bookmark.web_histories.select(:path).each do |wh|
-    histories_old << wh.path
-  end
+  histories_old = $current_bookmark.web_histories.map{|wh| wh.path}
   count = histories_old.size
   
-  histories = selection_data(referer_filter(LOG_FILE, 0.0))
-  
+  histories = selection_data(referer_filter(PROXY_LOG, 0.0))
+  print "there are #{(histories-histories_old).count} new histories\n"
   (histories - histories_old).each do |h|
     number = (ZERO+count.to_s)[-4..-1]
-    thumbnail_path = WindowsLibs.make_path([THUMBNAIL_DIR, bookmark.thumbnail, "thumbnail_#{number}"])
+    thumbnail_path = WindowsLibs.make_path([THUMBNAIL_DIR, $current_bookmark.thumbnail, "thumbnail_#{number}"])
     WindowsLibs.screen_capture(thumbnail_path, h)
     
     history = WebHistory.create(:path => h)
-    Timeline.create(:bookmark => bookmark, :history => history, :thumbnail => number)
+    Timeline.create(:bookmark => $current_bookmark,
+                    :history => history,
+                    :thumbnail => number)
     
     count += 1
   end
 end
 
-# ŒvZ‹@“à•”‚Ì—š—ğûW
 def collect_file_history(last_collect)
-  histories_old = []
-  bookmark = Bookmark.last
-  bookmark.file_histories.select(:path).each do |fh|
-    histories_old << fh.path
-  end
+  histories_old = $current_bookmark.filehistories.map{|fh| fh.path}
   histories = compare_file_access_log(last_collect)
   
   (histories - histories_old).each do |h|
     history = FileHistory.create(:path => h, :title => h.split("\\").last)
-    Timeline.create(:bookmark => bookmark, :history => history)
+    Timeline.create(:bookmark => $current_bookmark, :history => history)
   end
 end
 
@@ -62,23 +54,23 @@ end
 ##  main
 ###
 
-#ƒƒOƒtƒ@ƒCƒ‹‚Ìİ’è(o—Í“¯Šú‚ğ^‚É)
+## ãƒ­ã‚°ãƒ•ã‚¡ã‚¤ãƒ«ã®è¨­å®š(å‡ºåŠ›åŒæœŸã‚’çœŸã«)
 
-browselog = File.open(LOG_FILE, "w")
+browselog = File.open(PROXY_LOG, "w")
 browselog.sync = true
 
 $t1 = Thread.new do
-#  `#{WindowsLibs.make_path(["","squid","sbin","squid.exe"])}`
   while true
-    if $current_task != nil
+    if $current_bookmark != nil
       print "--- #{Time.now} ---\n"
       last_collect = Time.now
       sleep 60
-      #TimeLine.create(:start_time => last_collect, :end_time => Time.now)
+
       collect_web_history
       print "collect web_history successfuly\n"
       collect_file_history(last_collect)
       print "collect file_history successfuly\n"
+      $current_bookmark.commit
     else
       sleep 60
     end
