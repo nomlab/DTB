@@ -8,7 +8,10 @@ DesktopBookmark::Application.routes.draw do
     post "work/select", :to => "works#select"
     post "start", :to => "desktop_bookmark#start"
     post "stop",  :to => "desktop_bookmark#stop"
-    
+
+    # old interface for evaluation
+    match "task/list", :to => "tasks#list"
+
     resources :work, :controller => :works do
       #desktop_bookmark/work/:work_id/destroy
       get "destroy", :to => "works#destroy"

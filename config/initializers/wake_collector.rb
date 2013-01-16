@@ -60,6 +60,7 @@ browselog.sync = true
 
 # まずHistory呼んでおかないとWebHistoryとFileHistory呼んだときにエラー吐く．
 # そのエラーが画面に出力されないせいで気づきにくい．気がする．
+# Historyの中で両方定義すれば問題ないんだろうけど，ルーティング面倒になりそうな
 History 
 
 $t1 = Thread.new do

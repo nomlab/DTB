@@ -1,0 +1,9 @@
+<%# -*- coding: utf-8 -*-  %>
+<%= stylesheet_link_tag "tasks" %>
+<h2>作業一覧</h2>
+
+<div id="task_list">
+  <% @tasks.each do |task| %>
+    <%= render :partial => "tasks/task_item", :locals => {:task => task} %>
+  <% end %>
+</div>

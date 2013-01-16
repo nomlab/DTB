@@ -2,7 +2,7 @@ class CreateModels < ActiveRecord::Migration
   def change
     create_table :tasks do |t|
       t.string :name
-      t.text :description
+      t.text :description, :default => ""
       t.text :keyword
       t.datetime :deadline
       t.boolean :status
@@ -13,7 +13,7 @@ class CreateModels < ActiveRecord::Migration
     create_table :bookmarks do |t|
       t.string :name
       t.string :keyword
-      t.text :comment
+      t.text :comment, :default => ""
       t.datetime :start_time
       t.datetime :end_time
       t.string :thumbnail

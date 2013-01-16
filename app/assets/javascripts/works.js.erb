@@ -1,0 +1,11 @@
+/* -*- coding: utf-8 -*- */
+$(document).ready(function(){
+  $(" .name").click(function(){
+    $(this).siblings().slideToggle(1000);
+  });
+
+  $(".work_list").treeview();
+  $("ul ul .collapsable-hitarea").toggleClass("expandable-hitarea");
+//  $("ul ul .expandable-hitarea").hide();
+//  $("ul ul").hide();
+});

@@ -31,8 +31,9 @@ class Task < ActiveRecord::Base
 
   def create_directory
     Dir::chdir("repository"){
-      Dir::mkdir "#{self.work.name}/#{self.name}"
-      dummyfile = "#{self.work.name}/#{self.name}/dummy"
+      dir_name = self.work.bread_cramb.map{|w|  w.name }.join("/") + "/#{self.name}"
+      Dir::mkdir dir_name
+      dummyfile = "#{dir_name}/dummy"
       FileUtils.touch dummyfile
       repo = Grit::Repo.new "."
       new_blob = Grit::Blob.create(repo, {:name => dummyfile, :data => File.read(dummyfile)})

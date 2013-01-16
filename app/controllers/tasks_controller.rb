@@ -3,6 +3,11 @@ require "./lib/windows"
 class TasksController < ApplicationController
   def index
   end
+
+  # 仕事および作業導入前のUIで，作業の一覧を表示
+  def list
+    @tasks = Task.all
+  end
   
   def new
     @task = Task.new
@@ -20,7 +25,7 @@ class TasksController < ApplicationController
       else
         flash[:notice] = "作業の登録に失敗しました．"
         format.html { render :action => "new" }
-        format.xml { render :xml => @taskk.errors, :status => :unprocessable_entity }
+        format.xml { render :xml => @task.errors, :status => :unprocessable_entity }
       end
     end
   end

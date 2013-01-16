@@ -7,7 +7,7 @@ class DesktopBookmarkController < ApplicationController
   
   def index
     @work = Work.new
-    @works = Work.paginate(:page => params[:page], :per_page => 8, :order => "id DESC")
+    @works = Work.where(:parent_id => nil).paginate(:page => params[:page], :per_page => 10)
     @selected_work = Work.current || Work.find_by_id(session[:work_id])
     @selected_tasks = @selected_work.tasks rescue []
     

@@ -1,14 +1,14 @@
 <%# -*- coding: utf-8 -*-  %>
 <%= stylesheet_link_tag "works" %>
+<%= stylesheet_link_tag "jquery.treeview.css" %>
+<%= javascript_include_tag "jquery.treeview.js" %>
 <h2>仕事一覧</h2>
 
-<table id="work_table">
-  <col class="check">
-  <col class="name">
-  <col class="deadline">
-  <col class="edit">
-  <col class="delete">
+<% depth = 0 %>
+<ul class="work_list depth_<%= depth %> filetree" style="margin-top: 20px;">
   <% works.each do |work| %>
-    <%= render :partial => "works/table_item", :locals => {:work => work} %>
+    <%= render :partial => "works/list_item", :locals => {:work => work, :depth => depth+1} %>
   <% end %>
-</table>
+</ul>
+
+<%= will_paginate works, :previous_label => "<", :next_label => ">" %>
