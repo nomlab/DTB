@@ -5,7 +5,7 @@
     <%= link_to name, :controller => "bookmarks", :action => "show", :task_id => bookmark.task_id, :id => bookmark.id %>
   </td>
   <td class="duration"><nobr>
-      (<%= bookmark.created_at.strftime("%Y/%m/%d %H:%M") %> 〜 <%= bookmark.updated_at != nil ? bookmark.updated_at.strftime("%Y/%m/%d %H:%M") : "" %>)
+      (<%= bookmark.start_time.strftime("%Y/%m/%d %H:%M") %> 〜 <%= bookmark.end_time != nil ? bookmark.end_time.strftime("%Y/%m/%d %H:%M") : "" %>)
   </nobr></td>
   <td class="operations">
     <%= link_to image_tag("edit.gif", :title => "作業情報編集"), :controller => "bookmarks", :action => "edit", :task_id => bookmark.task_id, :id => bookmark.id %>

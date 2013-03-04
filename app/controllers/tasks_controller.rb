@@ -63,6 +63,22 @@ class TasksController < ApplicationController
       end
     end
   end
+
+  def finish
+    @task = Task.find(params[:task_id])
+    @task.finish
+    @depth = params[:depth].to_i
+    respond_to do |format|
+      if @task.finished?
+        flash[:notice] = "successfuly finished."
+      else
+        flash[:error] = "failed to finish."
+      end
+      format.js
+      format.html {redirect_to :controller => "desktop_bookmark"}
+#      format.xml { head :ok }
+    end
+  end
   
   def destroy
     @task = Task.find_by_id(params[:task_id])

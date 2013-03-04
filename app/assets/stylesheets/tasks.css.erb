@@ -9,7 +9,7 @@
     margin-bottom: 10px;
 }
 
-.name {
+.task_item .name {
     height: 28px;
     font-size: 18px;
     float:left;
@@ -17,24 +17,24 @@
     line-height: 28px;
 }
 
-.dates {
+.task_item .dates {
     float:right;
     height: 30px;
 }
 
-.reset {
+.task_item .reset {
     clear: both;
 }
 
-.registed_at {
+.task_item .registed_at {
     
 }
 
-.deadline {
+.task_item .deadline {
     
 }
 
-.description {
+.task_item .description {
     margin-top: 10px;
     width: 62%;
     height: 34px;
@@ -43,10 +43,54 @@
     float:left;
 }
 
-.commands {
+.task_item .commands {
     margin-top:10px;
     margin-left: 3%;
     height: 30px;
     width: 35%;
     float:right;
+}
+
+.task_items {
+    display: inline_block;
+    margin: 5px 0px 5px 0px;
+    width: 100%;
+}
+
+.task_items div {
+    display: inline_block;
+    _display: inline;
+}
+
+
+span.name {
+    max-width: 40%;
+    min-width: 40%;
+}
+
+span.duration {
+    max-width: 40%;
+    min-width: 40%;
+}
+
+span.continue {
+    max-width: 20%;
+    min-width: 20%;
+}
+
+/* for table style */
+
+table#task_table {
+    font-size: small;
+}
+
+table#task_table tr {
+    border: 0px;
+    border-bottom: 1px solid gray;
+    margin: 2px 0px;
+}
+
+table#task_table tr:first-child {
+    font-style: none;
+    border-bottom: 1px solid red;
 }

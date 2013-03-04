@@ -1,11 +1,13 @@
 /* -*- coding: utf-8 -*- */
+
 $(document).ready(function(){
-  $(" .name").click(function(){
-    $(this).siblings().slideToggle(1000);
+  $(" .toggle").click(function(){
+    $(this).parent().siblings().toggle(0);
+    var isExpandable = $(this).hasClass("expandable");
+    $(this).toggleClass("collapsable", isExpandable);
+    $(this).toggleClass("expandable", !isExpandable)
   });
 
-  $(".work_list").treeview();
-  $("ul ul .collapsable-hitarea").toggleClass("expandable-hitarea");
-//  $("ul ul .expandable-hitarea").hide();
-//  $("ul ul").hide();
+//  $(".work_list").treeview();
+//  $("ul ul .collapsable-hitarea").toggleClass("expandable-hitarea");
 });

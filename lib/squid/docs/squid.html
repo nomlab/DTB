@@ -1,0 +1,245 @@
+Content-type: text/html
+
+<HTML><HEAD><TITLE>Manpage of squid</TITLE>
+</HEAD><BODY>
+<H1>squid</H1>
+Section: Maintenance Commands (8)<BR>Updated: 2006-05-29<BR><A HREF="#index">Index</A>
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+squid - proxy caching server
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<B>squid</B>
+
+[
+<B>-dhirsvzCDFINRVYX</B>
+
+] [
+<B>-l</B><I> facility</I>
+
+] [
+<B>-f</B><I> config-file</I>
+
+] [
+-[
+<B>au</B>
+
+] 
+<I>port</I>
+
+] [
+<B>-k  signal</B>
+
+] [
+<B>-n</B><I> service-name</I>
+
+] [
+<B>-O</B><I> cmd-line</I>
+
+]
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+<B>squid</B>
+
+is a high-performance proxy caching server for web clients,
+supporting FTP, gopher, and HTTP data objects.  Unlike traditional
+caching software, 
+<B>squid</B>
+
+handles all requests in a single, non-blocking, I/O-driven process.
+<P>
+
+<B>squid</B>
+
+keeps meta data and especially hot objects cached in RAM, 
+caches DNS lookups, supports non-blocking DNS lookups, and implements
+negative caching of failed requests.
+<P>
+
+<B>squid</B>
+
+supports SSL, extensive access controls, and full request 
+logging.  By using the lightweight Internet Cache Protocol, 
+<B>squid</B>
+
+caches can be arranged in a hierarchy or mesh for additional 
+bandwidth savings.
+<P>
+
+<B>squid</B>
+
+consists of a main server program squid, a Domain Name System
+lookup program dnsserver, some optional programs for rewriting
+requests and performing authentication, and some management and client
+tools.  When squid starts up, it spawns a configurable number of
+dnsserver processes, each of which can perform a single, blocking
+Domain Name System (DNS) lookup.  This reduces the amount of time the
+cache waits for DNS lookups.
+<P>
+
+<B>squid</B>
+
+is derived from the ARPA-funded Harvest Project 
+<A HREF="http://harvest.cs.colorado.edu/">http://harvest.cs.colorado.edu/</A>
+<P>
+
+This manual page only lists the command line arguments.  For details
+on how to configure
+<B>squid</B>
+
+see the file 
+<B>c:/squid/etc/squid.conf,</B>
+
+the Squid FAQ and the documentation at the
+<B>squid</B>
+
+home page <A HREF="http://www.squid-cache.org">http://www.squid-cache.org</A>
+<P>
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>OPTIONS</H2>
+
+<DL COMPACT>
+<DT>-d level<DD>
+Write debugging to stderr also.
+<DT>-f file<DD>
+Use the given config-file instead of
+<I>c:/squid/etc/squid.conf</I>
+
+<DT>-h<DD>
+Print help message.
+<DT>-i<DD>
+Install as a Windows Service (see -n option).
+<DT>-k reconfigure | rotate | shutdown | interrupt | kill | debug | check | parse<DD>
+Parse configuration file, then send signal to running copy 
+(except -k parse) and exit.
+<DT>-n name<DD>
+Specify Windows Service name to use for service operations, default is: 
+<B>Squid</B>
+
+<DT>-r<DD>
+Remove a Windows Service (see -n option).
+<DT>-s<DD>
+Enable logging to syslog.
+<DT>-l facility<DD>
+Use specified syslog facility. implies -s
+<DT>-u port<DD>
+Specify ICP port number (default: 3130), disable with 0.
+<DT>-v<DD>
+Print version.
+<DT>-z<DD>
+Create swap directories
+<DT>-C<DD>
+Do not catch fatal signals.
+<DT>-D<DD>
+Disable initial DNS tests.
+<DT>-F<DD>
+Don't serve any requests until store is rebuilt.
+<DT>-I<DD>
+Override first HTTP port with the bound socket passed in on standard input.
+<DT>-N<DD>
+No daemon mode.
+<DT>-O options<DD>
+Set Windows Service Command line options in Registry.
+<DT>-R<DD>
+Do not set REUSEADDR on port.
+<DT>-X<DD>
+Force full debugging.
+<DT>-Y<DD>
+Only return UDP_HIT or UDP_MISS_NOFETCH during fast reload.   
+</DL>
+<A NAME="lbAF">&nbsp;</A>
+<H2>FILES</H2>
+
+<I>c:/squid/etc/squid.conf</I>
+
+<DL COMPACT><DT><DD>
+The main configuration file.  You must initially make 
+changes to this file for 
+<B>squid</B>
+
+to work.  For example, the default configuration does not 
+allow access from any browser.
+</DL>
+
+<P>
+<I>c:/squid/etc/squid.conf.default</I>
+
+<DL COMPACT><DT><DD>
+Reference copy of the configuration file. Always kept up to date with
+the version of Squid you are using. Use this to look up configuration
+syntax after upgrading.
+</DL>
+
+<P>
+<I>c:/squid/etc/mime.conf (mime_table)</I>
+
+<DL COMPACT><DT><DD>
+MIME type mappings for FTP gatewaying
+</DL>
+
+<P>
+<I>c:/squid/share/errors/English (error_directory)</I>
+
+<DL COMPACT><DT><DD>
+Error page templates
+</DL>
+
+<P>
+<A NAME="lbAG">&nbsp;</A>
+<H2>SEE ALSO</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+cachemgr.cgi">cachemgr.cgi</A></B>(8), 
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+ncsa_auth">ncsa_auth</A></B>(8), 
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+pam_auth">pam_auth</A></B>(8), 
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+squid_ldap_auth">squid_ldap_auth</A></B>(8), 
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+squid_ldap_group">squid_ldap_group</A></B>(8), 
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+squid_session">squid_session</A></B>(8), 
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+squid_unix_group">squid_unix_group</A></B>(8), 
+
+<BR>
+
+<B>The Squid FAQ</B>
+
+<P>
+<P>
+<P>
+
+
+
+
+
+
+<P>
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">OPTIONS</A><DD>
+<DT><A HREF="#lbAF">FILES</A><DD>
+<DT><A HREF="#lbAG">SEE ALSO</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time:  GMT, March 13, 2010
+</BODY>
+</HTML>

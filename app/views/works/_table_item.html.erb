@@ -1,10 +1,15 @@
 <%# -*- coding: utf-8 -*- %>
-<tr class="item">
-  <td class="check">
-    <a></a>
-  </td>
-  <td class="name">
-    <%= link_to work.name, :controller => "works", :action => "show", :id => work.id %>
+
+<tr class="item work depth<%= depth %>">
+  <td class="tree">
+    <div class="dummy" style="min-width: <%= 30*depth %>px;"></div>
+    <div class="expandable">
+    </div>
+    <div class="check">
+    </div>
+    <div class="name">
+      <%= link_to work.name, :controller => "works", :action => "show", :id => work.id %>
+    </div>
   </td>
   <td class="deadline <%= work.level %>">
     <%= if work.deadline == nil
@@ -17,6 +22,17 @@
     <%= link_to "", :controller => "works", :action => "edit", :id => work.id %>
   </td>
   <td class="delete">
-<%= link_to "", {:controller => "works", :action => "destroy", :work_id => work.id}, :confirm => "本当に削除してよろしいですか？" %>
+    <%= link_to "", {:controller => "works", :action => "destroy", :work_id => work.id}, :confirm => "本当に削除してよろしいですか？" %>
   </td>
 </tr>
+
+<% children = (work.children + work.tasks).sort{|a, b| a.created_at <=> b.created_at } %>
+<% if children != [] %>
+  <% children.each do |item| %>
+    <% if item.class.name == "Work" %>
+      <%= render :partial => "works/table_item", :locals => {:work => item, :depth => depth+1} %>
+    <% else %>
+      <%= render :partial => "tasks/table_item", :locals => {:task => item, :depth => depth+1} %>
+    <% end %>
+  <% end %>
+<% end %>

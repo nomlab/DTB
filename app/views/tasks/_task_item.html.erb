@@ -1,22 +1,32 @@
 <%# -*- coding: utf-8 -*- %>
-<div class="task_item">
-  <div class="name">
-    <%= link_to task.name, :controller => "tasks", :action => "show",
-          :work_id =>task.work.id, :id => task.id %></div>
-  <div class="dates">
-    <div class="registed_at">
-      登録：<%= task.created_at.strftime("%Y/%m/%d(%a) %H:%M") %></div>
-    <div class="deadline">
-      締切：<%= task.deadline.strftime("%Y/%m/%d(%a) %H:%M") rescue "未設定" %></div></div>
-  <div class="description">
-    <%= task.description.gsub(/\r?\n/, "<br>").html_safe %></div>
-  <div class="commands">
-    <%= link_to image_tag("edit.gif", :title => "作業情報編集"), 
-          :controller => "tasks", :action => "edit",
-          :work_id => task.work.id, :id => task.id %>
-    <%= link_to image_destroy("作業削除"),
-	  {:controller => "tasks", :action => "destroy",
-           :work_id => task.work.id, :task_id => task.id},
-          :confirm => "本当に削除していいですか？", :method => :get %>
-  </div>
-</div>
+<% 
+   time = (task.updated_at - task.created_at).to_i
+   min = 60
+   hour = min*60
+   day = hour*24
+   duration = ""
+
+   if (flag = time/day) != 0
+     duration += "#{flag} day"
+     time %= day
+   end
+   if (flag = time/hour) != 0
+     duration += " #{flag} hour"
+     time %= hour
+   end
+   duration += " #{flag} min"
+   %>
+<tr class="item">
+  <td class="name">
+    <%= link_to task.name, :controller => "tasks", :action => "show", :work_id => task.work.id, :id => task.id %>
+  </td>
+  <td class="duration"><%= task.created_at.strftime("%Y/%m/%d %H:%M") %> - <%= task.updated_at.strftime("%H:%M") %>( <%= duration %> )</td>
+  <td class="continue">
+    <% if task == Task.current %>
+      <%= link_to "中断", :controller => "desktop_bookmark", :action => "stop", :bookmark => {} %>
+    <% else %>
+      <%= link_to "再開", :controller=> "desktop_bookmark", :action => "start", :work_id => task.work.id, :task_id => task.id %>
+    <% end %>
+  </td>
+</tr>
+

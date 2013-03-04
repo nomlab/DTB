@@ -1,0 +1,24 @@
+<%# -*- coding: utf-8 -*- %>
+
+<tr class="item task depth<%= depth%>">
+  <td class="tree">
+    <div class="dummy" style="min-width: <%= 30*(depth+1) %>px;"></div>
+    <div class="check"></div>
+    <div class="name">
+      <%= link_to task.name, :action => "show", :work_id => task.work.id, :id => task.id %>
+    </div>
+  </td>
+  <td class="deadline <%= task.level %>">
+    <%= if task.deadline == nil
+	  "締切未設定"
+	else
+	  task.deadline.strftime("%Y/%m/%d (%a)") + "(残り#{task.deadline.yday - Time.now.yday}日)"
+	end %>
+  </td>
+  <td class="edit">
+    <%= link_to "", :controller => "tasks", :action => "edit", :work_id => task.work.id, :id => task.id %>
+  </td>
+  <td class="delete">
+    <%= link_to "", {:controller => "tasks", :action => "destroy", :work_id => task.work.id, :task_id => task.id}, :confirm => "本当に削除してよろしいですか？" %>
+  </td>
+</tr>

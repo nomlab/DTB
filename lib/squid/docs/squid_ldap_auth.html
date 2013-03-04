@@ -1,0 +1,306 @@
+Content-type: text/html
+
+<HTML><HEAD><TITLE>Manpage of squid_ldap_auth</TITLE>
+</HEAD><BODY>
+<H1>squid_ldap_auth</H1>
+Section: Maintenance Commands (8)<BR>Updated: 14 January 2005<BR><A HREF="#index">Index</A>
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+squid_ldap_auth - Squid LDAP authentication helper
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<B>squid_ldap_auth</B>
+
+-b &quot;base DN&quot; [-u attribute] [options] [ldap_server_name[:port]|URI]...
+<BR>
+
+<B>squid_ldap_auth</B>
+
+-b &quot;base DN&quot; -f &quot;LDAP search filter&quot; [options] [ldap_server_name[:port]|URI]...
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+This helper allows Squid to connect to a LDAP directory to
+validate the user name and password of Basic HTTP authentication.
+LDAP options are specified as parameters on the command line,
+while the username(s) and password(s) to be checked against the
+LDAP directory are specified on subsequent lines of input to the
+helper, one username/password pair per line separated by a space.
+
+As expected by the basic authentication construct of Squid, after
+specifying a username and password followed by a new line, this
+helper will produce either OK or ERR on the following line
+to show if the specified credentials are correct according to
+the LDAP directory.
+
+The program has two major modes of operation. In the default mode
+of operation the users DN is constructed using the base DN and
+user attribute. In the other mode of operation a search
+filter is used to locate valid user DN's below the base DN.
+<DL COMPACT>
+<DT><B>-b </B><I>basedn </I><B>(REQUIRED)</B>
+
+<DD>
+Specifies the base DN under which the users are located.
+<DT><B>-f </B><I>filter</I>
+
+<DD>
+LDAP search filter to locate the user DN. Required if the users
+are in a hierarchy below the base DN, or if the login name is
+not what builds the user specific part of the users DN.
+<DT><DD>
+The search filter can contain up to 15 occurrences of %s
+which will be replaced by the username, as in &quot;uid=%s&quot; for
+RFC2037 directories. For a detailed description of LDAP search
+filter syntax see RFC2254.
+<DT><B>-u </B><I>userattr</I>
+
+<DD>
+Specifies the name of the DN attribute that contains the username/login.
+Combined with the base DN to construct the users DN when no search filter
+is specified (-f option). Defaults to 'uid'
+<DT><DD>
+Note: This can only be done if all your users are located directly under
+the same position in the LDAP tree and the login name is used for naming
+each user object. If your LDAP tree does not match these criterias or if
+you want to filter who are valid users then you need to use a search filter
+to search for your users DN (-f option).
+<DT><B>-U </B><I>passwordattr</I>
+
+<DD>
+Use ldap_compare instead of ldap_simple_bind to verify the users password.
+passwordattr is the LDAP attribute storing the users password.
+<DT><B>-s </B><I>base|one|sub</I>
+
+<DD>
+search scope when performing user DN searches specified
+by the -f option. Defaults to 'sub'.
+<DT><DD>
+<B>base</B>
+
+object only,
+<B>one</B>
+
+level below the base object or
+<B>sub</B>tree
+
+below the base object
+<DT><B>-D </B><I>binddn </I><B>-w </B><I>password</I>
+
+<DD>
+The DN and password to bind as while performing searches. Required by the
+<B>-f</B>
+
+flag if the directory does not allow anonymous searches.
+<DT><DD>
+As the password needs to be printed in plain text in your Squid configuration
+it is strongly recommended to use a account with minimal associated privileges.
+This to limit the damage in case someone could get hold of a copy of your
+Squid configuration file.
+<DT><B>-D </B><I>binddn </I><B>-W </B><I>secretfile </I>
+
+<DD>
+The DN and the name of a file containing the password
+to bind as while performing searches. 
+<DT><DD>
+Less insecure version of the former parameter pair with two advantages:
+The password does not occur in the process listing, 
+and the password is not being compromised if someone gets the squid 
+configuration file without getting the secretfile.
+<DT><B>-P</B>
+
+<DD>
+Use a persistent LDAP connection. Normally the LDAP connection
+is only open while validating a username to preserve resources
+at the LDAP server. This option causes the LDAP connection to
+be kept open, allowing it to be reused for further user
+validations. Recommended for larger installations.
+<DT><B>-O</B>
+
+<DD>
+Only bind once per LDAP connection. Some LDAP servers do not
+allow re-binding as another user after a successful ldap_bind.
+The use of this option always opens a new connection for each
+login attempt. If combined with the -P option for persistent
+LDAP connection then the connection used for searching for the
+user DN is kept persistent but a new connection is opened
+to verify each users password once the DN is found.
+<DT><B>-R</B>
+
+<DD>
+do not follow referrals
+<DT><B>-a </B><I>never|always|search|find</I>
+
+<DD>
+when to dereference aliases. Defaults to 'never'
+<DT><DD>
+<B>never</B>
+
+dereference aliases (default),
+<B>always</B>
+
+dereference aliases, only while
+<B>search</B>ing
+
+or only to
+<B>find</B>
+
+the base object
+<DT><B>-H</B><I> ldapuri</I>
+
+<DD>
+Specity the LDAP server to connect to by LDAP URI (requires OpenLDAP libraries).
+Servers can also be specified last on the command line.
+<DT><B>-h</B><I> ldapserver</I>
+
+<DD>
+Specify the LDAP server to connect to. Servers can also be specified last
+on the command line.
+<DT><B>-p</B><I> ldapport</I>
+
+<DD>
+Specify an alternate TCP port where the ldap server is listening if
+other than the default LDAP port 389. Can also be specified within the
+server specificiation by using servername:port syntax.
+<DT><B>-v</B><I> 2|3</I>
+
+<DD>
+LDAP protocol version. Defaults to 2 if not specified.
+<DT><B>-Z</B>
+
+<DD>
+Use TLS encryption
+<DT><B>-S</B><I>certpath</I>
+
+<DD>
+Enable LDAP over SSL (requires Netscape LDAP API libraries)
+<DT><B>-c</B><I>connect_timeout</I>
+
+<DD>
+Specify timeout used when connecting to LDAP servers (requires
+Netscape LDAP API libraries)
+<DT><B>-t</B><I>search_timeout</I>
+
+<DD>
+Specify time limit on LDAP search operations
+<DT><B>-d</B>
+
+<DD>
+Debug mode where each step taken will get reported in detail.
+Useful for understanding what goes wrong if the results is
+not what is expected.
+</DL>
+<A NAME="lbAE">&nbsp;</A>
+<H2>EXAMPLES</H2>
+
+For directories using the RFC2307 layout with a single domain, all
+you need to specify is usually the base DN under where your users
+are located and the server name:
+<DL COMPACT>
+<DT><DD>
+squid_ldap_auth -b &quot;ou=people,dc=your,dc=domain&quot; ldapserver
+
+If you have sub-domains then you need to use a search filter approach
+to locate your user DNs as these can no longer be constructed direcly
+from the base DN and login name alone:
+<DT><DD>
+squid_ldap_auth -b &quot;dc=your,dc=domain&quot; -f &quot;uid=%s&quot; ldapserver
+
+And similarily if you only want to allow access to users having a
+specific attribute
+<DT><DD>
+squid_ldap_auth -b &quot;dc=your,dc=domain&quot; -f &quot;(&amp;(uid=%s)(specialattribute=value))&quot; ldapserver
+
+Or if the user attribute of the user DN is &quot;cn&quot; instead of &quot;uid&quot; and
+you do not want to have to search for the users then you could use something
+like the following example for Active Directory:
+<DT><DD>
+squid_ldap_auth -u cn -b &quot;cn=Users,dc=your,dc=domain&quot; ldapserver
+
+If you want to search for the user DN and your directory does not allow
+anonymous searches then you must also use the -D and -w flags to specify
+a user DN and password to log in as to perform the searches, as in the
+following complex Active Directory example
+<DT><DD>
+squid_ldap_auth -P -R -b &quot;dc=your,dc=domain&quot; -D &quot;cn=squid,cn=users,dc=your,dc=domain&quot; -w &quot;secretsquidpassword&quot; -f &quot;(&amp;(userPrincipalName=%s)(objectClass=Person))&quot; activedirectoryserver
+</DL>
+<A NAME="lbAF">&nbsp;</A>
+<H2>NOTES</H2>
+
+When constructing search filters it is strongly recommended to test the filter
+using ldapsearch before you attempt to use squid_ldap_auth. This to verify
+that the filter matches what you expect.
+<A NAME="lbAG">&nbsp;</A>
+<H2>AUTHOR</H2>
+
+This manual page was written by 
+<I>Henrik Nordstrom &lt;<A HREF="mailto:hno@squid-cache.org">hno@squid-cache.org</A>&gt;</I>
+
+
+squid_ldap_auth is written by 
+<I>Glenn Newton &lt;<A HREF="mailto:gnewton@wapiti.cisti.nrc.ca">gnewton@wapiti.cisti.nrc.ca</A>&gt;</I>
+
+and
+<I>Henrik Nordstrom &lt;<A HREF="mailto:hno@squid-cache.org">hno@squid-cache.org</A>&gt;</I>
+
+<A NAME="lbAH">&nbsp;</A>
+<H2>KNOWN ISSUES</H2>
+
+Will crash if other % values than %s is used in -f, or if more than 15 %s
+is used.
+<A NAME="lbAI">&nbsp;</A>
+<H2>QUESTIONS</H2>
+
+Any questions on usage can be sent to 
+<I>Squid Users &lt;<A HREF="mailto:squid-users@squid-cache.org">squid-users@squid-cache.org</A>&gt;</I>,
+
+or to your favorite LDAP list/friend if the question is more related to
+LDAP than Squid.
+<A NAME="lbAJ">&nbsp;</A>
+<H2>REPORTING BUGS</H2>
+
+Report bugs or bug-fixes to
+<I>Squid Bugs &lt;<A HREF="mailto:squid-bugs@squid-cache.org">squid-bugs@squid-cache.org</A>&gt;</I>
+
+or ideas for new improvements to 
+<I>Squid Developers &lt;<A HREF="mailto:squid-dev@squid-cache.org">squid-dev@squid-cache.org</A>&gt;</I>
+
+<A NAME="lbAK">&nbsp;</A>
+<H2>SEE ALSO</H2>
+
+<B>ldapsearch</B>(<B>1</B>),
+
+<BR>
+
+Your favorite LDAP documentation
+<BR>
+
+<B>RFC2254</B> - The String Representation of LDAP Search Filters,
+
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">EXAMPLES</A><DD>
+<DT><A HREF="#lbAF">NOTES</A><DD>
+<DT><A HREF="#lbAG">AUTHOR</A><DD>
+<DT><A HREF="#lbAH">KNOWN ISSUES</A><DD>
+<DT><A HREF="#lbAI">QUESTIONS</A><DD>
+<DT><A HREF="#lbAJ">REPORTING BUGS</A><DD>
+<DT><A HREF="#lbAK">SEE ALSO</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time:  GMT, March 13, 2010
+</BODY>
+</HTML>

@@ -1,0 +1,21 @@
+<%# -*- coding: utf-8 -*-  %>
+<%= stylesheet_link_tag "works" %>
+<h2>仕事一覧</h2>
+
+<table id="work_table">
+  <col class="check">
+  <col class="name">
+  <col class="deadline">
+  <col class="edit">
+  <col class="delete">
+  <% works.each do |work| %>
+    <%= render :partial => "works/table_item", :locals => {:work => work} %>
+  <% end %>
+</table>
+<hr>
+<div id="work_tree">
+  <% works.each do |work| %>
+    <%= render :partial => "works/tree_item", :locals => {:work => work, :depth => 0} %>
+  <% end %>
+</div>
+<%= will_paginate works, :previous_label => "<", :next_label => ">" %>

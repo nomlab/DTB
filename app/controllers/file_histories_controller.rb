@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 class FileHistoriesController < ApplicationController
   require_dependency "lib/windows"
-  
+  History  # おまじない
   def show    
   end
 

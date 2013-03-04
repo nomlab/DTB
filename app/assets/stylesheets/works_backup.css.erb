@@ -1,0 +1,314 @@
+<%# -*- coding: utf-8 -*- %>
+
+a:link {
+    color: white;
+}
+
+a:visited {
+    color: white;
+}
+
+/* for list */
+
+ul.work_list {
+    color: white; 
+    font-weight: bold;
+    width: 100%;
+    background: gray;
+}
+
+ul.work_list .null {
+    border: 0px;
+}
+
+ul.work_list * {
+    width: 100%;
+    line-height: 30px;
+    vertical-align: middle;
+}
+
+ul.work_list li > div {
+    height: 30px;
+    width: 100%;
+    display: inline-block;
+    margin-top: -3px;
+}
+
+ul.work_list li > div ul {
+    height: 30px;
+    width: 100%;
+    list-style-type: none;
+}
+ul.work_list li > div ul.left {
+    float:left;
+    max-width: 65%;
+    overflow: hidden;
+}
+ul.work_list li > div ul.right {
+    float:right;
+    max-width: 208px;
+}
+
+ul.work_list li > div li {
+    float: left;
+    width: 30px;
+    border-right: 1px solid red;
+    max-height: 30px;
+}
+
+ul.work_list .check:before {
+    content: "\2714";
+}
+ul.work_list .expandable:before {
+    content: "＋";
+}
+ul.work_list .collapsable:before {
+    content: "―";
+}
+ul.work_list .edit:before {
+    content: "\270e";
+}
+ul.work_list .delete:before {
+    content: "\2718";
+}
+
+ul.work_list .check, 
+ul.work_list .toggle, 
+ul.work_list .edit, 
+ul.work_list .delete {
+    text-align: center;
+    text-decoration: none;
+}
+
+ul.work_list .deadline {
+    width: 140px;
+    padding-left: 5px;
+}
+
+ul.work_list .name {
+    min-width: 200px;
+    overflow: hidden;
+}
+ul.work_list .name a {
+    max-height: 30px;
+}
+
+/* for table */
+#work_table {
+    background-color: #666;
+    width: 100%;
+    border-radius: 5px;
+    border-spacing: 0;
+    font-color: white;
+#    font-size: 12px;
+    background-image: -moz-linear-gradient(top, #888 0%, #777 50%, #666 50%, #777 100%);
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #888), color-stop(0.50, #777), color-stop(0.50, #666), color-stop(1, #777));
+}
+
+#work_table tr.item {
+    height: 30px;
+    line-height: 30px;
+    vertical-align: middle;
+    color: white;
+    font-weight: bold;
+    text-shadow: 0 -1px 0 #333, 0 1px 0 #555;
+    box-shadow: 0px  1px 0px rgba(225,225,225,0.3) inset,
+                0px -1px 0px rgba(225,225,225,0.3) inset,
+                0px  1px 3px #666;
+
+}
+
+#work_table tr.item:first-child {
+    border-radius: 5px 5px 0 0;
+    box-shadow: 0px -1px 0px rgba(225,225,225,0.3) inset,
+                0px  1px 3px #666;
+}
+
+#work_table tr.item:last-child {
+    border-radius: 0 0 5px 5px;
+    box-shadow: 0px  1px 0px rgba(225,225,225,0.3) inset,
+                0px  1px 3px #666;    
+}
+#work_table tr.item:only-child {
+    border-radius: 5px 5px 5px 5px;
+    box-shadow: 0px  1px 0px rgba(225,225,225,0.3) inset,
+                0px  1px 3px #666;    
+}
+
+#work_table tr.item:first-child td{
+    border-left: 0;
+}
+#work_table tr.item:last-child td {
+    border-bottom: 0;
+}
+#work_table td {
+    border-bottom: 1px solid #444;
+}
+
+#work_table .tree {
+    letter-spacing: -.40em;
+}
+
+#work_table .tree div {
+    display: inline-block;
+    letter-spacing: normal;
+}
+
+#work_table .tree .expandable,
+#work_table .tree .collapsable {
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    cursor: pointer;
+}
+
+#work_table .tree .expandable:hover,
+#work_table .tree .collapsable:hover {
+    color: #87cefa;
+}
+
+#work_table .tree .expandable:before {
+    content: "＋";
+}
+#work_table .tree .collapsable:before {
+    content: "－";
+}
+
+#work_table div.check {
+    width: 30px;
+    height: 30px;
+    border-right: 1px solid #777;
+    box-shadow: 1px 0px 0px rgba(225,225,225,0.3) inset,
+                -1px 0px 0px rgba(225,225,225,0.3) inset;
+}
+#work_table div.check {
+    width: 30px;
+    height: 30px;
+#    display:block;
+    text-align:center;
+    text-decoration: none;
+}
+#work_table div.check:hover {
+    cursor: pointer;
+    color: #87cefa;
+}
+#work_table div.check:before {
+    content: "\2714";
+}
+
+#work_table div.name {
+    padding-left: 5px;
+#    overflow: hidden;
+    white-space:nowrap;
+    max-width: 100%;
+}
+#work_table div.name a {
+    text-decoration: none;
+    display:block;
+}
+#work_table div.name a:hover {
+    cursor:pointer;
+    color: palegreen;
+}
+
+#work_table td.deadline {
+    padding-left:5px;
+    width: 230px;
+    min-width: 230px;
+}
+
+#work_table td.yellow {
+    color:yellow;
+}
+
+#work_table td.red {
+    color:red;
+}
+
+#work_table td.edit {
+    width: 30px;
+}
+#work_table td.edit a{
+    display:block;
+    width: 30px;
+    height: 30px;
+    text-decoration: none;
+    text-align:center;
+}
+#work_table td.edit a:before {
+    content: "\270E";
+}
+#work_table td.edit a:hover {
+    cursor:pointer;
+    color: palegreen;
+}
+
+
+#work_table td.delete {
+    width: 30px;
+    border-right: 0;
+}
+#work_table td.delete a{
+    display:block;
+    width: 30px;
+    height: 30px;
+    text-decoration: none;
+    text-align:center;
+}
+#work_table td.delete a:before {
+    content: "\2718";
+}
+#work_table td.delete a:hover {
+    color: #ff3030;
+    cursor: pointer;
+}
+
+
+/* for form */
+div#entry_form {
+    width: 100%;
+    max-width: 620px;
+    height: 90px;
+    border: 1px solid red;
+    border-radius: 5px;
+    padding: 5px 0px 5px 10px;
+}
+
+div#entry_form textarea{
+    border-radius: 5px;
+    height: 90px;
+    width: 330px;
+}
+
+div#entry_form input[type=text] {
+    border-radius: 2px;
+}
+
+div#left_area {
+    float:left;
+    height: 90px;
+    width: 200px;
+}
+
+div#left_area div#name_field{
+    margin-bottom: 20px;
+}
+
+div#center_area {
+    float: left;
+    height: 90px;
+    width: 330px;
+
+}
+
+div#right_area {
+    height: 90px;
+    width: 70px;
+    vertical-align: middle;
+    float:left;
+}
+
+div#right_area input {
+    margin: 30px 15px;
+    padding: 2px;
+}

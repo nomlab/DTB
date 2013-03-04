@@ -1,13 +1,14 @@
 <%# -*- coding: utf-8 -*-  %>
 <%= stylesheet_link_tag "works" %>
-<%= stylesheet_link_tag "jquery.treeview.css" %>
-<%= javascript_include_tag "jquery.treeview.js" %>
+<%# stylesheet_link_tag "jquery.treeview.css" %>
+<%# javascript_include_tag "jquery.treeview.js" %>
 <h2>仕事一覧</h2>
 
-<% depth = 0 %>
-<ul class="work_list depth_<%= depth %> filetree" style="margin-top: 20px;">
+<ul class="work_list" style="margin-top: 20px;">
   <% works.each do |work| %>
-    <%= render :partial => "works/list_item", :locals => {:work => work, :depth => depth+1} %>
+  <li class="list_item" id="work<%= work.id %>">
+    <%= render :partial => "works/list_item", :locals => {:work => work, :depth => 0} %>
+  </li>
   <% end %>
 </ul>
 

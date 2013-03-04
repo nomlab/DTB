@@ -3,10 +3,12 @@ db/*.sqlite3
 log/*.log
 tmp/
 .sass-cache/
-*.lock
 db/schema.rb
 config/database.yml
 .DS_Store
 app/assets/images/icons/
 app/assets/images/thumbnail/
 repository/
+lib/squid/etc/squid.conf
+lib/squid/etc/mime.conf
+lib/squid/var/*

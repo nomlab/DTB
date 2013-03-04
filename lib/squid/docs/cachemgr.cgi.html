@@ -1,0 +1,96 @@
+Content-type: text/html
+
+<HTML><HEAD><TITLE>Manpage of cachemgr.cgi</TITLE>
+</HEAD><BODY>
+<H1>cachemgr.cgi</H1>
+Section: Maintenance Commands (8)<BR>Updated: 2005-04-25<BR><A HREF="#index">Index</A>
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+cachemgr.cgi - squid HTTP proxy manager interface
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<B><A HREF="http://your.server/cgi-bin/cachemgr.cgi">http://your.server/cgi-bin/cachemgr.cgi</A></B>
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+The cache manager (cachemgr.cgi) is a CGI utility for displaying statistics
+about the Squid HTTP proxy process as it runs. The cache manager is a
+convenient way to manage the cache and view statistics without logging
+into the server.
+<A NAME="lbAE">&nbsp;</A>
+<H2>FILES</H2>
+
+<I>./cachemgr.conf</I>
+
+<BR>
+
+<I>c:/squid/etc/cachemgr.conf</I>
+
+<DL COMPACT><DT><DD>
+The access configuration file defining which Squid servers may
+be managed via this cachemgr.cgi program. Each line specifies a
+<B>server</B>:<B>port</B>
+
+followed by an optional description
+
+The server name may contain shell wildcard characters such as *, [] etc.
+A quick selection dropdown menu is automatically constructed from the simple
+server names.
+
+Specifying :port is optional. If not specified then
+the default proxy port is assumed. :* or :any matches
+any port on the target server.
+</DL>
+
+<A NAME="lbAF">&nbsp;</A>
+<H2>SECURITY</H2>
+
+cachemgr.cgi calls the requested server on the requested port using HTTP
+and returns a formatted version of the response. To avoid abuse it is
+recommended to configure your web server to restrict access to the
+cachemgr.cgi program.
+
+Configuration examples for many common web servers can be found in the
+Squid FAQ.
+<A NAME="lbAG">&nbsp;</A>
+<H2>SEE ALSO</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?8+squid">squid</A></B>(8)
+
+<BR>
+
+<B>The Squid FAQ</B>, Chapter 9 The Cache Manager
+
+
+
+
+
+
+
+<P>
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">FILES</A><DD>
+<DT><A HREF="#lbAF">SECURITY</A><DD>
+<DT><A HREF="#lbAG">SEE ALSO</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time:  GMT, March 13, 2010
+</BODY>
+</HTML>

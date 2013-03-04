@@ -6,19 +6,22 @@ DesktopBookmark::Application.routes.draw do
     
     # desktop_bookmark/work/select
     post "work/select", :to => "works#select"
-    post "start", :to => "desktop_bookmark#start"
-    post "stop",  :to => "desktop_bookmark#stop"
+    # 
+    match "start", :to => "desktop_bookmark#start"
+    match "stop",  :to => "desktop_bookmark#stop"
 
     # old interface for evaluation
     match "task/list", :to => "tasks#list"
-
+    match "bookmark/list", :to => "bookmarks#list"
     resources :work, :controller => :works do
       #desktop_bookmark/work/:work_id/destroy
       get "destroy", :to => "works#destroy"
+      post "finish", :to => "works#finish"
 
       resources :task, :controller => :tasks do
         #desktop_bookmark/work/:work_id/task/:task_id/destroy
         get "destroy", :to => "tasks#destroy"
+        post "finish", :to => "tasks#finish"
         # route for ajax request to start/stop a task 
         # desktop_bookmark/work/:work_id/task/:task_id/[srart|stop]
 #        post "start", :to => "tasks#start"

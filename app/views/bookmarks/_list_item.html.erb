@@ -1,0 +1,12 @@
+<%# -*- coding: utf-8 -*-  %>
+<li class="list_item bookmark">
+<ul class="item">
+<li class="null" style="width: <%= (depth+1)*31 %>px;"></li>
+<li class="duration">
+<%= link_to "#{bookmark.start_time.strftime("%Y/%m/%d %H:%M")} - #{bookmark.end_time.strftime("%H:%M")}",
+    {:controller => "bookmarks", :action => "show", :work_id => bookmark.task.work.id, :task_id => bookmark.task.id, :id => bookmark.id} %>
+</li>
+<li class="null">
+</li>
+</ul>
+</li>

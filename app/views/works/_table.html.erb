@@ -3,13 +3,13 @@
 <h2>仕事一覧</h2>
 
 <table id="work_table">
-  <col class="check">
-  <col class="name">
+  <col class="tree">
   <col class="deadline">
   <col class="edit">
   <col class="delete">
+  <% index = 0 %>
   <% works.each do |work| %>
-    <%= render :partial => "works/table_item", :locals => {:work => work} %>
+    <%= render :partial => "works/table_item", :locals => {:work => work, :depth => 0} %>
   <% end %>
 </table>
 

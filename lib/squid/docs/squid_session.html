@@ -1,0 +1,108 @@
+Content-type: text/html
+
+<HTML><HEAD><TITLE>Manpage of squid_session</TITLE>
+</HEAD><BODY>
+<H1>squid_session</H1>
+Section: Maintenance Commands (8)<BR>Updated: 19 March 2006<BR><A HREF="#index">Index</A>
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+squid_session - Squid session tracking external acl group helper
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+squid_session [-t idle_timeout] [-b dbpath] [-a]
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+This helper maintains a concept of sessions by monitoring requests
+and timing out sessions if no requests have been seen for the idle timeout
+timer.
+
+Intended use is for displaying &quot;terms of use&quot; pages, ad popups etc.
+<DL COMPACT>
+<DT><B>-t </B><I>idletimeout </I><B>(default 3600)</B>
+
+<DD>
+Specifies the session idle timeout timer.
+<DT><B>-b </B><I>dbpath</I>
+
+<DD>
+Path to persistent database. If not specified the session details
+will be kept in memory only and all sessions will reset each time
+Squid restarts it's helpers (Squid restart or rotation of logs).
+<DT><B>-a</B>
+
+<DD>
+Active mode. In this mode sessions are started by evaluating an
+acl with the argument LOGIN, or terminated by the argument LOGOUT.
+
+Without this flag the helper automatically starts the session after
+the first request.
+</DL>
+<A NAME="lbAE">&nbsp;</A>
+<H2>EXAMPLE</H2>
+
+
+Configuration example using the default automatic mode
+<DL COMPACT>
+<DT><DD>
+external_acl_type session ttl=300 negative_ttl=0 children=1 concurrency=200 %LOGIN /usr/local/squid/libexec/squid_session
+<DT><DD>
+acl session external session
+<DT><DD>
+http_access deny !session
+<DT><DD>
+deny_info <A HREF="http://your.server/bannerpage?url=%s">http://your.server/bannerpage?url=%s</A> session
+
+Then set up <A HREF="http://your.server/bannerpage">http://your.server/bannerpage</A> to display a session startup page and then redirect the user back to the requested URL given in the url query parameter.
+</DL>
+<A NAME="lbAF">&nbsp;</A>
+<H2>AUTHOR</H2>
+
+This helper and documentation was written by 
+<I>Henrik Nordstrom &lt;<A HREF="mailto:henrik@henriknordstrom.net">henrik@henriknordstrom.net</A>&gt;</I>
+
+<A NAME="lbAG">&nbsp;</A>
+<H2>QUESTIONS</H2>
+
+Any questions on usage can be sent to 
+<I>Squid Users &lt;<A HREF="mailto:squid-users@squid-cache.org">squid-users@squid-cache.org</A>&gt;</I>.
+
+<A NAME="lbAH">&nbsp;</A>
+<H2>REPORTING BUGS</H2>
+
+Report bugs or bug-fixes to
+<I>Squid Bugs &lt;<A HREF="mailto:squid-bugs@squid-cache.org">squid-bugs@squid-cache.org</A>&gt;</I>
+
+or ideas for new improvements to 
+<I>Squid Developers &lt;<A HREF="mailto:squid-dev@squid-cache.org">squid-dev@squid-cache.org</A>&gt;</I>
+
+<A NAME="lbAI">&nbsp;</A>
+<H2>SEE ALSO</H2>
+
+<B>squid</B>(<B>8</B>)
+
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">EXAMPLE</A><DD>
+<DT><A HREF="#lbAF">AUTHOR</A><DD>
+<DT><A HREF="#lbAG">QUESTIONS</A><DD>
+<DT><A HREF="#lbAH">REPORTING BUGS</A><DD>
+<DT><A HREF="#lbAI">SEE ALSO</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time:  GMT, March 13, 2010
+</BODY>
+</HTML>

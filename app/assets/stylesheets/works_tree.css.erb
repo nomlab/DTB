@@ -1,0 +1,235 @@
+/* -*- coding: utf-8-*- */
+
+/* for tree (not with treeview) */
+
+#work_tree {
+    background-color: #666;
+    width: 100%;
+    border-radius: 5px;
+    border-spacing: 0;
+    font-color: white;
+#    font-size: 12px;
+    background-image: -moz-linear-gradient(top, #888 0%, #777 50%, #666 50%, #777 100%);
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #888), color-stop(0.50, #777), color-stop(0.50, #666), color-stop(1, #777));
+}
+
+#work_tree div.tree_item {
+    height: 30px;
+    line-height: 30px;
+    vertical-align: middle;
+    color: white;
+    font-weight: bold;
+    letter-spacing: -.40em;
+    text-shadow: 0 -1px 0 #333, 0 1px 0 #555;
+    box-shadow: 0px  1px 0px rgba(225,225,225,0.3) inset,
+                0px -1px 0px rgba(225,225,225,0.3) inset,
+                0px  1px 3px #666;
+
+}
+
+#work_tree div.tree_item:first-child {
+    border-radius: 5px 5px 0 0;
+    box-shadow: 0px -1px 0px rgba(225,225,225,0.3) inset,
+                0px  1px 3px #666;
+}
+
+#work_tree div.tree_item:last-child {
+    border-radius: 0 0 5px 5px;
+    box-shadow: 0px  1px 0px rgba(225,225,225,0.3) inset,
+                0px  1px 3px #666;    
+}
+#work_tree div.tree_item:only-child {
+    border-radius: 5px 5px 5px 5px;
+    box-shadow: 0px  1px 0px rgba(225,225,225,0.3) inset,
+                0px  1px 3px #666;    
+}
+
+#work_tree div.tree_item:first-child div{
+    border-left: 0;
+}
+#work_tree div.tree_item:last-child div{
+    border-bottom: 0;
+}
+#work_tree .tree_item div {
+    border-bottom: 1px solid #444;
+    display: inline-block;
+    letter-spacing: normal;
+}
+
+#work_tree div.close,
+#work_tree div.open {
+    text-align: center;
+    width: 30px;
+    height: 30px; 
+    border-right: 1px solid #777;
+    box-shadow: 1px 0px 0px rgba(225,225,225,0.3) inset,
+      -1px 0px 0px rgba(225,225,225,0.3) inset;
+}
+
+#work_tree div.open:before {
+    content: "＋"
+}
+#work_tree div.close:before {
+    content: "－"
+}
+
+#work_tree div.close:hover,
+#work_tree div.open:hover {
+    cursor: pointer;
+    color: #87cefa;
+}
+
+#work_tree div.check {
+    width: 30px;
+    height: 30px;
+    border-right: 1px solid #777;
+    box-shadow: -1px 0px 0px rgba(225,225,225,0.3) inset;
+}
+
+#work_tree div.check a {
+    width: 30px;
+    height: 30px;
+    display: block;
+    text-align:center;
+    text-decoration: none;
+}
+#work_tree div.check a:hover {
+    cursor: pointer;
+    color: #87cefa;
+}
+#work_tree div.check a:before {
+    content: "\2714";
+}
+
+#work_tree div.name {
+    padding-left: 5px;
+# div に対して使うと前後の要素が下にずれる    
+#    overflow: hidden;
+    white-space:nowrap;
+    
+}
+#work_tree div.name a {
+    text-decoration: none;
+    display:block;
+}
+#work_tree div.name a:hover {
+    cursor:pointer;
+    color: palegreen;
+}
+
+#work_tree div.deadline {
+    padding-left:5px;
+    width: 230px;
+    min-width: 230px;
+}
+
+#work_tree div.yellow {
+    color:yellow;
+}
+
+#work_tree div.red {
+    color:red;
+}
+
+#work_tree div.edit {
+    width: 30px;
+}
+#work_tree div.edit a{
+    display:block;
+    width: 30px;
+    height: 30px;
+    text-decoration: none;
+    text-align:center;
+}
+#work_tree div.edit a:before {
+    content: "\270E";
+}
+#work_tree div.edit a:hover {
+    cursor:pointer;
+    color: palegreen;
+}
+
+
+#work_tree div.delete {
+    width: 30px;
+    border-right: 0;
+}
+#work_tree div.delete a{
+    display:block;
+    width: 30px;
+    height: 30px;
+    text-decoration: none;
+    text-align:center;
+}
+#work_tree div.delete a:before {
+    content: "\2718";
+}
+#work_tree div.delete a:hover {
+    color: #ff3030;
+    cursor: pointer;
+}
+
+#work_tree .tree_item ul {
+    width: 290px;
+    height: 30px;
+    float:right;
+    list-style-type: none;
+}
+#work_tree .tree_item ul li {
+    height: 30px;
+    text-align: center;
+    float:left;
+    letter-spacing: normal;
+}
+#work_tree .tree_item ul li.deadline {
+    width: 230px;
+    text-align: left;
+}
+
+#work_tree .tree_item ul li {
+    display: inline-block;
+}
+#work_tree li.yellow {
+    color:yellow;
+}
+
+#work_tree li.red {
+    color:red;
+}
+
+#work_tree li.edit {
+    width: 30px;
+}
+#work_tree li.edit a{
+    display:block;
+    width: 30px;
+    height: 30px;
+    text-decoration: none;
+    text-align:center;
+}
+#work_tree li.edit a:before {
+    content: "\270E";
+}
+#work_tree li.edit a:hover {
+    cursor:pointer;
+    color: palegreen;
+}
+
+#work_tree li.delete {
+    width: 30px;
+    border-right: 0;
+}
+#work_tree li.delete a{
+    display:block;
+    width: 30px;
+    height: 30px;
+    text-decoration: none;
+    text-align:center;
+}
+#work_tree li.delete a:before {
+    content: "\2718";
+}
+#work_tree li.delete a:hover {
+    color: #ff3030;
+    cursor: pointer;
+}

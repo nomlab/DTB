@@ -1,0 +1,280 @@
+Content-type: text/html
+
+<HTML><HEAD><TITLE>Manpage of squid_ldap_group</TITLE>
+</HEAD><BODY>
+<H1>squid_ldap_group</H1>
+Section: Maintenance Commands (8)<BR>Updated: 30 January 2005<BR><A HREF="#index">Index</A>
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+squid_ldap_group - Squid LDAP external acl group helper
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+squid_ldap_group -b &quot;base DN&quot; -f &quot;LDAP search filter&quot; [options] [ldap_server_name[:port]|URI]...
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+This helper allows Squid to connect to a LDAP directory to
+authorize users via LDAP groups.
+LDAP options are specified as parameters on the command line,
+while the username(s) and group(s) to be checked against the
+LDAP directory are specified on subsequent lines of input to the
+helper, one username/group pair per line separated by a space.
+
+As expected by the external_acl construct of Squid, after
+specifying a username and group followed by a new line, this
+helper will produce either OK or ERR on the following line
+to show if the user is a member of the specified group.
+
+The program operates by searching with a search filter based
+on the users user name and requested group, and if a match
+is found it is determined that the user belongs to the group.
+<DL COMPACT>
+<DT><B>-b </B><I>basedn </I><B>(REQUIRED)</B>
+
+<DD>
+Specifies the base DN under which the groups are located.
+<DT><B>-B </B><I>basedn </I>
+
+<DD>
+Specifies the base DN under which the users are located (if different)
+<DT><B>-g</B>
+
+<DD>
+Specifies that the first query argument sent to the helper by Squid is
+a extension to the basedn and will be temporarily added in front of the
+global basedn for this query.
+<DT><B>-f </B><I>filter</I>
+
+<DD>
+LDAP search filter used to search the LDAP directory for any
+matching group memberships.
+<B>In</B>the<B>filter</B>%u<B>will</B>be<B>replaced</B>by<B>the</B>user<B>name</B>(or<B>DN</B>if
+
+the -F or -u options are used) and %g by the requested group name.
+<DT><B>-F </B><I>filter</I>
+
+<DD>
+LDAP search filter used to search the LDAP directory for any
+matching users.
+<B>In</B>the<B>filter</B>%s<B>will</B>be<B>replaced</B>by<B>the</B>user<B>name.</B>If<B>%</B>is<B>to</B>be
+
+included literally in the filter then use %%.
+<DT><B>-u </B><I>attr</I>
+
+<DD>
+LDAP attribute used to construct the user DN from the user name and
+base dn without needing to search for the user.
+<DT><B>-s </B><I>base|one|sub</I>
+
+<DD>
+search scope. Defaults to 'sub'.
+<DT><DD>
+<B>base</B>
+
+object only,
+<B>one</B>
+
+level below the base object or
+<B>sub</B>tree
+
+below the base object
+<DT><B>-D </B><I>binddn </I><B>-w </B><I>password</I>
+
+<DD>
+The DN and password to bind as while performing searches. Required
+if the directory does not allow anonymous searches.
+<DT><DD>
+As the password needs to be printed in plain text in your Squid configuration
+and will be sent on the command line to the helper it is strongly recommended
+to use a account with minimal associated privileges.  This to limit the damage
+in case someone could get hold of a copy of your Squid configuration file or
+extracts the password used from a process listing.
+<DT><B>-D </B><I>binddn </I><B>-W </B><I>secretfile </I>
+
+<DD>
+The DN and the name of a file containing the password
+to bind as while performing searches. 
+<DT><DD>
+Less insecure version of the former parameter pair with two advantages:
+The password does not occur in the process listing, 
+and the password is not being compromised if someone gets the squid 
+configuration file without getting the secretfile.
+<DT><B>-P</B>
+
+<DD>
+Use a persistent LDAP connection. Normally the LDAP connection
+is only open while verifying a users group membership to preserve
+resources at the LDAP server. This option causes the LDAP connection to
+be kept open, allowing it to be reused for further user
+validations. Recommended for larger installations.
+<DT><B>-R</B>
+
+<DD>
+do not follow referrals
+<DT><B>-a </B><I>never|always|search|find</I>
+
+<DD>
+when to dereference aliases. Defaults to 'never'
+<DT><DD>
+<B>never</B>
+
+dereference aliases (default),
+<B>always</B>
+
+dereference aliases, only while
+<B>search</B>ing
+
+or only to
+<B>find</B>
+
+the base object
+<DT><B>-H</B><I> ldapuri</I>
+
+<DD>
+Specity the LDAP server to connect to by a LDAP URI (requires OpenLDAP libraries)
+<DT><B>-h</B><I> ldapserver</I>
+
+<DD>
+Specify the LDAP server to connect to
+<DT><B>-p</B><I> ldapport</I>
+
+<DD>
+Specify an alternate TCP port where the ldap server is listening if
+other than the default LDAP port 389.
+<DT><B>-v</B><I> 2|3</I>
+
+<DD>
+LDAP protocol version. Defaults to 2 if not specified.
+<DT><B>-Z</B>
+
+<DD>
+Use TLS encryption
+<DT><B>-E</B><I>certpath</I>
+
+<DD>
+Enable LDAP over SSL (requires Netscape LDAP API libraries)
+<DT><B>-c</B><I>connect_timeout</I>
+
+<DD>
+Specify timeout used when connecting to LDAP servers (requires
+Netscape LDAP API libraries)
+<DT><B>-t</B><I>search_timeout</I>
+
+<DD>
+Specify time limit on LDAP search operations
+<DT><B>-S</B>
+
+<DD>
+Strip NT domain name component from user names (/ or \ separated)
+<DT><B>-K</B>
+
+<DD>
+Strip Kerberos Realm component from user names (@ separated)
+<DT><B>-d</B>
+
+<DD>
+Debug mode where each step taken will get reported in detail.
+Useful for understanding what goes wrong if the results is
+not what is expected.
+<P>
+</DL>
+<A NAME="lbAE">&nbsp;</A>
+<H2>SQUID CONFIGURATION</H2>
+
+This helper is intended to be used as a external_acl_type helper from
+squid.conf.
+
+
+<PRE>
+external_acl_type ldap_group %LOGIN /path/to/squid_ldap_group ...
+<BR>
+acl group1 external ldap_group Group1
+<BR>
+acl group2 external ldap_group Group2
+</PRE>
+
+
+<A NAME="lbAF">&nbsp;</A>
+<H2>NOTES</H2>
+
+When constructing search filters it is recommended to first test the filter
+using ldapsearch before you attempt to use squid_ldap_group. This to verify
+that the filter matches what you expect.
+<A NAME="lbAG">&nbsp;</A>
+<H2>AUTHOR</H2>
+
+This manual page was written by 
+<I>Henrik Nordstrom &lt;<A HREF="mailto:hno@marasystems.com">hno@marasystems.com</A>&gt;</I>
+
+
+squid_ldap_group is written by 
+<I>Flavio Pescuma &lt;<A HREF="mailto:flavio@marasystems.com">flavio@marasystems.com</A>&gt;</I>
+
+and
+<I>Henrik Nordstrom &lt;<A HREF="mailto:hno@squid-cache.org">hno@squid-cache.org</A>&gt;</I>,
+
+based on prior work in squid_ldap_auth by
+<I>Glen Newton &lt;<A HREF="mailto:glen.newton@nrc.ca">glen.newton@nrc.ca</A>&gt;</I>
+
+<A NAME="lbAH">&nbsp;</A>
+<H2>KNOWN LIMITATIONS</H2>
+
+Max 16 occurrences of %s in the -u argument is supported.
+<A NAME="lbAI">&nbsp;</A>
+<H2>QUESTIONS</H2>
+
+Any questions on usage can be sent to 
+<I>Squid Users &lt;<A HREF="mailto:squid-users@squid-cache.org">squid-users@squid-cache.org</A>&gt;</I>,
+
+or to your favorite LDAP list/friend if the question is more related to
+LDAP than Squid.
+<A NAME="lbAJ">&nbsp;</A>
+<H2>REPORTING BUGS</H2>
+
+Report bugs or bug-fixes to
+<I>Squid Bugs &lt;<A HREF="mailto:squid-bugs@squid-cache.org">squid-bugs@squid-cache.org</A>&gt;</I>
+
+or ideas for new improvements to 
+<I>Squid Developers &lt;<A HREF="mailto:squid-dev@squid-cache.org">squid-dev@squid-cache.org</A>&gt;</I>
+
+<A NAME="lbAK">&nbsp;</A>
+<H2>SEE ALSO</H2>
+
+<B>squid_ldap_auth</B>(<B>8</B>),
+
+<B>ldapsearch</B>(<B>1</B>),
+
+<BR>
+
+Your favorite LDAP documentation
+<BR>
+
+<B>RFC2254</B> - The String Representation of LDAP Search Filters,
+
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">SQUID CONFIGURATION</A><DD>
+<DT><A HREF="#lbAF">NOTES</A><DD>
+<DT><A HREF="#lbAG">AUTHOR</A><DD>
+<DT><A HREF="#lbAH">KNOWN LIMITATIONS</A><DD>
+<DT><A HREF="#lbAI">QUESTIONS</A><DD>
+<DT><A HREF="#lbAJ">REPORTING BUGS</A><DD>
+<DT><A HREF="#lbAK">SEE ALSO</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time:  GMT, March 13, 2010
+</BODY>
+</HTML>

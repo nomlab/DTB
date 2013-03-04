@@ -1,0 +1,37 @@
+<%# -*- coding: utf-8 -*- %>
+<div class="tree_item depth_<%= depth %>">
+  <div class="open"></div>
+  <div class="check"><a></a></div>
+  <div class="name">
+    <%= link_to work.name, :controller => "works", :action => "show", :id => work.id %>
+  </div>
+<!--  <div class="deadline <%= work.level %>">
+    <%= if work.deadline == nil
+	  "締切未設定"
+	else
+	  work.deadline.strftime("%m/%d (%a)") + "(残り#{(work.deadline - Time.now).to_i/(3600*24)}日)"
+	end %>
+  </div>
+    <div class="edit">
+      <%= link_to "", :controller => "works", :action => "edit", :id => work.id %>
+    </div>
+    <div class="delete">
+      <%= link_to "", {:controller => "works", :action => "destroy", :work_id => work.id}, :confirm => "本当に削除してよろしいですか？" %>
+    </div>
+-->
+  <ul class="others">
+    <li class="deadline">
+      <%= if work.deadline == nil
+	    "締切未設定"
+	  else
+	    work.deadline.strftime("%m/%d (%a)") + "(残り#{(work.deadline - Time.now).to_i/(3600*24)}日)"
+	  end %>
+    </li>
+    <li class="edit">
+      <%= link_to "", :controller => "works", :action => "edit", :id => work.id %>
+    </li>
+    <li class="delete">
+      <%= link_to "", {:controller => "works", :action => "destroy", :work_id => work.id}, :confirm => "本当に削除してよろしいですか？" %>
+    </li>
+  </ul>
+</div>

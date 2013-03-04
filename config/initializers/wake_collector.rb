@@ -10,7 +10,9 @@ $current_work     = nil
 ROOT = Rails.root.to_s.gsub(/\//, "\\")
 
 THUMBNAIL_DIR = WindowsLibs.make_path([ROOT,"app","assets","images","thumbnail"])
-PROXY_LOG = WindowsLibs.make_path(["","squid","var","logs","access.log"])
+SQUID_DIR = WindowsLibs.make_path([ROOT, "lib", "squid"])
+SQUID_CONF = WindowsLibs.make_path([SQUID_DIR, "etc", "squid.conf"])
+PROXY_LOG = WindowsLibs.make_path([SQUID_DIR,"var","logs","access.log"])
 ZERO = "0000"
 
 def collect_web_history
@@ -83,7 +85,7 @@ $t1 = Thread.new do
 end
 
 $t2 = Thread.new do
-  `#{WindowsLibs.make_path(["","squid","sbin","squid.exe"])}`
+  `#{WindowsLibs.make_path([SQUID_DIR,"sbin","squid.exe"])} -f #{SQUID_CONF}`
 end
 
 at_exit do

@@ -1,0 +1,34 @@
+<%# -*- coding: utf-8 -*- %>
+<% bookmarks = task.bookmarks %>
+<% depth += 1 if bookmarks == [] %>
+  <ul class="item">
+    <li class="null" style="min-height: 30px;width: <%= (depth)*31 %>px;"></li>
+    <% if bookmarks != [] %><li class="toggle expandable"></li><% end %>
+    <li class="check <%= task.finished? ? "finished" : "unfinished" %>">
+      <%= link_to("", {:controller => "tasks", :action => "finish", :work_id => task.work.id, :task_id => task.id, :depth => depth},
+      :method => "post", :confirm => "この作業を完了しますか？", :remote => true) unless task.finished? %>
+    </li>
+    <li class="name">
+      <%= link_to task.name, :controller => "tasks", :action => "show", :work_id => task.work.id, :id => task.id %>
+    </li>
+    <li class="deadline">
+      <%= if task.deadline == nil
+          "締切未設定"
+          else
+          task.deadline.strftime("%Y/%m/%d %H:%M") 
+          end %>
+    </li>
+    <li class="edit">
+      <%= link_to "", :controller => "tasks", :action => "edit", :work_id => task.work.id, :id => task.id %>
+    </li>
+    <li class="delete">
+      <%= link_to "", :controller => "tasks", :action => "destroy", :work_id => task.work.id, :task_id => task.id %>
+    </li>
+  </ul>
+  <% if bookmarks != [] %>
+  <ul class="item_children" style="list-style-type: none;">
+    <% bookmarks.each do |bookmark| %>
+    <%= render :partial => "bookmarks/list_item", :locals => {:bookmark => bookmark, :depth => depth+1} %>
+    <% end %>
+  </ul>
+  <% end %>

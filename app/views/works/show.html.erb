@@ -8,26 +8,58 @@
 
 <div id="left">
   <% unless ["", nil].include? @work.description %>
-    <br>
-    詳細:<br>
-    <div id="description">
-      <%= @work.description.gsub(/\r?\n/){"<br>"}.html_safe %>
-    </div>
+  <br>
+  詳細:<br>
+  <div id="description">
+    <%= @work.description.gsub(/\r?\n/){"<br>"}.html_safe %>
+  </div>
   <% end %>
-  
-</br>
+<br>
 
-<%= render :partial => "tasks/list", :locals => {:tasks => @work.tasks} %>
+<%= stylesheet_link_tag "tasks" %>
+<h2>作業一覧</h2>
+<% list = (@work.tasks + @work.children).sort{|a, b| a.deadline <=> b.deadline } %>
+<table id="task_table">
+  <tr>
+    <th class="name">名前</th>
+    <th class="duration">期間</th>
+    <th class="continue">操作</th>
+  </tr>
+  <% list.each do |item| %>
+  <% if item.class == Task %>
+    <%= render :partial => "tasks/task_item", :locals => {:task => item} %>
+  <% else %>
+  <tr class="item">
+    <td class="name">
+      <%= link_to item.name, :controller => "works", :action => "show", :id => item.id %>
+    </td>
+    <td class="duration"><%= item.created_at.strftime("%Y/%m/%d %H:%M") %> - <%= item.updated_at.strftime("%H:%M") %></td>
+    <td class="continue">
+    </td>
+  </tr>
+  <% end %>
+  <% end %>
+</table>
 </div>
-
+<!--
 <div id="right">
   <div id="info">
     登録：<%= @work.created_at.strftime("%Y/%m/%d (%a) %H:%M") %><br>
     期限：<%= @work.deadline.strftime("%Y/%m/%d (%a) %H:%M") rescue "未設定" %><br>
     (残り<%= (@work.deadline.yday - Time.now.yday) rescue "?" %>日)
   </div>
-</div>
+</div>-->
 <div class="reset"></div>
+
+<b><h2> 参照した計算機内部のデータ <%# link_to image_edit("計算機内部の履歴情報の編集"), :controller => "file_histories", :action => "edit", :bookmark_id => @bookmark %></h2></b>
+<font size="+1"><%= getpath(@work) %></font>
+<br>
+<b><h2> 参照した計算機外部のデータ <%# link_to image_edit("計算機外部の履歴情報の編集"), :controller => "web_histories", :action => "edit", :bookmark_id => @bookmark %></h2></b>
+<%= getpic(@work) %>
+<%# @bookmark.thumbnail_tag %><br>
+
+<hr>
+
 <hr>
 <%= link_to "削除", {:action => "destroy", :work_id => @work },
 :confirm => "本当に削除してよろしいですか" %> &nbsp;

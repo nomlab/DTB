@@ -1,0 +1,11 @@
+/* -*- coding:utf-8 -*- */
+$('#task<%= @task.id %>').html(
+    "<%=j render :partial => "tasks/list_item", :locals => {:task => @task, :depth => @depth} %>"
+);
+
+$('#task<%= @task.id %> .toggle').first().click(function(){
+    $(this).parent().siblings().toggle(0);
+    var isExpandable = $(this).hasClass("expandable");
+    $(this).toggleClass("collapsable", isExpandable);
+    $(this).toggleClass("expandable", !isExpandable)
+});

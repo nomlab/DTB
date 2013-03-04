@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(:version => 20130115023359) do
   create_table "bookmarks", :force => true do |t|
     t.string   "name"
     t.string   "keyword"
-    t.text     "comment"
+    t.text     "comment",    :default => ""
     t.datetime "start_time"
     t.datetime "end_time"
     t.string   "thumbnail"
@@ -42,7 +42,7 @@ ActiveRecord::Schema.define(:version => 20130115023359) do
 
   create_table "tasks", :force => true do |t|
     t.string   "name"
-    t.text     "description"
+    t.text     "description", :default => ""
     t.text     "keyword"
     t.datetime "deadline"
     t.boolean  "status"
@@ -61,7 +61,7 @@ ActiveRecord::Schema.define(:version => 20130115023359) do
 
   create_table "works", :force => true do |t|
     t.string   "name"
-    t.string   "description"
+    t.string   "description", :default => ""
     t.datetime "deadline"
     t.boolean  "status"
     t.string   "keyword"

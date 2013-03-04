@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 module ApplicationHelper
   require_dependency 'lib/referer_filter'
   require 'time'
@@ -90,17 +90,27 @@ module ApplicationHelper
       
       ext = path.split(".").last
       icon = Exticon.find_by_ext(ext)
+=begin
       if icon == nil
-        `lib\\GetIcon.exe \"#{NKF.nkf("-s", path)}\" app\\assets\\images\\icons\\#{ext}.bmp`
+        
+        #        `lib\\GetIcon.exe \"#{NKF.nkf("-s", path)}\" app\\assets\\images\\icons\\#{ext}.bmp`
+        `lib\\GetIcon.exe \"#{path.force_encoding("utf-8")}\" app\\assets\\images\\icons\\#{ext}.bmp`
         i = Exticon.new
         i.ext = ext
         i.save
       end
+=end
       obj << "<img src=\"/assets/icons/#{ext}.bmp\" alt=\"\" title=\"#{path}\" height=25 weight=25> "
       obj << path.split("\\").last
 #      obj << "<a href = \"/file_history/" + "\"> <img src=\"/assets/open.png\" alt=\"\" title=\"現在の内容で開く\" height=20 weight=20>"
-      obj << link_to(image_tag("open.png", :title => "現在の内容で開く", :size => "20x20"), :controller => "file_histories", :action => "link", :bookmark_id => bookmark.id, :id => history.id)
-      #if history.flag
+      if bookmark.class == Task
+        obj << link_to(image_tag("open.png", :title => "現在の内容で開く", :size => "20x20"), :controller => "file_histories", :action => "link", :bookmark_id => bookmark.bookmarks[0].id, :id => history.id, :task_id => bookmark.id, :work_id => bookmark.work.id)
+      elsif bookmark.class == Work
+        obj << link_to(image_tag("open.png", :title => "現在の内容で開く", :size => "20x20"), :controller => "file_histories", :action => "link", :bookmark_id => history.bookmarks[0].id, :id => history.id, :task_id => history.bookmarks[0].task.id, :work_id => bookmark.id)
+      else
+      obj << link_to(image_tag("open.png", :title => "現在の内容で開く", :size => "20x20"), :controller => "file_histories", :action => "link", :bookmark_id => bookmark.id, :id => history.id, :task_id => bookmark.task.id, :work_id => bookmark.task.work.id)
+      end
+        #if history.flag
       #  obj << " ☆</a>" 
       #else
         obj << "</a>"

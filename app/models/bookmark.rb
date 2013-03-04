@@ -43,18 +43,18 @@ EOS
     $current_bookmark = bookmark
   end
 
+  def bread_cramb
+    return (self.task.bread_cramb << self)
+  end
+
   def create_directory
-    Dir::mkdir "app/assets/images/thumbnail/#{self.thumbnail}"
+    dir = self.bread_cramb.map{|a| a.name }.join("/")
+    Dir::mkdir("app/assets/images/thumbnail/" + dir)
   end
   
   def delete_directory
-    Dir::chdir("app/assets/images/thumbnail"){
-      delete_dir = "#{self.thumbnail}"
-      Dir::foreach(delete_dir){|f|
-        File::delete(deelte_dir + "/" + f) if !(/\.+$/ =~ f)
-      }
-      Dir::rmdir(delete_dir)
-    }
+    dir = self.bread_cramb.map{|a| a.name }.join("/") # "work1/work2/task/bookmark"
+    FileUtils.rm_rf("app/assets/images/thumbnail/" + dir)
   end
 
   # Git関連のメソッド

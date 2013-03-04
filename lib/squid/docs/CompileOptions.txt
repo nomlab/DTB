@@ -1,0 +1,34 @@
+This Squid.exe is compiled with the following options enabled:
+
+- HTCP support enabled
+- SNMP support enabled
+- Internal DNS Server
+- WIN32 Service running mode
+- WCCP and WCCPv2 disabled
+- Useragent log enabled
+- Referer log enabled
+- Delay Pools disabled
+- ICMP support disabled
+- ARP acl support enabled
+- Large cache file support enabled
+- Cache Digests support enabled
+
+Authentication Schema: Basic, NTLM, Digest, Negotiate
+Heap modules: lru, heap
+FS modules: ufs, null, aufs, coss
+File descriptors: 2048
+
+so, be sure to configure all related squid.conf options.
+
+Squid default paths:
+
+Squid Directory:		c:\squid
+Squid Binariers Directory:	c:\squid\sbin (squid.exe)
+Binaries Directory:		c:\squid\bin (*.exe)
+Helpers Directory:		c:\squid\libexec (*.exe)
+Cache Directory:		c:\squid\var\cache
+Log Directory:			c:\squid\var\logs (*.log and *.pid)
+Conf Directory:			c:\squid\etc (squid.conf, mime.conf)
+Errors Directory:		c:\squid\share\errors
+Icons Directory:		c:\squid\share\icons
+

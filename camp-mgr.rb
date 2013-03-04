@@ -13,7 +13,7 @@ end
 
 # main
 unless valid_argument?
-  puts "please specify CSV file at ARGV[0]"
+  puts "please specify CSV file at first argument."
   exit
 end
 
@@ -24,7 +24,7 @@ end
 require "./config/environment"
 
 # clear repository
-`rm -rf repository`
+FileUtils.rm_rf("repository")
 Dir::mkdir("repository") rescue nil
 Dir::chdir("repository"){
   FileUtils.touch "erase_me"

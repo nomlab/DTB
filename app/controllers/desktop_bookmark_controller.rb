@@ -2,12 +2,15 @@
 class DesktopBookmarkController < ApplicationController
   require "nkf"
   require "will_paginate"
-  
+  require "will_paginate/array"
   require_dependency "lib/windows"
   
   def index
     @work = Work.new
-    @works = Work.where(:parent_id => nil).paginate(:page => params[:page], :per_page => 10)
+    @works = Work.where(:parent_id => nil).where("status IS 'f' OR status IS NULL").sort{|a,b| a.deadline <=> b.deadline}
+    @works += Work.where(:status => true, :parent_id => nil).sort{|a, b| a.deadline <=> b.deadline }
+    @works = @works.paginate(:page => params[:page], :per_page => 10)
+
     @selected_work = Work.current || Work.find_by_id(session[:work_id])
     @selected_tasks = @selected_work.tasks rescue []
     
@@ -34,11 +37,11 @@ class DesktopBookmarkController < ApplicationController
     Bookmark.current = bookmark
     respond_to do |format|
       format.js
+      format.html { redirect_to :controller => "task", :action => "list" }
     end
   end
   
   def stop
-    # たぶんこれで動く．うごいてるはず
     Bookmark.current.update_attributes(:comment => params[:bookmark][:comment])
     reset_accesslog
     
@@ -50,6 +53,7 @@ class DesktopBookmarkController < ApplicationController
     @selected_tasks = []
     respond_to do |format|
       format.js
+      format.html { redirect_to :controller => "task", :action => "list" }
     end
   end
   

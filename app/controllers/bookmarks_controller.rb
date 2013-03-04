@@ -2,6 +2,10 @@
 class BookmarksController < ApplicationController
   def index
   end
+
+  def list
+    @bookmarks = Bookmark.order("end_time DESC")
+  end
   
   def new
     @bookmark = Bookmark.new

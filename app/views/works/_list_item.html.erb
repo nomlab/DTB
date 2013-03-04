@@ -1,0 +1,41 @@
+<%# -*- coding: utf-8 -*- %>
+<% list = (work.children + work.tasks).sort{|a,b| a.deadline <=> b.deadline } %>
+<% depth += 1 if list == [] %>
+  <ul class="item">
+    <li class="null" style="min-height: 30px;width: <%= (depth)*31 %>px;"></li>
+    <% if list != [] %><li class="toggle expandable"></li><% end %>
+    <li class="check <%= work.finished? ? "finished" : "unfinished" %>">
+      <%= link_to("", {:controller => "works", :action => "finish", :work_id => work.id, :depth => depth}, 
+      :method => "post", :confirm => "この仕事を完了しますか？", :remote => true) unless work.finished? %>
+    </li>
+    <li class="name"><%= link_to work.name, :controller => "works", :action => "show", :id => work.id %></li>
+    <li class="deadline">
+      <%= if work.deadline == nil
+	    "締切未設定"
+	  else
+	    work.deadline.strftime("%Y/%m/%d %H:%M") 
+	  end %>
+    </li>
+    <li class="edit">
+      <%= link_to "", :controller => "works", :action => "edit", :id => work.id %>
+    </li>
+    <li class="delete">
+      <%= link_to "", :controller => "works", :action => "destroy", :work_id => work.id %>
+    </li>
+  </ul>
+  <% if list != [] %>
+  <ul class="item_children" style="list-style-type: none;">
+    <% list.each do |item| %>
+      <% if item.class.name == "Work" %>
+      <li class="list_item" id="work<%= item.id %>">
+      <%= render :partial => "works/list_item", :locals => {:work => item, :depth => depth+1} %>
+      </li>
+      <% else %>
+      <li class="list_item" id="task<%= item.id %>">
+        <%= render :partial => "tasks/list_item", :locals => {:task => item, :depth => depth+1} %>
+      </li>
+      <% end %>
+    <% end %>
+  </ul>
+  <% end %>
+

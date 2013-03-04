@@ -1,0 +1,34 @@
+<%# -*- coding: utf-8 -*- %>
+<% 
+   time = (bookmark.updated_at - bookmark.created_at).to_i
+   min = 60
+   hour = min*60
+   day = hour*24
+   duration = ""
+
+   if (flag = time/day) != 0
+     duration += "#{flag} day"
+     time %= day
+   end
+   if (flag = time/hour) != 0
+     duration += " #{flag} hour"
+     time %= hour
+   end
+   duration += " #{flag} min"
+   %>
+<tr class="item">
+  <td class="name">
+    <%= link_to bookmark.name, :controller => "bookmarks", :action => "show", :id => bookmark.id, :task_id => bookmark.task.id, :work_id => bookmark.task.work.id %>
+  </td>
+  <td class="duration"><%= bookmark.start_time.strftime("%Y/%m/%d %H:%M") %> - <%= bookmark.end_time.strftime("%H:%M") %>( <%= duration %> )</td>
+<!--
+  <td class="continue">
+    <% if bookmark == Bookmark.current %>
+      <%# link_to "中断", :controller => "desktop_bookmark", :action => "stop", :bookmark => {} %>
+    <% else %>
+      <%# link_to "再開", :controller=> "desktop_bookmark", :action => "start", :work_id => bookmark.task.work.id, :task_id => bookmark.task.id, :bookmark_id => bookmark.id %>
+    <% end %>
+  </td>
+-->
+</tr>
+

@@ -1,0 +1,11 @@
+/* -*- coding:utf-8 -*- */
+$('#work<%= @work.id %>').html(
+    "<%=j render :partial => "works/list_item", :locals => {:work => @work, :depth => @depth} %>"
+);
+
+$('#work<%= @work.id %> .toggle').first().click(function(){
+    $(this).parent().siblings().toggle(0);
+    var isExpandable = $(this).hasClass("expandable");
+    $(this).toggleClass("collapsable", isExpandable);
+    $(this).toggleClass("expandable", !isExpandable)
+});

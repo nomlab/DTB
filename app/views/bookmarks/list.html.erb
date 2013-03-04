@@ -1,0 +1,14 @@
+<%# -*- coding: utf-8 -*-  %>
+<%= stylesheet_link_tag "tasks" %>
+<h2>作業状態一覧</h2>
+
+<table id="task_table">
+  <tr>
+    <th class="name">名前</th>
+    <th class="duration">期間</th>
+    <th class="continue">操作</th>
+  </tr>
+  <% @bookmarks.each do |bookmark| %>
+    <%= render :partial => "bookmarks/bookmark_item", :locals => {:bookmark => bookmark} %>
+  <% end %>
+</table>

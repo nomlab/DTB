@@ -11,7 +11,7 @@ body {
   padding: 0px; 
   color: black;
   background-color: white;
-  background-color: #ddd;
+#  background-color: #ddd;
   font-size: 100%;
 #  text-align: center;
 #  font-family: Verdana,Arial;
@@ -33,12 +33,14 @@ a:link {
 
 a:visited {
   background: transparent none repeat;
-  color: purple;
+#  color: purple;
+  color: blue;
 }
 
 a:hover, a:active { 
   background: transparent none repeat; 
-  color: darkblue;
+#  color: darkblue;
+  color: blue;
 }
 
 a img { 
@@ -285,7 +287,7 @@ div#notice_area {
 div#main {
 #    width: 100%;
     padding-left: 300px;
-#    background-color: #ddd;
+    background-color: white;
 }
 
 tr.task_item {
@@ -369,4 +371,3 @@ div#button {
     width: 100px;
     background-color: palegreen;
 }
-
