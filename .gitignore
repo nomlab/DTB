@@ -11,4 +11,5 @@ app/assets/images/thumbnail/
 repository/
 lib/squid/etc/squid.conf
 lib/squid/etc/mime.conf
-lib/squid/var/*
+lib/squid/var/cache/*
+lib/squid/var/logs/*
