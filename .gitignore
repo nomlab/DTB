@@ -1,0 +1,20 @@
+# Ignore bundler config.
+/.bundle
+
+# Ignore the default SQLite database.
+/db/*.sqlite3
+/db/*.sqlite3-journal
+
+# Ignore all logfiles and tempfiles.
+/log/*.log
+/tmp
+doc/
+*.swp
+*~
+.project
+
+# Ignore a setting file of Finder
+.DS_Store
+
+# Ignore .ruby-gemset
+.ruby-gemset
