@@ -1,0 +1,37 @@
+<h1>Listing unified_histories</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Path</th>
+      <th>Title</th>
+      <th>Type</th>
+      <th>R path</th>
+      <th>Start time</th>
+      <th>End time</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @unified_histories.each do |unified_history| %>
+      <tr>
+        <td><%= unified_history.path %></td>
+        <td><%= unified_history.title %></td>
+        <td><%= unified_history.type %></td>
+        <td><%= unified_history.r_path %></td>
+        <td><%= unified_history.start_time %></td>
+        <td><%= unified_history.end_time %></td>
+        <td><%= link_to 'Show', unified_history %></td>
+        <td><%= link_to 'Edit', edit_unified_history_path(unified_history) %></td>
+        <td><%= link_to 'Destroy', unified_history, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Unified history', new_unified_history_path %>

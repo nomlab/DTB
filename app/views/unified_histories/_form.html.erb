@@ -1,0 +1,41 @@
+<%= form_for(@unified_history) do |f| %>
+  <% if @unified_history.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@unified_history.errors.count, "error") %> prohibited this unified_history from being saved:</h2>
+
+      <ul>
+      <% @unified_history.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :path %><br>
+    <%= f.text_field :path %>
+  </div>
+  <div class="field">
+    <%= f.label :title %><br>
+    <%= f.text_field :title %>
+  </div>
+  <div class="field">
+    <%= f.label :type %><br>
+    <%= f.text_field :type %>
+  </div>
+  <div class="field">
+    <%= f.label :r_path %><br>
+    <%= f.text_field :r_path %>
+  </div>
+  <div class="field">
+    <%= f.label :start_time %><br>
+    <%= f.datetime_select :start_time %>
+  </div>
+  <div class="field">
+    <%= f.label :end_time %><br>
+    <%= f.datetime_select :end_time %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -1,4 +1,12 @@
 DTB::Application.routes.draw do
+  resources :unified_histories
+
+  resources :time_entries
+
+  resources :tasks
+
+  resources :missions
+
   root to: "welcome#index"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

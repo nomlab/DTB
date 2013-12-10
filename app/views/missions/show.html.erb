@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @mission.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @mission.description %>
+</p>
+
+<p>
+  <strong>Deadline:</strong>
+  <%= @mission.deadline %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @mission.status %>
+</p>
+
+<p>
+  <strong>Keyword:</strong>
+  <%= @mission.keyword %>
+</p>
+
+<p>
+  <strong>Parent:</strong>
+  <%= @mission.parent_id %>
+</p>
+
+<%= link_to 'Edit', edit_mission_path(@mission) %> |
+<%= link_to 'Back', missions_path %>
