@@ -85,6 +85,11 @@ class TimeEntriesController < ApplicationController
     end
   end
 
+  def import
+    TimeEntry.import
+    redirect_to :back, notice: 'Import time entry'
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_time_entry

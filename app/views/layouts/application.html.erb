@@ -75,6 +75,7 @@
                   <li><%= button_to "停止", {:controller => "time_entries", :action => "stop",
                                            :id => time_entry.id }, :class => "btn btn-danger" %><li>
                 <% end %>
+                <li><%= button_to "インポート", {:controller => "time_entries", :action => "import"}, :class => "btn btn-nomal" %><li>
               </ul>
             </div><!--/.well -->
           </div><!--/span-->
