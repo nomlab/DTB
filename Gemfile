@@ -49,3 +49,6 @@ gem 'less-rails'
 gem 'twitter-bootstrap-rails'
 gem 'execjs'
 gem 'therubyracer'
+
+# Use Toggl API v8
+gem 'toggl_api', github: 'wkang/toggl_api'

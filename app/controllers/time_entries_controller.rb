@@ -61,6 +61,30 @@ class TimeEntriesController < ApplicationController
     end
   end
 
+  def start
+    options = Hash.new
+    options["description"] = params[:description]
+    response = TimeEntry.start(options)
+    @time_entry = TimeEntry.new({name: response["description"], start_time: Time.parse(response["start"]),
+                                 toggl_time_entry_id: response["id"], running_status: true})
+    if @time_entry.save
+      redirect_to :back, notice: 'Time entry is running.'
+    else
+      redirect_to :back, notice: 'Time entry couldn`t run.'
+    end
+  end
+
+  def stop
+    @time_entry = TimeEntry.find(params[:id])
+    response = @time_entry.stop
+    if @time_entry.update({end_time: (Time.parse(response["start"]) + response["duration"]),
+                            running_status: false})
+      redirect_to :back, notice: 'Time entry stoped.'
+    else
+      redirect_to :back, notice: 'Time entry couldn`t stop.'
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_time_entry
@@ -69,6 +93,6 @@ class TimeEntriesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def time_entry_params
-      params.require(:time_entry).permit(:name, :keyword, :comment, :start_time, :end_time, :thumbnail, :task_id)
+      params.require(:time_entry).permit(:name, :keyword, :comment, :start_time, :end_time, :thumbnail, :task_id, :toggl_time_entry_id, :running_status)
     end
 end
