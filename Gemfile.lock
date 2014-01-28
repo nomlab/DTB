@@ -45,6 +45,7 @@ GEM
       execjs
     coffee-script-source (1.6.3)
     commonjs (0.2.7)
+    daemon-spawn (0.4.2)
     erubis (2.7.0)
     execjs (2.0.2)
     faraday (0.8.8)
@@ -138,6 +139,7 @@ PLATFORMS
 
 DEPENDENCIES
   coffee-rails (~> 4.0.0)
+  daemon-spawn
   execjs
   jbuilder (~> 1.2)
   jquery-rails
