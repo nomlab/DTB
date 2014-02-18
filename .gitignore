@@ -21,3 +21,6 @@ doc/
 
 # Ignore yml file of api_token of toggl
 local/toggl.yml
+
+# Ignore gemfiles
+vendor/bundle
