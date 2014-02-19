@@ -79,7 +79,7 @@ class TimeEntriesController < ApplicationController
     response = @time_entry.stop
     `sudo pkill -f dtrace`
     `rails runner lib/file_log_daemon.rb stop`
-    histories = File.readlines("#{Rails.root}/log/filehistory.log")
+    histories = File.readlines("#{Rails.root}/log/file_access.log")
     file_histories = Array.new
 
     histories.each do |history|

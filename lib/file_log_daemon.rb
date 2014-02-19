@@ -1,7 +1,7 @@
 class FileLogDaemon < DaemonSpawn::Base
   def start(args)
     puts "trace file access start : #{Time.now}"
-    `sudo #{Rails.root.to_s}/lib/track_emacs_file_log.d | awk -f #{Rails.root.to_s}/lib/file_log.awk > #{Rails.root.to_s}/log/file_log.log`
+    `sudo #{Rails.root.to_s}/lib/track_emacs_file_log.d | awk -f #{Rails.root.to_s}/lib/file_log.awk > #{Rails.root.to_s}/log/file_access.log`
   end
 
   def stop
