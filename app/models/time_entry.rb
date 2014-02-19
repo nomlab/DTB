@@ -37,4 +37,8 @@ class TimeEntry < ActiveRecord::Base
     base = TimeEntry.initialize_api_base
     return base.stop_time_entry(self.toggl_time_entry_id)
   end
+
+  def duration
+    return {"start_time" => start_time, "end_time" => end_time}
+  end
 end
