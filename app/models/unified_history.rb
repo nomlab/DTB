@@ -7,6 +7,6 @@ class UnifiedHistory < ActiveRecord::Base
   class WebHistory < UnifiedHistory
   end
 
-  class Filehistory < UnifiedHistory
+  class FileHistory < UnifiedHistory
   end
 end
