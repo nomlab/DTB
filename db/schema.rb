@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140127071237) do
+ActiveRecord::Schema.define(version: 20131210025008) do
 
   create_table "missions", force: true do |t|
     t.string   "name"
@@ -41,23 +41,23 @@ ActiveRecord::Schema.define(version: 20140127071237) do
     t.text     "comment"
     t.datetime "start_time"
     t.datetime "end_time"
-    t.string   "thumbnail"
+    t.integer  "toggl_time_entry_id"
+    t.boolean  "running_status",      default: false
     t.integer  "task_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "toggl_time_entry_id"
-    t.boolean  "running_status",      default: false
   end
 
   create_table "unified_histories", force: true do |t|
-    t.string   "path"
     t.string   "title"
+    t.string   "path"
+    t.string   "history_type"
     t.string   "r_path"
     t.datetime "start_time"
     t.datetime "end_time"
+    t.string   "thumbnail"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "history_type"
   end
 
 end

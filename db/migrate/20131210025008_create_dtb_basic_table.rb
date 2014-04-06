@@ -28,19 +28,21 @@ class CreateDtbBasicTable < ActiveRecord::Migration
       t.text :comment
       t.datetime :start_time
       t.datetime :end_time
-      t.string :thumbnail
+      t.integer :toggl_time_entry_id
+      t.boolean :running_status, :default => false
       t.integer :task_id
 
       t.timestamps
     end
 
     create_table :unified_histories do |t|
-      t.string :path
       t.string :title
-      t.string :type
+      t.string :path
+      t.string :history_type
       t.string :r_path
       t.datetime :start_time
       t.datetime :end_time
+      t.string :thumbnail
 
       t.timestamps
     end
