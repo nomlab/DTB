@@ -32,18 +32,6 @@ group :doc do
   gem 'sdoc', require: false
 end
 
-# Use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.0.0'
-
-# Use unicorn as the app server
-# gem 'unicorn'
-
-# Use Capistrano for deployment
-# gem 'capistrano', group: :development
-
-# Use debugger
-# gem 'debugger', group: [:development, :test]
-
 # Twitter Bootstrap
 gem 'less-rails'
 gem 'twitter-bootstrap-rails'
@@ -55,3 +43,7 @@ gem 'toggl_api', github: 'wkang/toggl_api'
 
 # Use daemon
 gem 'daemon-spawn', :require => 'daemon_spawn'
+
+# Watch file
+gem 'guard'
+gem 'guard-shell'
