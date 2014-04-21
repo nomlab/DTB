@@ -1,0 +1,11 @@
+{
+    "name": "mindthetime",
+    "title": "My Mind The Time",
+    "id": "jid0-HYNmqxA9zQGfJADREri4n2AHKSI@jetpack",
+    "description": "実験用に改造したMind The Time.",
+    "author": "Takuya Okada",
+    "license": "MPL 2.0",
+    "version": "0.1",
+    "lib": "resources/mind-the-time/lib",
+    "main": "main"
+}

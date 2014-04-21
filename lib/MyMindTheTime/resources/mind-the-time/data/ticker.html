@@ -1,0 +1,37 @@
+<!--
+This Source Code Form is subject to the terms of the Mozilla Public
+License, v. 2.0. If a copy of the MPL was not distributed with this file,
+You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script src="ticker.js"></script>
+    <style>
+        #tickerDiv {
+            background: #e6e6e6;
+            height: 14px;
+            line-height: 14px;
+            font-size: 13px;
+            text-align: center;
+            color: #aaa;
+            font-family: Arial, sans-serif;
+            letter-spacing: -0.5px;
+            border: 1px solid #999;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        #modeDot {
+            border: 2px solid transparent;
+            border-radius: 2px;
+            position: absolute;
+            margin: 2px 2px;
+        }
+    </style>
+  </head>
+  <body onload="init()">
+        <div id="modeDot"></div>
+        <div id="tickerDiv">0:00&nbsp;&nbsp;0:00</div>
+  </body>
+</html>
