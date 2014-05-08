@@ -47,3 +47,4 @@ gem 'daemon-spawn', :require => 'daemon_spawn'
 # Watch file
 gem 'guard'
 gem 'guard-shell'
+gem 'rb-kqueue'

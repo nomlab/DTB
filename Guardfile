@@ -15,8 +15,10 @@ def save_web_history_from_web_log(file)
   thumbnail = last_log[4]
   insert_history = "INSERT INTO unified_histories VALUES(#{id}, '#{title}', '#{url}', 'web_history', '', '#{start_time}', '#{end_time}', '#{thumbnail}', datetime('now', 'localtime'), datetime('now', 'localtime'))"
   dtb_db.execute(insert_history)
+  dtb_db.close
 end
 
 guard :shell do
   watch(%r{^(mymindthetime.sqlite)$}) {|m| save_web_history_from_web_log("/Users/okada/Library/Application Support/Firefox/Profiles/wn9kf5tr.test/mymindthetime.sqlite") }
 end
+
