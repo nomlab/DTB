@@ -2,10 +2,10 @@
 #
 # Author:  Takuya Okada
 # Created: 2014-5-28
+# Updated: 2014-5-28
 #
 # log format
-#    pid|pName|startTime|endTime
-#   If endTime is '*',  that entry was not completely wathed
+#    stratTime|pid|pName
 
 # property of script
 property aLogDirPath : "/Users/okada/Dropbox/Nomlab/home/admin/misc/DTB/lib/"
@@ -66,19 +66,6 @@ on isEmptyFile(unixFilePath)
         return false
 end isEmptyFile
 
-on addStrToNewFile(aString, unixFilePath)
-        set aFile to unixFilePath as POSIX file
-
-        open for access aFile with write permission
-        set aEOF to get eof of aFile
-        try
-                write aString starting at (aEOF + 1) to aFile
-        on error aErrorText
-                display dialog aErrorText
-        end try
-        close access aFile
-end addStrToNewFile
-
 on addStrToFile(aString, unixFilePath)
         set aFile to unixFilePath as POSIX file
 
@@ -86,7 +73,7 @@ on addStrToFile(aString, unixFilePath)
         set aEOF to get eof of aFile
         try
                 # Overwrite '*'
-                write aString starting at (aEOF) to aFile
+                write aString starting at (aEOF + 1) to aFile
         on error aErrorText
                 display dialog aErrorText
         end try
@@ -111,14 +98,7 @@ end createBackUpLogFile
 repeat
         set {pid, pName} to newFrontmostProcessIDAndName()
         set startTime to get makeDateStr(current date) of me
-        set endTime to get startTime
 
-        if isEmptyFile(aLogFilePath) then
-                set logString to (pid as string) & "|" & pName & "|" & startTime & "|" & "*"
-                addStrToNewFile(logString, aLogFilePath)
-        else
-                set logString to endTime & LF & pid & "|" & pName & "|" & startTime & "|" & "*"
-                addStrToFile(logString, aLogFilePath)
-        end if
-        log logString
+        set logString to startTime & "|" & pid & "|" & pName & LF
+        addStrToFile(logString, aLogFilePath)
 end repeat
