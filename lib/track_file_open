@@ -1,12 +1,11 @@
 #!/usr/sbin/dtrace -q -s
 syscall::open:entry
 {
-  unixtime = walltimestamp % 1000000000 < 5000000000 ?
-             walltimestamp / 1000000000 : walltimestamp / 1000000000 + 1;
+  unixtime = walltimestamp / 1000000000;
   self->file = arg0;
 }
 syscall::open:return
 {
-  printf("%d|%d|%s|%s\n", unixtime, pid, execname, copyinstr(self->file));
+  printf("%d|file_open|%d|%s|%s\n", unixtime, pid, execname, copyinstr(self->file));
   self->file = 0;
 }
