@@ -1,9 +1,0 @@
-#!/opt/local/bin/gawk -f
-BEGIN{
-    FS="|"
-}
-{
-    if($4 ~ /\/Users\/okada/){
-        print (strftime("%Y%m%dT%H%M%S", $1)"|"$2"|"$3"|"$4)
-    }
-}
