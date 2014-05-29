@@ -41,10 +41,6 @@ gem 'therubyracer'
 # Use Toggl API v8
 gem 'toggl_api', github: 'wkang/toggl_api'
 
-# Use daemon
-gem 'daemon-spawn', :require => 'daemon_spawn'
-
 # Watch file
 gem 'guard'
 gem 'guard-shell'
-gem 'rb-kqueue'

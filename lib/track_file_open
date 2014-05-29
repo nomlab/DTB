@@ -1,0 +1,7 @@
+#!/usr/sbin/dtrace -q -s
+syscall::open:entry
+{
+  unixtime = walltimestamp % 1000000000 < 5000000000 ?
+             walltimestamp / 1000000000 : walltimestamp / (10*9) + 1;
+  printf("%d|%d|%s|%s\n", unixtime, pid, execname, copyinstr(arg0));
+}
