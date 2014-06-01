@@ -1,0 +1,129 @@
+#!/usr/bin/env ruby
+require 'io/wait'
+
+class RecordGetter
+  include Enumerable
+
+  def initialize
+    @records = []
+    @trackers = []
+  end
+
+  def add_tracker(tracker)
+    @trackers << tracker.new
+  end
+
+  def del_tracker(tracker)
+    @trackers.each{|t|
+      t = nil if t.class == tracker
+    }
+    @trackers.compact
+  end
+
+  def get_record
+    @trackers.each{|t|
+      @records << t.get_record if t.ready?
+    }
+    oldest_record = @records.sort!.first
+    @records[0] = nil
+    @records.compact!
+    oldest_record
+  end
+
+  def ready?
+    !@records.empty? || @trackers.any?{|t| t.ready? }
+  end
+
+  def each
+    @records.each do |record|
+      yield record
+    end
+  end
+end
+
+class RecordTracker
+  def initialize
+    @io = exec_cmd
+    set_record_class
+  end
+
+  def get_record
+    @record_class.new(@io.gets)
+  end
+
+  def ready?
+    @io.ready?
+  end
+
+  def stop_track
+    # stop track
+  end
+end
+
+class FileOpenTracker < RecordTracker
+  def exec_cmd
+    IO.popen("sudo ./track_file_open")
+  end
+
+  def set_record_class
+    @record_class = FileOpenRecord
+  end
+end
+
+class FocusChangeTracker < RecordTracker
+  def exec_cmd
+    IO.popen("./track_focus_change")
+  end
+
+  def set_record_class
+    @record_class = FocusChangeRecord
+  end
+end
+
+class ActivityRecord
+  include Comparable
+  attr_reader :time, :record_type, :pid, :pname
+
+  def initialize(line)
+  end
+
+  def parse_line(line)
+    principle_record = line.split("|")
+    principle_record[0] = Time.at(principle_record.first.to_i)
+    principle_record
+  end
+
+  def <=>(other)
+    self.time <=> other.time
+  end
+
+  def equal_process?(other)
+    self.pid == other.pid && self.pname == other.pname
+  end
+end
+
+class FileOpenRecord < ActivityRecord
+  attr_reader :path
+
+  def initialize(line)
+    @time, @record_type, @pid, @pname, @path = parse_line(line)
+  end
+end
+
+class FocusChangeRecord < ActivityRecord
+  def initialize(line)
+    @time, @record_type, @pid, @pname = parse_line(line)
+  end
+end
+
+################################
+# main
+rg = RecordGetter.new
+#rg.add_tracker(FileOpenTracker)
+rg.add_tracker(FocusChangeTracker)
+while 1 do
+  record = nil
+  record = rg.get_record if rg.ready?
+  puts "#{record.time}|#{record.record_type}|#{record.pid}|#{record.pname}" unless record == nil
+  sleep 1 #sec
+end
