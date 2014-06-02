@@ -8,7 +8,7 @@ class RecordGetter
   end
 
   def add_tracker(tracker_type)
-    @trackers << RecordTracker.careate(tracker_type)
+    @trackers << RecordTracker.create(tracker_type)
     return self
   end
 
@@ -55,8 +55,8 @@ class RecordTracker
     system "kill -9 #{@io.pid}"
   end
 
-  def self.create(:tracker_type)
-    case
+  def self.create(tracker_type)
+    case tracker_type
     when :file_open
       tracker = FileOpenTracker
     when :focus_change
@@ -64,7 +64,7 @@ class RecordTracker
     else
       raise "Unknown Tracker type"
     end
-    return tradker.new
+    return tracker.new
   end
 end
 
@@ -85,6 +85,32 @@ class FocusChangeTracker < RecordTracker
 
   def factory_class
     FocusChangeRecord
+  end
+end
+
+class RecordTrackerDecorator < RecordTracker
+  def initialize(tracker)
+    @tracker = tracker
+    @record = nil
+    self
+  end
+
+  def get_record
+    record = @record
+    @record = nil
+    record
+  end
+
+  def ready?
+    @record = @tracker.get_record if @tracker.ready?
+    @record = filter_record(@record)
+    @record.nil?
+  end
+end
+
+class HomeDirectoryFilter < RecordTrackerDecorator
+  def filter_record(record)
+    record if /^#{ENV["HOME"]}/ =~ record.path
   end
 end
 
