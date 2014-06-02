@@ -14,10 +14,14 @@ class RecordGetter
   end
 
   def del_tracker(tracker)
+    dt = nil
     @trackers.each{|t|
-      t = nil if t.class == tracker
+      if t.class == tracker
+        t.stop_track
+        dt = t
+      end
     }
-    @trackers.compact
+    @trackers.delete(dt) unless dt == nil
   end
 
   def get_record
@@ -44,7 +48,7 @@ end
 class RecordTracker
   def initialize
     @io = exec_cmd
-    set_record_class
+    @record_class = set_record_class
   end
 
   def get_record
@@ -56,7 +60,7 @@ class RecordTracker
   end
 
   def stop_track
-    # stop track
+    system "kill -9 #{@io.pid}"
   end
 end
 
@@ -66,26 +70,23 @@ class FileOpenTracker < RecordTracker
   end
 
   def set_record_class
-    @record_class = FileOpenRecord
+    FileOpenRecord
   end
 end
 
 class FocusChangeTracker < RecordTracker
   def exec_cmd
-    IO.popen("./track_focus_change")
+    IO.popen("./track_focus_change 2>&1")
   end
 
   def set_record_class
-    @record_class = FocusChangeRecord
+    FocusChangeRecord
   end
 end
 
 class ActivityRecord
   include Comparable
   attr_reader :time, :record_type, :pid, :pname
-
-  def initialize(line)
-  end
 
   def parse_line(line)
     principle_record = line.split("|")
@@ -100,6 +101,10 @@ class ActivityRecord
   def equal_process?(other)
     self.pid == other.pid && self.pname == other.pname
   end
+
+  def print_record
+    puts "#{@time}|#{@record_type}|#{@pid}|#{@pname}"
+  end
 end
 
 class FileOpenRecord < ActivityRecord
@@ -107,6 +112,10 @@ class FileOpenRecord < ActivityRecord
 
   def initialize(line)
     @time, @record_type, @pid, @pname, @path = parse_line(line)
+  end
+
+  def print_record
+    puts "#{@time}|#{@record_type}|#{@pid}|#{@pname}|#{@path}"
   end
 end
 
@@ -119,11 +128,11 @@ end
 ################################
 # main
 rg = RecordGetter.new
-#rg.add_tracker(FileOpenTracker)
+rg.add_tracker(FileOpenTracker)
 rg.add_tracker(FocusChangeTracker)
 while 1 do
   record = nil
   record = rg.get_record if rg.ready?
-  puts "#{record.time}|#{record.record_type}|#{record.pid}|#{record.pname}" unless record == nil
+  record.print_record unless record == nil
   sleep 1 #sec
 end
