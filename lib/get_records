@@ -2,15 +2,14 @@
 require 'io/wait'
 
 class RecordGetter
-  include Enumerable
-
   def initialize
     @records = []
     @trackers = []
   end
 
-  def add_tracker(tracker)
-    @trackers << tracker.new
+  def add_tracker(tracker_type)
+    @trackers << RecordTracker.careate(tracker_type)
+    return self
   end
 
   def del_tracker(tracker)
@@ -37,22 +36,15 @@ class RecordGetter
   def ready?
     !@records.empty? || @trackers.any?{|t| t.ready? }
   end
-
-  def each
-    @records.each do |record|
-      yield record
-    end
-  end
 end
 
 class RecordTracker
   def initialize
     @io = exec_cmd
-    @record_class = set_record_class
   end
 
   def get_record
-    @record_class.new(@io.gets)
+    factory_class.new(@io.gets)
   end
 
   def ready?
@@ -62,6 +54,18 @@ class RecordTracker
   def stop_track
     system "kill -9 #{@io.pid}"
   end
+
+  def self.create(:tracker_type)
+    case
+    when :file_open
+      tracker = FileOpenTracker
+    when :focus_change
+      tracker = FocusChangeTracker
+    else
+      raise "Unknown Tracker type"
+    end
+    return tradker.new
+  end
 end
 
 class FileOpenTracker < RecordTracker
@@ -69,7 +73,7 @@ class FileOpenTracker < RecordTracker
     IO.popen("sudo ./track_file_open")
   end
 
-  def set_record_class
+  def factory_class
     FileOpenRecord
   end
 end
@@ -79,7 +83,7 @@ class FocusChangeTracker < RecordTracker
     IO.popen("./track_focus_change 2>&1")
   end
 
-  def set_record_class
+  def factory_class
     FocusChangeRecord
   end
 end
@@ -127,12 +131,14 @@ end
 
 ################################
 # main
+
 rg = RecordGetter.new
-rg.add_tracker(FileOpenTracker)
-rg.add_tracker(FocusChangeTracker)
+rg.add_tracker(:file_open).add_tracker(:focus_change)
+
 while 1 do
-  record = nil
-  record = rg.get_record if rg.ready?
-  record.print_record unless record == nil
+  if rg.ready?
+    record = rg.get_record
+    record.print_record
+  end
   sleep 1 #sec
 end
