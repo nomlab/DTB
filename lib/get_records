@@ -80,7 +80,7 @@ end
 
 class FocusChangeTracker < RecordTracker
   def exec_cmd
-    IO.popen("./track_focus_change 2>&1")
+    IO.popen("./track_focus_change")
   end
 
   def factory_class
