@@ -1,26 +1,15 @@
 #!/usr/bin/env ruby
 require 'io/wait'
 
-class RecordGetter
+class ActivityTrackerManager
   def initialize
     @records = []
     @trackers = []
   end
 
-  def add_tracker(tracker_type)
-    @trackers << RecordTracker.create(tracker_type)
+  def add_tracker(tracker)
+    @trackers << tracker
     return self
-  end
-
-  def del_tracker(tracker)
-    dt = nil
-    @trackers.each{|t|
-      if t.class == tracker
-        t.stop_track
-        dt = t
-      end
-    }
-    @trackers.delete(dt) unless dt == nil
   end
 
   def get_record
@@ -30,45 +19,54 @@ class RecordGetter
     oldest_record = @records.sort!.first
     @records[0] = nil
     @records.compact!
-    oldest_record
+    return oldest_record
   end
 
   def ready?
-    !@records.empty? || @trackers.any?{|t| t.ready? }
+    return !@records.empty? || @trackers.any?{|t| t.ready? }
+  end
+
+  def stop_track
+    @trackers.each{|t|
+      t.stop_track
+    }
   end
 end
 
-class RecordTracker
+class ActivityTracker
   def initialize
     @io = exec_cmd
   end
 
   def get_record
-    factory_class.new(@io.gets)
+    return factory_class.new(@io.gets)
   end
 
   def ready?
-    @io.ready?
+    return @io.ready?
   end
 
   def stop_track
     system "kill -9 #{@io.pid}"
   end
 
-  def self.create(tracker_type)
+  def self.create(tracker_types)
+    tracker_type = tracker_types.shift
     case tracker_type
     when :file_open
       tracker = FileOpenTracker
     when :focus_change
       tracker = FocusChangeTracker
+    when :home_directory_filter
+      tracker = HomeDirectoryFilter
     else
       raise "Unknown Tracker type"
     end
-    return tracker.new
+    return tracker_types.empty? ? tracker.new : tracker.new(self.create(tracker_types))
   end
 end
 
-class FileOpenTracker < RecordTracker
+class FileOpenTracker < ActivityTracker
   def exec_cmd
     IO.popen("sudo ./track_file_open")
   end
@@ -78,39 +76,45 @@ class FileOpenTracker < RecordTracker
   end
 end
 
-class FocusChangeTracker < RecordTracker
+class FocusChangeTracker < ActivityTracker
   def exec_cmd
     IO.popen("./track_focus_change")
   end
 
   def factory_class
-    FocusChangeRecord
+    return FocusChangeRecord
   end
 end
 
-class RecordTrackerDecorator < RecordTracker
+class ActivityTrackerDecorator < ActivityTracker
   def initialize(tracker)
     @tracker = tracker
     @record = nil
-    self
+    return self
   end
 
   def get_record
     record = @record
     @record = nil
-    record
+    return record
   end
 
   def ready?
-    @record = @tracker.get_record if @tracker.ready?
-    @record = filter_record(@record)
-    @record.nil?
+    if @tracker.ready? && @record.nil?
+      @record = @tracker.get_record
+      @record = filter_record(@record)
+    end
+    return !@record.nil?
+  end
+
+  def stop_track
+    tracker.stop_track
   end
 end
 
-class HomeDirectoryFilter < RecordTrackerDecorator
+class HomeDirectoryFilter < ActivityTrackerDecorator
   def filter_record(record)
-    record if /^#{ENV["HOME"]}/ =~ record.path
+    return /^#{ENV["HOME"]}/ =~ record.path ? record : nil
   end
 end
 
@@ -121,7 +125,7 @@ class ActivityRecord
   def parse_line(line)
     principle_record = line.split("|")
     principle_record[0] = Time.at(principle_record.first.to_i)
-    principle_record
+    return principle_record
   end
 
   def <=>(other)
@@ -158,8 +162,8 @@ end
 ################################
 # main
 
-rg = RecordGetter.new
-rg.add_tracker(:file_open).add_tracker(:focus_change)
+rg = ActivityTrackerManager.new
+rg.add_tracker(ActivityTracker.create([:home_directory_filter, :file_open])).add_tracker(ActivityTracker.create([:focus_change]))
 
 while 1 do
   if rg.ready?
