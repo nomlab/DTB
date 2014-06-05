@@ -57,8 +57,18 @@ class ActivityTracker
       tracker = FileOpenTracker
     when :focus_change
       tracker = FocusChangeTracker
-    when :home_directory_filter
-      tracker = HomeDirectoryFilter
+    when :accept_home_directory_filter
+      tracker = AcceptHomeDirectoryFilter
+    when :ignore_library_filter
+      tracker = IgnoreLibraryFilter
+    when :ignore_finder_filter
+      tracker = IgnoreFinderFilter
+    when :ignore_font_worker_filter
+      tracker = IgnoreFontWorkerFilter
+    when :ignore_truste_valuation_filter
+      tracker = IgnoreTrusteValuationFilter
+    when :ignore_mdworker_filter
+      tracker = IgnoreMdworkerFilter
     else
       raise "Unknown Tracker type"
     end
@@ -68,7 +78,7 @@ end
 
 class FileOpenTracker < ActivityTracker
   def exec_cmd
-    IO.popen("sudo ./track_file_open")
+    IO.popen("sudo #{Rails.root}/lib/track_file_open")
   end
 
   def factory_class
@@ -78,7 +88,7 @@ end
 
 class FocusChangeTracker < ActivityTracker
   def exec_cmd
-    IO.popen("./track_focus_change")
+    IO.popen("#{Rails.root}/lib/track_focus_change")
   end
 
   def factory_class
@@ -112,9 +122,39 @@ class ActivityTrackerDecorator < ActivityTracker
   end
 end
 
-class HomeDirectoryFilter < ActivityTrackerDecorator
+class AcceptHomeDirectoryFilter < ActivityTrackerDecorator
   def filter_record(record)
     return /^#{ENV["HOME"]}/ =~ record.path ? record : nil
+  end
+end
+
+class IgnoreLibraryFilter < ActivityTrackerDecorator
+  def filter_record(record)
+    return /^#{ENV["HOME"]}\/Library/ =~ record.path ? nil : record
+  end
+end
+
+class IgnoreFinderFilter < ActivityTrackerDecorator
+  def filter_record(record)
+    return /^Finder$/ =~ record.pname ? nil : record
+  end
+end
+
+class IgnoreFontWorkerFilter < ActivityTrackerDecorator
+  def filter_record(record)
+    return /^fontworker$/ =~ record.pname ? nil : record
+  end
+end
+
+class IgnoreTrusteValuationFilter < ActivityTrackerDecorator
+  def filter_record(record)
+    return /^trustevaluation$/ =~ record.pname ? nil : record
+  end
+end
+
+class IgnoreMdworkerFilter < ActivityTrackerDecorator
+  def filter_record(record)
+    return /^mdworker$/ =~ record.pname ? nil : record
   end
 end
 
@@ -123,6 +163,7 @@ class ActivityRecord
   attr_reader :time, :record_type, :pid, :pname
 
   def parse_line(line)
+    line.chomp!
     principle_record = line.split("|")
     principle_record[0] = Time.at(principle_record.first.to_i)
     return principle_record
@@ -148,6 +189,10 @@ class FileOpenRecord < ActivityRecord
     @time, @record_type, @pid, @pname, @path = parse_line(line)
   end
 
+  def equal_path?(other)
+    self.path == other.path
+  end
+
   def print_record
     puts "#{@time}|#{@record_type}|#{@pid}|#{@pname}|#{@path}"
   end
@@ -159,16 +204,135 @@ class FocusChangeRecord < ActivityRecord
   end
 end
 
+class FileOpeningProcess
+  include Comparable
+  attr_reader :pid, :pname, :path
+
+  def initialize(h)
+    @pid, @pname, @path = h[:pid], h[:pname], h[:path]
+  end
+
+  def <=>(other)
+    self.time <=> other.time
+  end
+
+  def equal_process?(other)
+    self.pid == other.pid && self.pname == other.pname
+  end
+
+  def equal_path?(other)
+    self.path == other.path
+  end
+end
+
+class WatchFileByProcess < ActivityRecord
+  attr_reader :path
+  def initialize(h)
+    @time, @record_type, @pid, @pname, @path = h[:time], 'process', h[:pid], h[:pname], h[:path]
+  end
+
+  def equal_path?(other)
+    self.path == other.path
+  end
+end
+
+class FileHistoryFactory
+  def initialize
+    @file_open_records = []
+    @file_opening_processes = []
+    @watch_files = []
+  end
+
+  def create_history(record)
+    case record
+    when FileOpenRecord
+      unless already_file_open?(record)
+        @file_open_records << record
+        @file_opening_processes << FileOpeningProcess.new( pid:   record.pid,
+                                                           pname: record.pname,
+                                                           path:  record.path )
+      end
+    when FocusChangeRecord
+      create_history_from_file_open_records(record)
+      create_history_from_watch_files(record)
+      store_watching_files(record)
+    end
+  end
+
+  private
+  def already_file_open?(record)
+    return already_exist_same_path_record?(record) || already_exist_same_path_process?(record)
+  end
+
+  def already_exist_same_path_record?(record)
+    @file_open_records.blank? ? false : @file_open_records.all?{|r| !r.equal_path?(record)}
+  end
+
+  def already_exist_same_path_process?(record)
+    @file_opening_processes.blank? ? false : @file_opening_processes.all?{|p| !p.equal_path?(record)}
+  end
+
+  def create_history_from_file_open_records(record)
+    unless @file_open_records.blank?
+      finish_watch_open_records = @file_open_records.select{|r| !r.equal_process?(record)}
+      finish_watch_open_records.each{|r|
+        puts UnifiedHistory.create!( path:         r.path,
+                                     title:        r.path.split("/").last || r.path,
+                                     history_type: "file_history",
+                                     start_time:   r.time,
+                                     end_time:     record.time )
+      }
+      @file_open_records = @file_open_records.select{|r| r.equal_process?(record)}
+    end
+  end
+
+  def create_history_from_watch_files(record)
+    unless @watch_files_by_process.blank?
+      finish_watch_files = @watch_files.select{|f| !f.equal_process?(record)}
+      finish_watch_files.each{|f|
+        puts UnifiedHistory.create!( path:         f.path,
+                                     title:        f.path.split("/").last || f.path,
+                                     history_type: "file_history",
+                                     start_time:   f.time,
+                                     end_time:     record.time )
+      }
+      @watch_files =  @watch_files.select{|f| f.equal_process?(record)}
+    end
+  end
+
+  def store_watching_files(record)
+    unless @file_opening_processes.blank?
+      @file_opening_processes.each{|process|
+        if process.equal_process?(record)
+          @watch_files << WatchFileByProcess.new( time:  record.time,
+                                                  pid:   process.pid,
+                                                  pname: process.pname,
+                                                  path:  process.path )
+        end
+      }
+    end
+  end
+end
+
 ################################
 # main
 
-rg = ActivityTrackerManager.new
-rg.add_tracker(ActivityTracker.create([:home_directory_filter, :file_open])).add_tracker(ActivityTracker.create([:focus_change]))
+atm = ActivityTrackerManager.new
+atm.add_tracker(ActivityTracker.create([:ignore_mdworker_filter,
+                                        :ignore_truste_valuation_filter,
+                                        :ignore_font_worker_filter,
+                                        :ignore_finder_filter,
+                                        :ignore_library_filter,
+                                        :accept_home_directory_filter,
+                                        :file_open]))
+atm.add_tracker(ActivityTracker.create([:focus_change]))
+fhf = FileHistoryFactory.new
 
 while 1 do
-  if rg.ready?
-    record = rg.get_record
+  if atm.ready?
+    record = atm.get_record
     record.print_record
+    #fhf.create_history(atm.get_record)
   end
   sleep 1 #sec
 end
