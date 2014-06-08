@@ -10,5 +10,6 @@ Bundler.require(:default, Rails.env)
 module DTB
   class Application < Rails::Application
     config.autoload_paths += %W(#{config.root}/lib)
+    config.time_zone = 'Tokyo'
   end
 end
