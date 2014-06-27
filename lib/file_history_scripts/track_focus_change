@@ -7,8 +7,10 @@
 
 osascript 2>&1 <<EOF
 on getFrontmostProcess()
+  set wnum to do shell script "./lib/file_history_scripts/get_title_of_focused_window"
   tell application "System Events"
-    return {unix id, name} of (item 1 of (processes whose frontmost is true))
+    set {pid, pname} to {unix id, name} of (item 1 of (processes whose frontmost is true))
+    return {pid, pname, wnum}
   end tell
 end getFrontmostProcess
 
@@ -17,14 +19,14 @@ end getFrontmostProcess
 
 on getTimeStringISO(time)
   set {year:y, month:m, day:d, hours:hh, minutes:mm, seconds:ss} to time
-  set ymd to y  * 10000 + m  * 100 + d
+  set ymd to y * 10000 + m * 100 + d
   set hms to hh * 10000 + mm * 100 + ss + 1000000 as string
 
   return ymd & "T" & (text 2 thru 7 of hms)
 end getTimeStringISO
 
 on getTimeStringUnix(time)
-  set sec to (time - (date "1970-1-1") - (time to GMT)) as miles as string
+  set sec to (time - (date "1970年1月1日木曜日 0:00:00") - (time to GMT)) as miles as string
   return sec
 end getTimeStringUnix
 
@@ -40,10 +42,10 @@ on getTimeStringLong(time)
   return y & " " & m & " " & spc & d & " " & (text 2 thru 3 of hms) & ":" & (text 4 thru 5 of hms) & ":" & (text 6 thru 7 of hms)
 end getTimeStringLong
 
-on printLog(pid, pname)
+on printLog(pid, pname, wnum)
   set now to getTimeStringUnix(current date) as string
-  log now & "|focus_change|" & pid & "|" & pname & "|"
-end
+  log now & "|focus_change|" & pid & "|" & pname & "|" & wnum
+end printLog
 
 ################################################################
 ## main
@@ -52,11 +54,11 @@ set previousProcess to null
 
 repeat
   set currentProcess to getFrontmostProcess()
-  set {pid, pname} to currentProcess
+  set {pid, pname, wnum} to currentProcess
 
   if not (currentProcess = previousProcess) then
-    printLog(pid, pname)
-    set previousProcess to currentProcess
+  printLog(pid, pname, wnum)
+  set previousProcess to currentProcess
   end if
   delay 1 #sec
 end repeat

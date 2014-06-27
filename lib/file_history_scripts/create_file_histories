@@ -55,6 +55,8 @@ class ActivityTracker
     case tracker_type
     when :file_open
       tracker = FileOpenTracker
+    when :file_close
+      tracker = FileCloseTracker
     when :focus_change
       tracker = FocusChangeTracker
     when :accept_home_directory_filter
@@ -87,6 +89,12 @@ class ActivityTracker
       tracker = IgnoreComAppleAppkiFilter
     when :ignore_emacsd_filter
       tracker = IgnoreEmacsdFilter
+    when :ignore_launchservicesd_filter
+      tracker = IgnoreLaunchServicesdFilter
+    when :ignore_taskgated_filter
+      tracker = IgnoreTaskGatedFilter
+    when :ignore_get_title_of_fo_filter
+      tracker = IgnoreGetTitleOfFoFilter
     else
       raise "Unknown Tracker type"
     end
@@ -101,6 +109,16 @@ class FileOpenTracker < ActivityTracker
 
   def factory_class
     FileOpenRecord
+  end
+end
+
+class FileCloseTracker < ActivityTracker
+  def exec_cmd
+    IO.popen("sudo #{Rails.root}/lib/file_history_scripts/track_file_close")
+  end
+
+  def factory_class
+    FileCloseRecord
   end
 end
 
@@ -233,6 +251,24 @@ class IgnoreEmacsdFilter < ActivityTrackerDecorator
   end
 end
 
+class IgnoreLaunchServicesdFilter < ActivityTrackerDecorator
+  def filter_record(record)
+    return /^launchservicesd/ =~ record.pname ? nil : record
+  end
+end
+
+class IgnoreTaskGatedFilter < ActivityTrackerDecorator
+  def filter_record(record)
+    return /^taskgated/ =~ record.pname ? nil : record
+  end
+end
+
+class IgnoreGetTitleOfFoFilter < ActivityTrackerDecorator
+  def filter_record(record)
+    return /^get_title_of_fo/ =~ record.pname ? nil : record
+  end
+end
+
 class ActivityRecord
   include Comparable
   attr_reader :time, :record_type, :pid, :pname
@@ -258,24 +294,49 @@ class ActivityRecord
 end
 
 class FileOpenRecord < ActivityRecord
-  attr_reader :path
+  attr_reader :path, :fd
 
   def initialize(line)
-    @time, @record_type, @pid, @pname, @path = parse_line(line)
+    @time, @record_type, @pid, @pname, @path, @fd = parse_line(line)
   end
 
   def equal_path?(other)
     self.path == other.path
   end
 
+  def equal_fd?(other)
+    self.fd == other.fd
+  end
+
   def print_record
-    puts "#{@time}|#{@record_type}|#{@pid}|#{@pname}|#{@path}"
+    puts "#{@time}|#{@record_type}|#{@pid}|#{@pname}|#{@path}|#{@fd}"
+  end
+end
+
+class FileCloseRecord < ActivityRecord
+  attr_reader :fd
+
+  def initialize(line)
+    @time, @record_type, @pid, @pname, @fd = parse_line(line)
+  end
+
+  def equal_fd?(other)
+    self.fd == other.fd
+  end
+
+  def print_record
+    puts "#{@time}|#{@record_type}|#{@pid}|#{@pname}|#{@fd}"
   end
 end
 
 class FocusChangeRecord < ActivityRecord
+  attr_reader :window_number
   def initialize(line)
-    @time, @record_type, @pid, @pname = parse_line(line)
+    @time, @record_type, @pid, @pname, @window_number = parse_line(line)
+  end
+
+  def print_record
+    puts "#{@time}|#{@record_type}|#{@pid}|#{@pname}|#{@window_number}"
   end
 end
 
@@ -326,25 +387,25 @@ class FileHistoryFactory
       }
 
       finish_watch_records(record).each{|r|
-        fh = UnifiedHistory.create!( path:         r.path,
-                                     title:        r.path.split("/").last || r.path,
-                                     history_type: "file_history",
-                                     start_time:   r.time,
-                                     end_time:     record.time )
+        fh = UnifiedHistory.new( path:         r.path,
+                                 title:        r.path.split("/").last || r.path,
+                                 history_type: "file_history",
+                                 start_time:   r.time,
+                                 end_time:     record.time )
         @file_opening_processes << FileOpeningProcess.new( pid:   r.pid,
                                                            pname: r.pname,
                                                            path:  r.path )
-        puts "#{fh.start_time}|#{fh.end_time}|#{fh.title}|#{fh.path}"
+        puts "history: #{fh.start_time}|#{fh.end_time}|#{fh.title}|#{fh.path}"
       }
       @file_open_records =  @file_open_records.select{|r| r.equal_process?(record)}
 
       finish_watch_files(record).each{|f|
-        fh = UnifiedHistory.create!( path:         f.path,
-                                     title:        f.path.split("/").last || f.path,
-                                     history_type: "file_history",
-                                     start_time:   f.time,
-                                     end_time:     record.time )
-        puts "#{fh.start_time}|#{fh.end_time}|#{fh.title}|#{fh.path}"
+        fh = UnifiedHistory.new( path:         f.path,
+                                 title:        f.path.split("/").last || f.path,
+                                 history_type: "file_history",
+                                 start_time:   f.time,
+                                 end_time:     record.time )
+        puts "history: #{fh.start_time}|#{fh.end_time}|#{fh.title}|#{fh.path}"
       }
       @watch_files =  @watch_files.select{|f| f.equal_process?(record)}
     end
@@ -381,7 +442,10 @@ end
 # main
 
 atm = ActivityTrackerManager.new
-atm.add_tracker(ActivityTracker.create([:ignore_emacsd_filter,
+atm.add_tracker(ActivityTracker.create([:ignore_get_title_of_fo_filter,
+                                        :ignore_taskgated_filter,
+                                        :ignore_launchservicesd_filter,
+                                        :ignore_emacsd_filter,
                                         :ignore_com_apple_appki_filter,
                                         :ignore_cfuser_text_encoding_filter,
                                         :ignore_cookied_filter,
@@ -397,11 +461,14 @@ atm.add_tracker(ActivityTracker.create([:ignore_emacsd_filter,
                                         :ignore_library_filter,
                                         :accept_home_directory_filter,
                                         :file_open]))
+atm.add_tracker(ActivityTracker.create([:file_close]))
 atm.add_tracker(ActivityTracker.create([:focus_change]))
 fhf = FileHistoryFactory.new
 while 1 do
   if atm.ready?
-    fhf.create_history(atm.get_record)
+    record = atm.get_record
+    record.print_record
+    fhf.create_history(record)
   end
   sleep 1 #sec
 end

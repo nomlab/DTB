@@ -6,6 +6,11 @@ syscall::open:entry
 }
 syscall::open:return
 {
-  printf("%d|file_open|%d|%s|%s\n", unixtime, pid, execname, copyinstr(self->file));
+  printf("%d|file_open|%d|%s|%s|%d\n", unixtime, pid, execname, copyinstr(self->file), arg1);
   self->file = 0;
+}
+syscall::close:entry
+{
+  unixtime = walltimestamp / 1000000000;
+  printf("%d|file_close|%d|%s|%d\n", unixtime, pid, execname, arg0);
 }

@@ -1,0 +1,6 @@
+#!/usr/sbin/dtrace -q -s
+syscall::close:entry
+{
+  unixtime = walltimestamp / 1000000000;
+  printf("%d|file_close|%d|%s|%d\n", unixtime, pid, execname, arg0);
+}
