@@ -13,23 +13,16 @@ class ActivityTrackerManager
   end
 
   def get_record
-    @trackers.each{|t|
-      @records << t.get_record if t.ready?
-    }
-    oldest_record = @records.sort!.first
-    @records[0] = nil
-    @records.compact!
-    return oldest_record
+    @trackers.each{|t| @records << t.get_record if t.ready? }
+    return @records.sort!.shift
   end
 
   def ready?
-    return !@records.empty? || @trackers.any?{|t| t.ready? }
+    return @records.present? || @trackers.any?(&:ready?)
   end
 
   def stop_track
-    @trackers.each{|t|
-      t.stop_track
-    }
+    @trackers.each(&:stop_track)
   end
 end
 
@@ -95,6 +88,10 @@ class ActivityTracker
       tracker = IgnoreTaskGatedFilter
     when :ignore_get_title_of_fo_filter
       tracker = IgnoreGetTitleOfFoFilter
+    when :accept_wathicng_file_filter
+      tracker = AcceptWathicngFileFilter
+    when :ignore_get_number_of_focused_window_filter
+      tracker = IgnoreGetNumberOfFocusedWindowFilter
     else
       raise "Unknown Tracker type"
     end
@@ -157,7 +154,7 @@ class ActivityTrackerDecorator < ActivityTracker
   end
 
   def stop_track
-    tracker.stop_track
+    @tracker.stop_track
   end
 end
 
@@ -263,9 +260,27 @@ class IgnoreTaskGatedFilter < ActivityTrackerDecorator
   end
 end
 
+class IgnoreTaskGatedFilter < ActivityTrackerDecorator
+  def filter_record(record)
+    return /^taskgated/ =~ record.pname ? nil : record
+  end
+end
+
 class IgnoreGetTitleOfFoFilter < ActivityTrackerDecorator
   def filter_record(record)
     return /^get_title_of_fo/ =~ record.pname ? nil : record
+  end
+end
+
+class AcceptWathicngFileFilter < ActivityTrackerDecorator
+  def filter_record(record)
+    return $file_open_processes_copy.any?{|p| p.pname == record.pname && p.pid == record.pid && p.fd == record.fd} ? record : nil
+  end
+end
+
+class IgnoreGetNumberOfFocusedWindowFilter < ActivityTrackerDecorator
+  def filter_record(record)
+    return /^get_number_of_f/ =~ record.pname ? nil : record
   end
 end
 
@@ -284,7 +299,7 @@ class ActivityRecord
     self.time <=> other.time
   end
 
-  def equal_process?(other)
+  def same_process?(other)
     self.pid == other.pid && self.pname == other.pname
   end
 
@@ -300,11 +315,11 @@ class FileOpenRecord < ActivityRecord
     @time, @record_type, @pid, @pname, @path, @fd = parse_line(line)
   end
 
-  def equal_path?(other)
+  def same_path?(other)
     self.path == other.path
   end
 
-  def equal_fd?(other)
+  def same_fd?(other)
     self.fd == other.fd
   end
 
@@ -320,7 +335,7 @@ class FileCloseRecord < ActivityRecord
     @time, @record_type, @pid, @pname, @fd = parse_line(line)
   end
 
-  def equal_fd?(other)
+  def same_fd?(other)
     self.fd == other.fd
   end
 
@@ -331,8 +346,13 @@ end
 
 class FocusChangeRecord < ActivityRecord
   attr_reader :window_number
+
   def initialize(line)
     @time, @record_type, @pid, @pname, @window_number = parse_line(line)
+  end
+
+  def same_window?(other)
+    self.window_number == other.window_number
   end
 
   def print_record
@@ -340,38 +360,52 @@ class FocusChangeRecord < ActivityRecord
   end
 end
 
-class FileOpeningProcess
-  attr_reader :pid, :pname, :path
+class FileOpeningWindow
+  attr_reader :pid, :pname, :path, :fd, :window_number
 
   def initialize(h)
-    @pid, @pname, @path = h[:pid], h[:pname], h[:path]
+    @pid, @pname, @path, @fd, @window_number = h[:pid], h[:pname], h[:path], h[:fd], h[:window_number]
   end
 
-  def equal_process?(other)
+  def same_process?(other)
     self.pid == other.pid && self.pname == other.pname
   end
 
-  def equal_path?(other)
+  def same_path?(other)
     self.path == other.path
+  end
+
+  def same_window?(other)
+    self.window_number == other.window_number
   end
 end
 
-class WatchFileByProcess < ActivityRecord
-  attr_reader :path
+class WatchingFile
+  attr_reader :time, :pid, :pname, :path, :window_number
+
   def initialize(h)
-    @time, @record_type, @pid, @pname, @path = h[:time], 'process', h[:pid], h[:pname], h[:path]
+    @time, @pid, @pname, @path, @window_number = h[:time], h[:pid], h[:pname], h[:path], h[:window_number]
   end
 
-  def equal_path?(other)
+  def same_process?(other)
+    self.pid == other.pid && self.pname == other.pname
+  end
+
+  def same_path?(other)
     self.path == other.path
+  end
+
+  def same_window?(other)
+    self.window_number == other.window_number
   end
 end
 
 class FileHistoryFactory
   def initialize
     @file_open_records = []
-    @file_opening_processes = []
+    @file_opening_windows = []
     @watch_files = []
+    @before_focused_window_number = 0
   end
 
   def create_history(record)
@@ -379,27 +413,33 @@ class FileHistoryFactory
     when FileOpenRecord
       @file_open_records << record unless aleady_open?(record)
     when FocusChangeRecord
-      start_watch_processes(record).each{|process|
-        @watch_files << WatchFileByProcess.new( time:  record.time,
-                                                pid:   process.pid,
-                                                pname: process.pname,
-                                                path:  process.path )
+      # Register watching files
+      watching_files = @file_opening_windows.select{|w| w.same_process?(record) && w.same_window?(record)}
+      watching_files.each{|file|
+        @watch_files << WatchingFile.new( time:  record.time,
+                                          pid:   file.pid,
+                                          pname: file.pname,
+                                          path:  file.path,
+                                          window_number: file.window_number)
       }
 
-      finish_watch_records(record).each{|r|
-        fh = UnifiedHistory.new( path:         r.path,
-                                 title:        r.path.split("/").last || r.path,
-                                 history_type: "file_history",
-                                 start_time:   r.time,
-                                 end_time:     record.time )
-        @file_opening_processes << FileOpeningProcess.new( pid:   r.pid,
-                                                           pname: r.pname,
-                                                           path:  r.path )
-        puts "history: #{fh.start_time}|#{fh.end_time}|#{fh.title}|#{fh.path}"
+      # Register Window from records stopping watching
+      stop_watching_records = @file_open_records.reject{|r| r.same_process?(record)}
+      @file_open_records.select!{|r| r.same_process?(record)}
+      stop_watching_records.each{|r|
+        @file_opening_windows << FileOpeningWindow.new( pid:   r.pid,
+                                                        pname: r.pname,
+                                                        path:  r.path,
+                                                        fd:    r.fd,
+                                                        window_number: @before_focused_window_number)
+        $file_open_processes_copy = @file_opening_windows.clone
       }
-      @file_open_records =  @file_open_records.select{|r| r.equal_process?(record)}
 
-      finish_watch_files(record).each{|f|
+      # Create FH from files and records stopping watching
+      finish_watching_files = @watch_files.reject{|f| f.same_process?(record) && f.same_window?(record)}
+      @watch_files.select!{|f| f.same_process?(record)}
+      finish_watching_files.concat(stop_watching_records)
+      finish_watching_files.each{|f|
         fh = UnifiedHistory.new( path:         f.path,
                                  title:        f.path.split("/").last || f.path,
                                  history_type: "file_history",
@@ -407,42 +447,31 @@ class FileHistoryFactory
                                  end_time:     record.time )
         puts "history: #{fh.start_time}|#{fh.end_time}|#{fh.title}|#{fh.path}"
       }
-      @watch_files =  @watch_files.select{|f| f.equal_process?(record)}
+
+      @before_focused_window_number = record.window_number
     end
   end
 
   private
-
-  def aleady_open?(file_open_record)
-    return already_exist_same_file_open_record?(file_open_record) || already_file_open_by_same_process?(file_open_record)
+  def aleady_open?(record)
+    return already_exist_same_record?(record) || already_opened_by_same_process?(record)
   end
 
-  def already_exist_same_file_open_record?(file_open_record)
-    return @file_open_records.any?{|r| r.equal_path?(file_open_record) && r.equal_process?(file_open_record)}
+  def already_exist_same_record?(record)
+    return @file_open_records.any?{|r| r.same_path?(record) && r.same_process?(record)}
   end
 
-  def already_file_open_by_same_process?(file_open_record)
-    return @file_opening_processes.any?{|p| p.equal_path?(file_open_record) && p.equal_process?(file_open_record)}
-  end
-
-  def start_watch_processes(focus_change_record)
-    return @file_opening_processes.select{|p| p.equal_process?(focus_change_record)}
-  end
-
-  def finish_watch_records(focus_change_record)
-    return @file_open_records.select{|r| !r.equal_process?(focus_change_record)}
-  end
-
-  def finish_watch_files(focus_change_record)
-    return @watch_files.select{|f| !f.equal_process?(focus_change_record)}
+  def already_opened_by_same_process?(record)
+    return @file_opening_windows.any?{|p| p.same_path?(record) && p.same_process?(record)}
   end
 end
 
 ################################
 # main
-
+$file_open_processes_copy = []
 atm = ActivityTrackerManager.new
-atm.add_tracker(ActivityTracker.create([:ignore_get_title_of_fo_filter,
+atm.add_tracker(ActivityTracker.create([:ignore_get_number_of_focused_window_filter,
+                                        :ignore_get_title_of_fo_filter,
                                         :ignore_taskgated_filter,
                                         :ignore_launchservicesd_filter,
                                         :ignore_emacsd_filter,
@@ -461,7 +490,8 @@ atm.add_tracker(ActivityTracker.create([:ignore_get_title_of_fo_filter,
                                         :ignore_library_filter,
                                         :accept_home_directory_filter,
                                         :file_open]))
-atm.add_tracker(ActivityTracker.create([:file_close]))
+sleep 1
+atm.add_tracker(ActivityTracker.create([:accept_wathicng_file_filter, :file_close]))
 atm.add_tracker(ActivityTracker.create([:focus_change]))
 fhf = FileHistoryFactory.new
 while 1 do
@@ -470,5 +500,5 @@ while 1 do
     record.print_record
     fhf.create_history(record)
   end
-  sleep 1 #sec
+  # sleep 1 #sec
 end

@@ -7,7 +7,7 @@
 
 osascript 2>&1 <<EOF
 on getFrontmostProcess()
-  set wnum to do shell script "./lib/file_history_scripts/get_title_of_focused_window"
+  set wnum to do shell script "./lib/file_history_scripts/get_number_of_focused_window"
   tell application "System Events"
     set {pid, pname} to {unix id, name} of (item 1 of (processes whose frontmost is true))
     return {pid, pname, wnum}
