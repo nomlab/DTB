@@ -378,6 +378,10 @@ class FileOpeningWindow
   def same_window?(other)
     self.window_number == other.window_number
   end
+
+  def same_fd?(other)
+    self.fd == other.fd
+  end
 end
 
 class WatchingFile
@@ -449,6 +453,8 @@ class FileHistoryFactory
       }
 
       @before_focused_window_number = record.window_number
+    when FileCloseRecord
+      @file_opening_windows.reject!{|w| w.same_fd?(record)}
     end
   end
 
