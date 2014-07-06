@@ -52,6 +52,7 @@
               <li><%= link_to "Mission一覧", "/missions"  %></li>
               <li><%= link_to "Task一覧", "/tasks"  %></li>
               <li><%= link_to "TimeEntry一覧", "/time_entries"  %></li>
+              <li><%= link_to "UnifiedHistory一覧", "/unified_histories"  %></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
@@ -73,18 +74,17 @@
                   <% time_entry = TimeEntry.running_time_entry.first %>
                   <li><%= text_field_tag 'description', time_entry.name, :readonly => true %><li>
                   <li><%= button_to "停止", {:controller => "time_entries", :action => "stop",
-                                           :id => time_entry.id }, :class => "btn btn-danger" %><li>
+                                             :id => time_entry.id }, :class => "btn btn-danger" %><li>
                 <% end %>
                 <li><%= button_to "インポート", {:controller => "time_entries", :action => "import"}, :class => "btn btn-nomal" %><li>
               </ul>
-            </div><!--/.well -->
-          </div><!--/span-->
+            </div>
+          </div>
           <div class="span9">
             <%= bootstrap_flash %>
             <%= yield %>
           </div>
-        </div><!--/row-->
-
+        </div>
     </div> <!-- /container -->
 
   </body>

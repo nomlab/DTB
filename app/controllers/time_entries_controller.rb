@@ -77,35 +77,12 @@ class TimeEntriesController < ApplicationController
   def stop
     @time_entry = TimeEntry.find(params[:id])
     response = @time_entry.stop
-    `sudo pkill -f dtrace`
-    `rails runner lib/file_log_daemon.rb stop`
-    histories = File.readlines("#{Rails.root}/log/file_access.log")
-    file_histories = Array.new
-
-    histories.each do |history|
-      if history.blank? == false
-        array = history.split(" ")
-        path = array.first
-        title = path.split.last
-        start_time = Time.parse("1970-01-01 00:00:00 +0000") + array.last.to_i * (0.000000001)
-        end_time = Time.parse(`ls -lu #{path} | awk '{print $6, $7, $8}'`)
-        file_histories << UnifiedHistory.new({path: path, title: title, history_type: "file_history",
-                                               start_time: start_time, end_time: end_time})
-      end
-    end
-
-    file_histories.uniq! {|history| history.path}
-    file_histories.each do |history|
-      history.save
-    end
-
     if @time_entry.update({end_time: (Time.parse(response["start"]) + response["duration"]),
                             running_status: false})
       redirect_to :back, notice: 'Time entry stoped.'
     else
       redirect_to :back, notice: 'Time entry couldn`t stop.'
     end
-    `#{Rails.root.to_s}/lib/file_log_daemon.rb start`
   end
 
   def import
@@ -114,13 +91,13 @@ class TimeEntriesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_time_entry
-      @time_entry = TimeEntry.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_time_entry
+    @time_entry = TimeEntry.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def time_entry_params
-      params.require(:time_entry).permit(:name, :keyword, :comment, :start_time, :end_time, :thumbnail, :task_id, :toggl_time_entry_id, :running_status)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def time_entry_params
+    params.require(:time_entry).permit(:name, :keyword, :comment, :start_time, :end_time, :thumbnail, :task_id, :toggl_time_entry_id, :running_status)
+  end
 end

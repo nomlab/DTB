@@ -1,14 +1,11 @@
 <h1>Listing time_entries</h1>
 
-<table>
+<table class="table table-striped">
   <thead>
     <tr>
       <th>Name</th>
-      <th>Keyword</th>
-      <th>Comment</th>
       <th>Start time</th>
       <th>End time</th>
-      <th>Thumbnail</th>
       <th>Task</th>
       <th></th>
       <th></th>
@@ -20,11 +17,8 @@
     <% @time_entries.each do |time_entry| %>
       <tr>
         <td><%= time_entry.name %></td>
-        <td><%= time_entry.keyword %></td>
-        <td><%= time_entry.comment %></td>
         <td><%= time_entry.start_time %></td>
         <td><%= time_entry.end_time %></td>
-        <td><%= time_entry.thumbnail %></td>
         <td><%= time_entry.task_id %></td>
         <td><%= link_to 'Show', time_entry %></td>
         <td><%= link_to 'Edit', edit_time_entry_path(time_entry) %></td>
