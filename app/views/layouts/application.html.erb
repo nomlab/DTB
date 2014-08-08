@@ -65,18 +65,7 @@
             <div class="well sidebar-nav">
               <h3>現在の作業</h3>
               <ul class="nav nav-list">
-                <% if TimeEntry.running_time_entry.blank? %>
-                  <%= form_tag({:controller => "time_entries", :action => "start" }) do %>
-                    <li><%= text_field_tag 'description' %><li>
-                    <li><button type="submit" class="btn btn-info">開始</button><li>
-                  <% end %>
-                <% else %>
-                  <% time_entry = TimeEntry.running_time_entry.first %>
-                  <li><%= text_field_tag 'description', time_entry.name, :readonly => true %><li>
-                  <li><%= button_to "停止", {:controller => "time_entries", :action => "stop",
-                                             :id => time_entry.id }, :class => "btn btn-danger" %><li>
-                <% end %>
-                <li><%= button_to "インポート", {:controller => "time_entries", :action => "import"}, :class => "btn btn-nomal" %><li>
+                <li> 現在非稼働 <li>
               </ul>
             </div>
           </div>

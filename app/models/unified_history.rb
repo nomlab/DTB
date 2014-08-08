@@ -4,9 +4,16 @@ class UnifiedHistory < ActiveRecord::Base
     return {"start_time" => start_time, "end_time" => end_time}
   end
 
-  class WebHistory < UnifiedHistory
+  def restore
+    system "open #{self.path}"
   end
+end
 
-  class FileHistory < UnifiedHistory
+class WebHistory < UnifiedHistory
+end
+
+class FileHistory < UnifiedHistory
+  def restore
+    # restore file by git
   end
 end

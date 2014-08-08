@@ -1,28 +1,20 @@
 class TimeEntriesController < ApplicationController
   before_action :set_time_entry, only: [:show, :edit, :update, :destroy]
 
-  # GET /time_entries
-  # GET /time_entries.json
   def index
     @time_entries = TimeEntry.all
   end
 
-  # GET /time_entries/1
-  # GET /time_entries/1.json
   def show
   end
 
-  # GET /time_entries/new
   def new
     @time_entry = TimeEntry.new
   end
 
-  # GET /time_entries/1/edit
   def edit
   end
 
-  # POST /time_entries
-  # POST /time_entries.json
   def create
     @time_entry = TimeEntry.new(time_entry_params)
 
@@ -37,8 +29,6 @@ class TimeEntriesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /time_entries/1
-  # PATCH/PUT /time_entries/1.json
   def update
     respond_to do |format|
       if @time_entry.update(time_entry_params)
@@ -51,37 +41,11 @@ class TimeEntriesController < ApplicationController
     end
   end
 
-  # DELETE /time_entries/1
-  # DELETE /time_entries/1.json
   def destroy
     @time_entry.destroy
     respond_to do |format|
       format.html { redirect_to time_entries_url }
       format.json { head :no_content }
-    end
-  end
-
-  def start
-    options = Hash.new
-    options["description"] = params[:description]
-    response = TimeEntry.start(options)
-    @time_entry = TimeEntry.new({name: response["description"], start_time: Time.parse(response["start"]),
-                                  toggl_time_entry_id: response["id"], running_status: true})
-    if @time_entry.save
-      redirect_to :back, notice: 'Time entry is running.'
-    else
-      redirect_to :back, notice: 'Time entry couldn`t run.'
-    end
-  end
-
-  def stop
-    @time_entry = TimeEntry.find(params[:id])
-    response = @time_entry.stop
-    if @time_entry.update({end_time: (Time.parse(response["start"]) + response["duration"]),
-                            running_status: false})
-      redirect_to :back, notice: 'Time entry stoped.'
-    else
-      redirect_to :back, notice: 'Time entry couldn`t stop.'
     end
   end
 
