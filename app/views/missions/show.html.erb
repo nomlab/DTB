@@ -1,9 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @mission.name %>
-</p>
+<h1><%= @mission.name %></h1>
 
 <p>
   <strong>Description:</strong>
@@ -25,10 +22,25 @@
   <%= @mission.keyword %>
 </p>
 
+<% unless @mission.parent.nil? %>
 <p>
   <strong>Parent:</strong>
-  <%= @mission.parent_id %>
+  <%= link_to @mission.parent.name, @mission.parent %>
 </p>
+<% end %>
+
+<h2>File Histories</h2>
+<% @mission.file_histories.each do |file_history| %>
+  <%= render :partial => "unified_histories/file_history_item",
+      :locals => {:file_history => file_history} %><br>
+<% end %>
+
+<h2>Web Histories</h2>
+<% @mission.web_histories.each do |web_history| %>
+  <%= render :partial => "unified_histories/web_history_item",
+      :locals => {:web_history => web_history} %><br>
+<% end %>
+
 
 <%= link_to 'Edit', edit_mission_path(@mission) %> |
 <%= link_to 'Back', missions_path %>

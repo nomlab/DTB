@@ -61,6 +61,10 @@ class MissionsController < ApplicationController
     end
   end
 
+  def tree
+    @missions = Mission.all
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_mission

@@ -1,0 +1,8 @@
+<tr>
+  <td><%= link_to mission.name, mission %></td>
+  <td><%= mission.deadline %></td>
+  <td><%= link_to '<i class="icon-pencil"></i>'.html_safe,
+          edit_mission_path(mission) %></td>
+  <td><%= link_to '<i class="icon-trash"></i>'.html_safe,
+          mission, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+</tr>

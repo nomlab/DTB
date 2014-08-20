@@ -4,9 +4,9 @@
   <thead>
     <tr>
       <th>Name</th>
+      <th>Task</th>
       <th>Start time</th>
       <th>End time</th>
-      <th>Task</th>
       <th></th>
       <th></th>
       <th></th>
@@ -15,19 +15,7 @@
 
   <tbody>
     <% @time_entries.each do |time_entry| %>
-      <tr>
-        <td><%= time_entry.name %></td>
-        <td><%= time_entry.start_time %></td>
-        <td><%= time_entry.end_time %></td>
-        <td><%= time_entry.task_id %></td>
-        <td><%= link_to 'Show', time_entry %></td>
-        <td><%= link_to 'Edit', edit_time_entry_path(time_entry) %></td>
-        <td><%= link_to 'Destroy', time_entry, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+      <%= render :partial => "time_entries/time_entry_item", :locals => {:time_entry => time_entry} %>
     <% end %>
   </tbody>
 </table>
-
-<br>
-
-<%= link_to 'New Time entry', new_time_entry_path %>

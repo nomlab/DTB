@@ -1,15 +1,10 @@
 <h1>Listing missions</h1>
 
-<table>
+<table class="table table-striped">
   <thead>
     <tr>
       <th>Name</th>
-      <th>Description</th>
       <th>Deadline</th>
-      <th>Status</th>
-      <th>Keyword</th>
-      <th>Parent</th>
-      <th></th>
       <th></th>
       <th></th>
     </tr>
@@ -18,20 +13,8 @@
   <tbody>
     <% @missions.each do |mission| %>
       <tr>
-        <td><%= mission.name %></td>
-        <td><%= mission.description %></td>
-        <td><%= mission.deadline %></td>
-        <td><%= mission.status %></td>
-        <td><%= mission.keyword %></td>
-        <td><%= mission.parent_id %></td>
-        <td><%= link_to 'Show', mission %></td>
-        <td><%= link_to 'Edit', edit_mission_path(mission) %></td>
-        <td><%= link_to 'Destroy', mission, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <%= render :partial => "missions/mission_item", :locals => {:mission => mission} %>
       </tr>
     <% end %>
   </tbody>
 </table>
-
-<br>
-
-<%= link_to 'New Mission', new_mission_path %>

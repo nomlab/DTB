@@ -49,6 +49,10 @@ class TimeEntriesController < ApplicationController
     end
   end
 
+  def continue
+    redirect_to :back, notice: 'Undefined'
+  end
+
   def import
     TimeEntry.import
     redirect_to :back, notice: 'Import time entry'

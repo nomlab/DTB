@@ -61,6 +61,12 @@ class UnifiedHistoriesController < ApplicationController
     end
   end
 
+  def restore
+    @unified_history = UnifiedHistory.find(params[:id])
+    @unified_history.restore
+    redirect_to :back
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_unified_history

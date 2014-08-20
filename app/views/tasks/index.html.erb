@@ -1,14 +1,10 @@
 <h1>Listing tasks</h1>
 
-<table>
+<table class="table table-striped">
   <thead>
     <tr>
       <th>Name</th>
-      <th>Description</th>
       <th>Deadline</th>
-      <th>Status</th>
-      <th>Keyword</th>
-      <th>Mission</th>
       <th></th>
       <th></th>
       <th></th>
@@ -18,20 +14,8 @@
   <tbody>
     <% @tasks.each do |task| %>
       <tr>
-        <td><%= task.name %></td>
-        <td><%= task.description %></td>
-        <td><%= task.deadline %></td>
-        <td><%= task.status %></td>
-        <td><%= task.keyword %></td>
-        <td><%= task.mission_id %></td>
-        <td><%= link_to 'Show', task %></td>
-        <td><%= link_to 'Edit', edit_task_path(task) %></td>
-        <td><%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <%= render :partial => "tasks/task_item", :locals => {:task => task} %>
       </tr>
     <% end %>
   </tbody>
 </table>
-
-<br>
-
-<%= link_to 'New Task', new_task_path %>

@@ -1,0 +1,12 @@
+<tr>
+  <td><%= link_to task.name, task %></td>
+  <td><%= task.deadline %></td>
+  <td><%= link_to '<i class="icon-play"></i>'.html_safe,
+          :id         => task.id,
+          :controller => "tasks",
+          :action     => "continue" %></td>
+  <td><%= link_to '<i class="icon-pencil"></i>'.html_safe,
+          edit_task_path(task) %></td>
+  <td><%= link_to '<i class="icon-trash"></i>'.html_safe,
+          task, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+</tr>

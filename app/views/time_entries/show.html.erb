@@ -1,9 +1,12 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
+<h1>
   <%= @time_entry.name %>
-</p>
+  <%= link_to '<i class="icon-play"></i>'.html_safe,
+      :id         => @time_entry.id,
+      :controller => "time_entries",
+      :action     => "continue" %>
+</h1>
 
 <p>
   <strong>Keyword:</strong>
@@ -27,32 +30,20 @@
 
 <p>
   <strong>Task:</strong>
-  <%= @time_entry.task_id %>
+  <%= link_to @time_entry.task.name, @time_entry.task %>
 </p>
 
-<p>
-  <strong>Unified Histories:</strong>
-  <table class="table table-striped">
-    <tr>
-      <th>Path</th>
-      <th>Title</th>
-      <th>Type</th>
-      <th>Duration</th>
-      <th>Start time</th>
-      <th>End time</th>
-    </tr>
-  <% @time_entry.unified_histories.each do |uh| %>
-    <tr>
-      <td><%= uh.path %></td>
-      <td><%= uh.title %></td>
-      <td><%= uh.history_type %></td>
-      <td><%= uh.end_time - uh.start_time %></td>
-      <td><%= uh.start_time %></td>
-      <td><%= uh.end_time %></td>
-    </tr>
-  <% end %>
-  </table>
-</p>
+<h2>File Histories</h2>
+<% @time_entry.file_histories.each do |file_history| %>
+  <%= render :partial => "unified_histories/file_history_item",
+      :locals => {:file_history => file_history} %><br>
+<% end %>
+
+<h2>Web Histories</h2>
+<% @time_entry.web_histories.each do |web_history| %>
+  <%= render :partial => "unified_histories/web_history_item",
+      :locals => {:web_history => web_history} %><br>
+<% end %>
 
 
 <%= link_to 'Edit', edit_time_entry_path(@time_entry) %> |
