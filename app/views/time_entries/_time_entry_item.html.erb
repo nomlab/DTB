@@ -1,12 +1,15 @@
 <tr>
   <td><%= link_to time_entry.name, time_entry %></td>
-  <td><%= link_to time_entry.task.name, time_entry.task %></td>
+  <td>
+    <% unless time_entry.task.nil? %>
+      <%= link_to time_entry.task.name, time_entry.task %>
+    <% else %>
+      no task
+    <% end %>
+  </td>
   <td><%= time_entry.start_time %></td>
   <td><%= time_entry.end_time %></td>
-  <td><%= link_to '<i class="icon-play"></i>'.html_safe,
-          :id         => time_entry.id,
-          :controller => "time_entries",
-          :action     => "continue" %></td>
+  <td><%= render :partial => "time_entries/start_or_stop_button", :locals => {:time_entry => time_entry} %></td>
   <td><%= link_to '<i class="icon-pencil"></i>'.html_safe,
           edit_time_entry_path(time_entry) %></td>
   <td><%= link_to '<i class="icon-trash"></i>'.html_safe,

@@ -1,5 +1,5 @@
 class TimeEntriesController < ApplicationController
-  before_action :set_time_entry, only: [:show, :edit, :update, :destroy]
+  before_action :set_time_entry, only: [:show, :edit, :update, :destroy, :continue]
 
   def index
     @time_entries = TimeEntry.all
@@ -50,7 +50,13 @@ class TimeEntriesController < ApplicationController
   end
 
   def continue
-    redirect_to :back, notice: 'Undefined'
+    TimeEntry.start({:description => params[:name]}, params[:task_id])
+    redirect_to :back, notice: 'TimeEntry is started.'
+  end
+
+  def stop
+    TimeEntry.stop
+    redirect_to :back, notice: 'TimeEntry is stoped.'
   end
 
   def import

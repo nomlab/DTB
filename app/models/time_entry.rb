@@ -2,11 +2,11 @@ class TimeEntry < ActiveRecord::Base
   belongs_to :task
 
   def self.current
-    return @@current_time_entry
+    @current_time_entry
   end
 
   def self.current=(time_entry)
-    return @@current_time_entry = time_entry
+    @current_time_entry = time_entry
   end
 
   def self.import
@@ -24,6 +24,22 @@ class TimeEntry < ActiveRecord::Base
       end
       time_entry.save
     end
+  end
+
+  def self.start(options, task_id)
+    response = TOGGL_API_CLIENT.start_time_entry(options)
+    return TimeEntry.current = TimeEntry.create(:name => response.description,
+                                                :start_time => Time.parse(response.start).localtime("+09:00"),
+                                                :task_id => task_id,
+                                                :toggl_time_entry_id => response.id)
+  end
+
+  def self.stop
+    time_entry = TimeEntry.current
+    response = TOGGL_API_CLIENT.stop_time_entry(TimeEntry.current.toggl_time_entry_id)
+    TimeEntry.current = nil
+    time_entry.end_time = Time.parse(response.stop).localtime("+09:00")
+    time_entry.save
   end
 
   def duration

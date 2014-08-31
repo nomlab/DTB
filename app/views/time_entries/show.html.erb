@@ -2,10 +2,7 @@
 
 <h1>
   <%= @time_entry.name %>
-  <%= link_to '<i class="icon-play"></i>'.html_safe,
-      :id         => @time_entry.id,
-      :controller => "time_entries",
-      :action     => "continue" %>
+  <%= render :partial => "time_entries/start_or_stop_button", :locals => {:time_entry => @time_entry} %>
 </h1>
 
 <p>
@@ -30,7 +27,11 @@
 
 <p>
   <strong>Task:</strong>
-  <%= link_to @time_entry.task.name, @time_entry.task %>
+  <% unless @time_entry.task.nil? %>
+    <%= link_to @time_entry.task.name, @time_entry.task %>
+  <% else %>
+    no task
+  <% end %>
 </p>
 
 <h2>File Histories</h2>
