@@ -1,5 +1,5 @@
 class TimeEntriesController < ApplicationController
-  before_action :set_time_entry, only: [:show, :edit, :update, :destroy, :continue]
+  before_action :set_time_entry, only: [:show, :edit, :update, :destroy]
 
   def index
     @time_entries = TimeEntry.all
