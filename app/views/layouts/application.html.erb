@@ -61,15 +61,33 @@
 
     <div class="container">
         <div class="row">
-          <div class="span3">
+          <div class="span4">
             <div class="well sidebar-nav">
-              <h3>現在の作業</h3>
+              <h3>Current time entry</h3>
               <ul class="nav nav-list">
-                <li> 現在非稼働 <li>
+                <% if TimeEntry.current.nil? %>
+                  <%= form_tag( { :controller => "time_entries",
+                                  :action => "continue" } ) do %>
+                    <li>
+                      <%= text_field_tag "name",
+                          nil, :placeholder => "What are you doing?"%>
+                      <button type="submit" class="btn btn-info">Start</button>
+                    </li>
+                  <% end %>
+                <% else %>
+                  <%= form_tag( { :controller => "time_entries",
+                                  :action => "stop" } ) do %>
+                    <li>
+                      <%= text_field_tag "name",
+                          TimeEntry.current.name, :readonly => true %>
+                      <button type="submit" class="btn btn-info">Stop</button>
+                    </li>
+                  <% end %>
+                <% end %>
               </ul>
             </div>
           </div>
-          <div class="span9">
+          <div class="span8">
             <%= bootstrap_flash %>
             <%= yield %>
           </div>
