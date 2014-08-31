@@ -3,11 +3,11 @@ class Task < ActiveRecord::Base
   belongs_to :mission
 
   def self.current
-    @@current_task
+    @current_task
   end
 
   def self.current=(task)
-    @@current_task = task
+    @current_task = task
   end
 
   def unified_histories
