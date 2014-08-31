@@ -10,15 +10,6 @@ class Task < ActiveRecord::Base
     @@current_task = task
   end
 
-  def start(options)
-    # Project = self.name
-    return TimeEntry.current = TOGGL_API_CLIENT.start_time_entry(options)
-  end
-
-  def stop
-    return TOGGL_API_CLIENT.stop_time_entry(TimeEntry.current.toggl_time_entry_id)
-  end
-
   def unified_histories
     return time_entries.map(&:unified_histories).flatten
   end
