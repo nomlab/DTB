@@ -1,0 +1,10 @@
+<li class="closed"><%= link_to mission.name, mission %>
+    <ul>
+      <% mission.children.each do |child| %>
+        <%= render :partial => "missions/tree_item", :locals => {:mission => child} %>
+      <% end %>
+      <% mission.tasks.each do |task| %>
+        <%= render :partial => "tasks/tree_item", :locals => {:task => task} %>
+      <% end %>
+    </ul>
+</li>

@@ -1,1 +1,21 @@
-<h1>Undefined</h1>
+<head>
+<%= stylesheet_link_tag "jquery.treeview" %>
+<%= javascript_include_tag "missions" %>
+<%= javascript_include_tag "jquery.treeview" %>
+<%= javascript_include_tag "jquery.treeview.edit" %>
+<%= javascript_include_tag "jquery.treeview.async" %>
+<%= csrf_meta_tag %>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $("#mission_tree").treeview({});
+  });
+</script>
+</head>
+
+<h1>Mission Tree</h1>
+<ul id="mission_tree" class="treeview">
+  <% @top_missions.each do |m| %>
+    <%= render :partial => "missions/tree_item", :locals => {:mission => m} %>
+  <% end %>
+</ul>

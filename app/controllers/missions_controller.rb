@@ -62,7 +62,8 @@ class MissionsController < ApplicationController
   end
 
   def tree
-    @missions = Mission.all
+    @top_missions = Mission.all.select{|m| m.parent.blank?}
+  end
   end
 
   private

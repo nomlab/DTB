@@ -1,0 +1,7 @@
+<li class="closed"><%= link_to task.name, task %>
+  <ul>
+    <% task.time_entries.each do |time_entry| %>
+      <li><%= link_to time_entry.name, time_entry %></li>
+    <% end %>
+  </ul>
+</li>
