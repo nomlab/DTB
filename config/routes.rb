@@ -7,6 +7,7 @@ DTB::Application.routes.draw do
   resources :tasks
 
   get "missions/tree", :to => "missions#tree"
+  get "missions/calendar", :to => "missions#calendar"
   resources :missions
 
   root to: "welcome#index"

@@ -1,0 +1,16 @@
+<head>
+<%= stylesheet_link_tag "fullcalendar" %>
+<%= stylesheet_link_tag "fullcalendar.print" %>
+<%= javascript_include_tag "moment" %>
+<%= javascript_include_tag "fullcalendar" %>
+<%= csrf_meta_tag %>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $("#calendar").fullCalendar({
+    });
+  });
+</script>
+</head>
+
+<div id="calendar"></div>
