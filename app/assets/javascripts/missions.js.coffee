@@ -1,3 +1,13 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://coffeescript.org/
+$ ->
+  $('#calendar').fullCalendar
+    lang: 'ja'
+    defaultView: 'month'
+    header:
+      left:  'today prev,next prevYear,nextYear title'
+      right: 'agendaDay,agendaWeek,month'
+    firstDay: 1 #Monday
+    timeFormat:
+      month: 'HH:mm'
+      week:  'HH:mm'
+      day:   'HH:mm'
+    axisFormat: 'HH:mm'
