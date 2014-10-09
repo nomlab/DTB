@@ -3,6 +3,15 @@ class Mission < ActiveRecord::Base
   has_many :children, :class_name => "Mission", :foreign_key => :parent_id
   belongs_to :parent, :class_name => "Mission", :foreign_key => :parent_id
 
+  def durations
+    return children.map(&:durations).flatten + tasks.map(&:durations).flatten
+  end
+
+  def duration
+    time_array = durations.map(&:values).flatten.compact
+    return {start_time: time_array.min, end_time: time_array.max}
+  end
+
   def unified_histories
     return tasks.map(&:unified_histories).flatten
   end

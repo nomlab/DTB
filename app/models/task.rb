@@ -10,6 +10,15 @@ class Task < ActiveRecord::Base
     @current_task = task
   end
 
+  def durations
+    return time_entries.map(&:duration)
+  end
+
+  def duration
+    time_array = durations.map(&:values).flatten.compact
+    return {start_time: time_array.min, end_time: time_array.max}
+  end
+
   def unified_histories
     return time_entries.map(&:unified_histories).flatten
   end

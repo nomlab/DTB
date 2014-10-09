@@ -43,7 +43,7 @@ class TimeEntry < ActiveRecord::Base
   end
 
   def duration
-    return {"start_time" => start_time, "end_time" => end_time}
+    return {start_time: start_time, end_time: end_time}
   end
 
   def unified_histories
