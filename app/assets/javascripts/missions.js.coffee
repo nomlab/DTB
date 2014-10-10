@@ -1,4 +1,5 @@
 $ ->
+  #-------- for fullcalendar --------
   $('#calendar').fullCalendar
     lang: 'ja'
     defaultView: 'month'
@@ -28,3 +29,6 @@ $ ->
           success: (events) ->
             $('#calendar').fullCalendar('removeEvents');
             $('#calendar').fullCalendar('addEventSource', events);
+
+  #-------- for treeview --------
+  $("#mission_tree").treeview({})
