@@ -46,10 +46,22 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="welcome#index">DTB</a>
+          <a class="brand" href="/welcome#index">DTB</a>
           <div class="container nav-collapse">
             <ul class="nav">
-              <li><%= link_to "Mission一覧", "/missions"  %></li>
+              <li>
+                <div class="dropdown">
+                  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+                    Mission
+                    <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#"></a><%= link_to "Mission一覧", "/missions"  %></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#"></a><%= link_to "Missionカレンダ", "/missions/calendar"  %></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#"></a><%= link_to "Missionツリー", "/missions/tree"  %></li>
+                  </ul>
+                </div>
+              </li>
               <li><%= link_to "Task一覧", "/tasks"  %></li>
               <li><%= link_to "TimeEntry一覧", "/time_entries"  %></li>
               <li><%= link_to "UnifiedHistory一覧", "/unified_histories"  %></li>
