@@ -18,10 +18,13 @@ $ ->
     ]
     eventClick:
       (calEvent, jsEvent, view) ->
+        url = "/missions/#{calEvent.id}.json" if calEvent.type == "mission"
+        url = "/tasks/#{calEvent.id}.json" if calEvent.type == "task"
+        url = "/time_entries/#{calEvent.id}.json" if calEvent.type == "time_entry"
         $ . ajax
-          type : "GET"
+          type: "GET"
           dataType: 'json'
-          url :  "/missions/#{calEvent.id}.json"
-          success : (events) ->
+          url: url
+          success: (events) ->
             $('#calendar').fullCalendar('removeEvents');
             $('#calendar').fullCalendar('addEventSource', events);

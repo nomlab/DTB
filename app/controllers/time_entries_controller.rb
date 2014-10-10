@@ -6,6 +6,10 @@ class TimeEntriesController < ApplicationController
   end
 
   def show
+    respond_to do |format|
+      format.html
+      format.json {render json: [@time_entry.to_event]}
+    end
   end
 
   def new

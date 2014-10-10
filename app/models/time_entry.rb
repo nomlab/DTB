@@ -62,4 +62,16 @@ class TimeEntry < ActiveRecord::Base
   def restore
     unified_histories.map(&:restore)
   end
+
+  def to_event
+    return {
+      id:        id,
+      title:     name,
+      start:     duration[:start_time],
+      end:       duration[:end_time],
+      type:      "time_entry",
+      color:     "#D5FCD7",
+      textColor: "#000000"
+    }
+  end
 end
