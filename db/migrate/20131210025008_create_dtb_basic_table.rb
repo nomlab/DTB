@@ -4,7 +4,7 @@ class CreateDtbBasicTable < ActiveRecord::Migration
       t.string :name
       t.string :description
       t.datetime :deadline
-      t.boolean :status
+      t.boolean :status, :default => false
       t.string :keyword
       t.integer :parent_id
 
@@ -15,7 +15,7 @@ class CreateDtbBasicTable < ActiveRecord::Migration
       t.string :name
       t.string :description
       t.datetime :deadline
-      t.boolean :status
+      t.boolean :status, :default => false
       t.string :keyword
       t.integer :mission_id
 
