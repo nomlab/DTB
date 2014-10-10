@@ -5,11 +5,20 @@ class MissionsController < ApplicationController
   # GET /missions.json
   def index
     @missions = Mission.all
+    respond_to do |format|
+      format.html
+      format.json {render json: @missions.select{|m| m.root? }.map(&:to_event)}
+    end
   end
 
   # GET /missions/1
   # GET /missions/1.json
   def show
+    respond_to do |format|
+      format.html
+      format.json {render json: @mission.children.map(&:to_event) +
+                                @mission.tasks.map(&:to_event)}
+    end
   end
 
   # GET /missions/new

@@ -11,3 +11,17 @@ $ ->
       week:  'HH:mm'
       day:   'HH:mm'
     axisFormat: 'HH:mm'
+    eventSources: [
+      {
+        url: '/missions.json'
+      }
+    ]
+    eventClick:
+      (calEvent, jsEvent, view) ->
+        $ . ajax
+          type : "GET"
+          dataType: 'json'
+          url :  "/missions/#{calEvent.id}.json"
+          success : (events) ->
+            $('#calendar').fullCalendar('removeEvents');
+            $('#calendar').fullCalendar('addEventSource', events);

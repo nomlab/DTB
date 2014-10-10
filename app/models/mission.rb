@@ -47,4 +47,16 @@ class Mission < ActiveRecord::Base
   def finished?
     return self.status
   end
+
+  def to_event
+    return {
+      id:        id,
+      title:     name,
+      start:     duration[:start_time],
+      end:       duration[:end_time],
+      type:      "mission",
+      color:     "#D6F0FE",
+      textColor: "#000000"
+    }
+  end
 end

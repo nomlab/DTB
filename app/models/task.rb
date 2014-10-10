@@ -42,4 +42,16 @@ class Task < ActiveRecord::Base
   def finished?
     return self.status
   end
+
+  def to_event
+    return {
+      id:        id,
+      title:     name,
+      start:     duration[:start_time],
+      end:       duration[:end_time],
+      type:      "task",
+      color:     "#FFD5AC",
+      textColor: "#000000"
+    }
+  end
 end
