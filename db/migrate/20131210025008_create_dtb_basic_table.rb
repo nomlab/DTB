@@ -29,7 +29,6 @@ class CreateDtbBasicTable < ActiveRecord::Migration
       t.datetime :start_time
       t.datetime :end_time
       t.integer :toggl_time_entry_id
-      t.boolean :running_status, :default => false
       t.integer :task_id
 
       t.timestamps
@@ -39,6 +38,7 @@ class CreateDtbBasicTable < ActiveRecord::Migration
       t.string :title
       t.string :path
       t.string :history_type
+      t.string :history_usage
       t.string :r_path
       t.datetime :start_time
       t.datetime :end_time
