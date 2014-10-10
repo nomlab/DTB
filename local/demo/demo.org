@@ -1,0 +1,49 @@
+#+TITLE: デモ手順
+#+DATE: <2014-10-11>
+#+AUTHOR: Takuya Okada
+* 準備
+  以下に注意する．
+  + 準備は DTB のルートディレクトリで行う．
+  + 岡田の Mac で動作を確認した手順である．
+
+  以下の手順で準備する．
+  1) 現在使用中の DB をバックアップ
+     #+BEGIN_SRC sh
+       $ mv db/development.sqlite3 db/development.sqlite3.bak
+     #+END_SRC
+  2) DBをマイグレーション
+     #+BEGIN_SRC sh
+       $ bundle exec rake db:migrate
+     #+END_SRC
+  3) デモ用データを追加するスクリプトを実行
+     #+BEGIN_SRC sh
+       $ bundle exec rails runner local/demo/init_demo.rb
+     #+END_SRC
+  4) 履歴情報の収集処理を開始
+     + 計算機内部
+       #+BEGIN_SRC sh
+         $ bundle exec rails runner lib/file_history_scripts/create_file_histories
+       #+END_SRC
+     + 計算機外部
+       1) Firefox の profile に改造版 MindTheTime (MyMindTheTime) のパスを教える
+          + hogehoge には適当な文字列が入っている
+          + profile_name にはユーザが設定したprofileの名前が入っている(デフォルトであるのは default)
+          #+BEGIN_SRC sh
+          $ ~/Library/Application\ Support/Firefox/Profiles/hogehoge.profile_name/extensions/jid0-HYNmqxA9zQGfJADREri4n2AHKSI@jetpack&
+          #+END_SRC
+       2) Firefox の起動と install
+          + 以下のコマンドで profile を指定して起動できる．あとは流れにそって install
+            #+BEGIN_SRC sh
+              $ /Applications/Firefox.app/Contents/MacOS/firefox -ProfileManager
+            #+END_SRC
+          + MyMindTheTime の Timer を動かす
+          + guard で MyMindTheTime が DB を更新するのを監視
+            + your_name にはユーザ名を入力
+            + hogehoge と profile_name は MyMindTheTime のパスを通した profile に合わせる
+            #+BEGIN_SRC sh
+            $ bundle exec guard -c --no-interactions --watchdir /Users/your_name/Library/Application\ Support/Firefox/Profiles/hogehoge.profile_name/
+            #+END_SRC
+  5) DTB を起動
+     #+BEGIN_SRC sh
+       $ bundle exec rails s
+     #+END_SRC
