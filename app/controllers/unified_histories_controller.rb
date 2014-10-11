@@ -1,5 +1,5 @@
 class UnifiedHistoriesController < ApplicationController
-  before_action :set_unified_history, only: [:show, :edit, :update, :destroy]
+  before_action :set_unified_history, only: [:show, :edit, :update, :destroy, :restore]
 
   # GET /unified_histories
   # GET /unified_histories.json
@@ -62,7 +62,6 @@ class UnifiedHistoriesController < ApplicationController
   end
 
   def restore
-    @unified_history = UnifiedHistory.find(params[:id])
     @unified_history.restore
     redirect_to :back
   end
