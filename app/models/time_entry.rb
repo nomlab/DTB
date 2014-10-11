@@ -56,7 +56,7 @@ class TimeEntry < ActiveRecord::Base
   end
 
   def web_histories
-    return unified_histories.select{|uh| uh.class == "web_history"}
+    return unified_histories.select{|uh| uh.history_type == "web_history"}
   end
 
   def restore
