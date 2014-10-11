@@ -3,27 +3,35 @@
     <table class="table table-bordered">
       <thead>
         <tr>
-          <th>Head Sample1</th>
+          <th>Groups</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>Body Sample1</td>
+          <td>作成データ</td>
+        </tr>
+        <tr>
+          <td>参照データ</td>
+        </tr>
+        <tr>
+          <td>未分類</td>
         </tr>
       </tbody>
     </table>
   </div>
   <div class="span6">
-    <table class="table table-bordered">
+    <table class="table table-hover table-responsive scroll">
       <thead>
         <tr>
-          <th>Head Sample2</th>
+          <th>Name</th>
+          <th>Path</th>
+          <th>Duration</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>Body Sample2</td>
-        </tr>
+        <% @unified_histories.each do |unified_history| %>
+          <%= render :partial => "unified_histories/table_item", :locals => {:unified_history => unified_history} %>
+        <% end %>
       </tbody>
     </table>
   </div>
