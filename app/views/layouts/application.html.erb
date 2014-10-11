@@ -56,15 +56,26 @@
                     <span class="caret"></span>
                   </button>
                   <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#"></a><%= link_to "Mission一覧", "/missions"  %></li>
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#"></a><%= link_to "Missionカレンダ", "/missions/calendar"  %></li>
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#"></a><%= link_to "Missionツリー", "/missions/tree"  %></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#"></a><%= link_to "一覧", "/missions"  %></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#"></a><%= link_to "カレンダ", "/missions/calendar"  %></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#"></a><%= link_to "ツリー", "/missions/tree"  %></li>
                   </ul>
                 </div>
               </li>
               <li><%= link_to "Task一覧", "/tasks"  %></li>
               <li><%= link_to "TimeEntry一覧", "/time_entries"  %></li>
-              <li><%= link_to "UnifiedHistory一覧", "/unified_histories"  %></li>
+              <li>
+                <div class="dropdown">
+                  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown">
+                    UnifiedHistory
+                    <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#"></a><%= link_to "一覧", "/unified_histories"  %></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#"></a><%= link_to "整理", "/unified_histories/organize"  %></li>
+                  </ul>
+                </div>
+              </li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
