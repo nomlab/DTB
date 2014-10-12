@@ -7,14 +7,16 @@ $ ->
     revert: true
 
   $(".droppable").click (event) ->
-    usage = event.target.id
+    $(".droppable").removeClass "selected"
+    $(@).addClass "selected"
+    usage = @id
     replaceInbox(usage)
 
   $(".droppable").droppable
     tolerance: "pointer"
     drop: (event, ui) ->
       unifiedHistoryId = ui.draggable.attr("id")
-      usage =  this.id
+      usage =  @id
       $ . ajax
         type:      "PUT"
         url:       "/unified_histories/update_usage/#{unifiedHistoryId}.json?usage=#{usage}"
