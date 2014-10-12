@@ -12,4 +12,5 @@
 #= require fullcalendar
 #= require lang-all
 #----------------------
+#= require jquery-ui
 #= require_tree .
