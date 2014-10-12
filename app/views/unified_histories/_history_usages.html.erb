@@ -1,0 +1,19 @@
+<h2>作成データ</h2>
+<%= render :partial => "unified_histories/usage_based_histories",
+    :locals => {:instance => instance, :usage => "product"} %>
+<hr>
+<h2>参照データ</h2>
+<%= render :partial => "unified_histories/usage_based_histories",
+    :locals => {:instance => instance, :usage => "reference"} %>
+<hr>
+<h2>不要データ</h2>
+<%= render :partial => "unified_histories/usage_based_histories",
+    :locals => {:instance => instance, :usage => "unneeded"} %>
+<hr>
+<h2>その他</h2>
+<%= render :partial => "unified_histories/usage_based_histories",
+    :locals => {:instance => instance, :usage => "other"} %>
+<hr>
+<h2>未分類</h2>
+<%= render :partial => "unified_histories/usage_based_histories",
+    :locals => {:instance => instance, :usage => "undefined"} %>

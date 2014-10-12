@@ -33,18 +33,10 @@
   <%= link_to @task.mission.name, @task.mission %>
 </p>
 
-<h2>File Histories</h2>
-<% @task.file_histories.each do |file_history| %>
-  <%= render :partial => "unified_histories/file_history_item",
-      :locals => {:file_history => file_history} %><br>
-<% end %>
+<hr>
 
-<h2>Web Histories</h2>
-<% @task.web_histories.each do |web_history| %>
-  <%= render :partial => "unified_histories/web_history_item",
-      :locals => {:web_history => web_history} %><br>
-<% end %>
-
+<%= render :partial => "unified_histories/history_usages",
+    :locals => {:instance => @task} %>
 
 <%= link_to 'Edit', edit_task_path(@task) %> |
 <%= link_to 'Back', tasks_path %>
