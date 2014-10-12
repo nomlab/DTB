@@ -24,3 +24,6 @@ local/toggl.yml
 
 # Ignore gemfiles
 vendor/bundle
+
+# Ignore todo list
+TODO.org
