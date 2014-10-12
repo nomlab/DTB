@@ -30,7 +30,7 @@
       </thead>
       <tbody class="inbox">
         <% @unified_histories.each do |unified_history| %>
-          <%= render :partial => "unified_histories/table_item", :locals => {:unified_history => unified_history} %>
+          <%= render :partial => "unified_histories/inbox_item", :locals => {:unified_history => unified_history} %>
         <% end %>
       </tbody>
     </table>

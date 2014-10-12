@@ -1,5 +1,6 @@
 class UnifiedHistoriesController < ApplicationController
-  before_action :set_unified_history, only: [:show, :edit, :update, :destroy, :restore]
+  before_action :set_unified_history, only: [:show, :edit, :update, :destroy,
+                                             :restore, :update_usage]
 
   # GET /unified_histories
   # GET /unified_histories.json
@@ -67,7 +68,16 @@ class UnifiedHistoriesController < ApplicationController
   end
 
   def organize
-    @unified_histories = UnifiedHistory.all
+    @unified_histories = UnifiedHistory.where(usage: "undefined")
+  end
+
+  #---------- for ajax ----------
+  def update_usage
+    @unified_history.update_attribute(:usage, params[:usage]) unless params[:usage].nil?
+    respond_to do |format|
+      format.html { redirect_to @unified_history, notice: 'Unified history was successfully updated.' }
+      format.json { render json: @unified_history }
+    end
   end
 
   private
@@ -78,6 +88,6 @@ class UnifiedHistoriesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def unified_history_params
-      params.require(:unified_history).permit(:path, :title, :history_type, :r_path, :start_time, :end_time)
+      params.require(:unified_history).permit(:path, :title, :history_type, :usage, :r_path, :start_time, :end_time)
     end
 end
