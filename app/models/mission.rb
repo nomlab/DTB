@@ -14,17 +14,17 @@ class Mission < ActiveRecord::Base
 
   def unified_histories
     return (children.map(&:unified_histories) +
-            tasks.map(&:unified_histories)).flatten
+            tasks.map(&:unified_histories)).flatten.uniq
   end
 
   def file_histories
     return (children.map(&:file_histories) +
-            tasks.map(&:file_histories)).flatten
+            tasks.map(&:file_histories)).flatten.uniq
   end
 
   def web_histories
     return (children.map(&:web_histories) +
-            tasks.map(&:web_histories)).flatten
+            tasks.map(&:web_histories)).flatten.uniq
   end
 
   def parent
