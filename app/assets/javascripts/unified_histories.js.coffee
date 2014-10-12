@@ -1,10 +1,27 @@
 $ ->
+  currentUsage = "undefined"
+
   $(".draggable").draggable
-    helper: "clone"
+    helper: (event) ->
+      $("<span style='white-space:nowrap;'>").text "unified_history"
     revert: true
 
   $(".droppable").click (event) ->
     usage = event.target.id
+    replaceInbox(usage)
+
+  $(".droppable").droppable
+    tolerance: "pointer"
+    drop: (event, ui) ->
+      unifiedHistoryId = ui.draggable.attr("id")
+      usage =  this.id
+      $ . ajax
+        type:      "PUT"
+        url:       "/unified_histories/update_usage/#{unifiedHistoryId}.json?usage=#{usage}"
+        success: (data) -> replaceInbox(currentUsage)
+        error: (error) -> alert error
+
+  replaceInbox = (usage) ->
     $.ajax
       type:      "GET"
       url:       "/unified_histories.json?usage=#{usage}"
@@ -15,23 +32,19 @@ $ ->
           startTime = moment(unified_history["start_time"]).format(timeFormat)
           endTime   = moment(unified_history["end_time"]).format(timeFormat)
           """
-          <tr class="draggable">
+          <tr class="draggable" id="#{unified_history["id"]}">
             <td>#{unified_history["title"]}</td>
             <td>#{unified_history["path"]}</td>
             <td>#{startTime} - #{endTime}</td>
           </tr>
           """
         $(".inbox").replaceWith("<tbody class='inbox'>#{entries}</tbody>")
-        entries = ""
-      error: (error) -> alert error
 
-  $(".droppable").droppable
-    tolerance: "pointer"
-    drop: (event, ui) ->
-      unifiedHistoryId = ui.draggable.attr("id")
-      usage =  this.id
-      $ . ajax
-        type:      "PUT"
-        url:       "/unified_histories/update_usage/#{unifiedHistoryId}.json?usage=#{usage}"
-        success: (data) -> return
-        error: (error) -> alert error
+        # I want to replace by initialize_draggable
+        $(".draggable").draggable
+          helper: (event) ->
+            $("<span style='white-space:nowrap;'>").text "unified_history"
+          revert: true
+
+        currentUsage = usage
+      error: (error) -> alert error
