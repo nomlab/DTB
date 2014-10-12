@@ -4,7 +4,7 @@ class UnifiedHistoriesController < ApplicationController
   # GET /unified_histories
   # GET /unified_histories.json
   def index
-    @unified_histories = UnifiedHistory.all
+    @unified_histories = params[:usage].nil? ? UnifiedHistory.all : UnifiedHistory.where(usage: params[:usage])
   end
 
   # GET /unified_histories/1
