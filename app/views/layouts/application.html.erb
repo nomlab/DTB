@@ -86,28 +86,17 @@
         <div class="row">
           <div class="span4">
             <div class="well sidebar-nav">
-              <h3>Current time entry</h3>
-              <ul class="nav nav-list">
-                <% if TimeEntry.current.nil? %>
-                  <%= form_tag( { :controller => "time_entries",
-                                  :action => "continue" } ) do %>
-                    <li>
-                      <%= text_field_tag "name",
-                          nil, :placeholder => "What are you doing?"%>
-                      <button type="submit" class="btn btn-info">Start</button>
-                    </li>
-                  <% end %>
-                <% else %>
-                  <%= form_tag( { :controller => "time_entries",
-                                  :action => "stop" } ) do %>
-                    <li>
-                      <%= text_field_tag "name",
-                          TimeEntry.current.name, :readonly => true %>
-                      <button type="submit" class="btn btn-info">Stop</button>
-                    </li>
-                  <% end %>
+              <% if TimeEntry.current.nil? %>
+                <%= form_tag( { controller: "time_entries", action: "continue"} ) do %>
+                  <%= text_field_tag "name", nil, placeholder: "What are you doing?", class: "current-time-entry" %>
+                  <button type="submit" class="btn btn-info current-time-entry">Start</button>
                 <% end %>
-              </ul>
+              <% else %>
+                <%= form_tag( { controller: "time_entries", action: "stop" } ) do %>
+                  <%= text_field_tag "name", TimeEntry.current.name, readonly: true , class: "current-time-entry"%>
+                  <button type="submit" class="btn btn-info current-time-entry">Stop</button>
+                <% end %>
+              <% end %>
             </div>
           </div>
           <div class="span8">

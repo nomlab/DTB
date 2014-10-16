@@ -3,6 +3,7 @@
 //= require fullcalendar
 //= require jquery-ui
 //= require_tree .
-table.group tr td.selected{
-  background-color: #CCFF99;
+.current-time-entry {
+  margin:0px;
+  float:left;
 }
