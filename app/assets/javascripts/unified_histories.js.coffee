@@ -1,10 +1,12 @@
-$ ->
-  currentUsage = "undefined"
+currentUsage = "undefined"
 
-  $(".draggable").draggable
-    helper: (event) ->
-      $("<span style='white-space:nowrap;'>").text "unified_history"
-    revert: true
+initDraggable = -> $(".draggable").draggable
+  helper: (event) ->
+    $("<span style='white-space:nowrap;'>").text "item"
+  revert: true
+
+$ ->
+  initDraggable()
 
   $(".droppable").click (event) ->
     $(".droppable").removeClass "selected"
@@ -41,12 +43,6 @@ $ ->
           </tr>
           """
         $(".inbox").replaceWith("<tbody class='inbox'>#{entries}</tbody>")
-
-        # I want to replace by initialize_draggable
-        $(".draggable").draggable
-          helper: (event) ->
-            $("<span style='white-space:nowrap;'>").text "unified_history"
-          revert: true
-
+        initDraggable()
         currentUsage = usage
       error: (error) -> alert error
