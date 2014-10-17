@@ -62,10 +62,16 @@
      #+END_SRC
   7) 履歴情報収集処理の開始
      1) 計算機内部の履歴情報について
-        #+BEGIN_SRC sh
-          $ bundle exec rails runner lib/file_history_scripts/create_file_histories
-        #+END_SRC
-     2) 計算機外部の履歴情報について
+        1) 実行権限の書換え(dtraceの利用のため)
+           #+BEGIN_SRC sh
+             $ sudo visudo
+             # replace "%admin  ALL=(ALL) ALL" to "%admin  ALL=(ALL) NOPASSWD: ALL"
+           #+END_SRC
+        2) スクリプトの実行
+           #+BEGIN_SRC sh
+             $ bundle exec rails runner lib/file_history_scripts/create_file_histories
+           #+END_SRC
+     3) 計算機外部の履歴情報について
         1) Firefox の profile に改造版 MindTheTime (MyMindTheTime) のパスを教える
            + hogehoge には適当な文字列が入っている
            + profile_name にはユーザが設定したprofileの名前が入っている(デフォルトであるのは default)
