@@ -41,11 +41,6 @@
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
-          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </a>
           <a class="brand" href="/welcome#index">DTB</a>
           <div class="container nav-collapse">
             <ul class="nav">
@@ -56,14 +51,14 @@
                     <span class="caret"></span>
                   </button>
                   <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#"></a><%= link_to "一覧", "/missions"  %></li>
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#"></a><%= link_to "カレンダ", "/missions/calendar"  %></li>
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#"></a><%= link_to "ツリー", "/missions/tree"  %></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#"></a><%= link_to "List", "/missions"  %></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#"></a><%= link_to "Calendar", "/missions/calendar"  %></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#"></a><%= link_to "Tree", "/missions/tree"  %></li>
                   </ul>
                 </div>
               </li>
-              <li><%= link_to "Task一覧", "/tasks"  %></li>
-              <li><%= link_to "TimeEntry一覧", "/time_entries"  %></li>
+              <li><%= link_to "Task List", "/tasks"  %></li>
+              <li><%= link_to "TimeEntry List", "/time_entries"  %></li>
               <li>
                 <div class="dropdown">
                   <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown">
@@ -71,8 +66,8 @@
                     <span class="caret"></span>
                   </button>
                   <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#"></a><%= link_to "一覧", "/unified_histories"  %></li>
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#"></a><%= link_to "整理", "/unified_histories/organize"  %></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#"></a><%= link_to "List", "/unified_histories"  %></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#"></a><%= link_to "Organize", "/unified_histories/organize"  %></li>
                   </ul>
                 </div>
               </li>
@@ -88,13 +83,13 @@
             <div class="well sidebar-nav">
               <% if TimeEntry.current.nil? %>
                 <%= form_tag( { controller: "time_entries", action: "continue"} ) do %>
-                  <%= text_field_tag "name", nil, placeholder: "What are you doing?", class: "current-time-entry" %>
-                  <button type="submit" class="btn btn-info current-time-entry">Start</button>
+                  <%= text_field_tag "name", nil, placeholder: "What are you doing?" %>
+                  <button type="submit" class="btn btn-info">Start</button>
                 <% end %>
               <% else %>
                 <%= form_tag( { controller: "time_entries", action: "stop" } ) do %>
-                  <%= text_field_tag "name", TimeEntry.current.name, readonly: true , class: "current-time-entry"%>
-                  <button type="submit" class="btn btn-info current-time-entry">Stop</button>
+                  <%= text_field_tag "name", TimeEntry.current.name, readonly: true %>
+                  <button type="submit" class="btn btn-info">Stop</button>
                 <% end %>
               <% end %>
             </div>
