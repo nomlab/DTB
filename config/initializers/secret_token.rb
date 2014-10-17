@@ -9,4 +9,4 @@
 
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
-DTB::Application.config.secret_key_base = '58773221a8ad0c4e860bb7a280a99fc9c5da152ceb5fb11e29e84c83161185683011d45887f311c7510a6d3dcd9eea926042e713ff83726e571dccb5eb4c62c8'
+DTB::Application.config.secret_key_base = '7eacf03e559dbae2527d49e90b49fd921d5f78d47a1a3c377e5f8570711c5fba85106fa03c8042367846975d199f1a2b39615759fc573c14dd715b861e72c981'
