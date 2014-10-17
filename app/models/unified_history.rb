@@ -1,7 +1,7 @@
 class UnifiedHistory < ActiveRecord::Base
 
   def duration
-    return {"start_time" => start_time, "end_time" => end_time}
+    return Duration.new(start_time, end_time)
   end
 
   def restore

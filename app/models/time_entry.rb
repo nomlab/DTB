@@ -43,7 +43,7 @@ class TimeEntry < ActiveRecord::Base
   end
 
   def duration
-    return {start_time: start_time, end_time: end_time}
+    return Duration.new(start_time, end_time)
   end
 
   def unified_histories
@@ -67,8 +67,8 @@ class TimeEntry < ActiveRecord::Base
     return {
       id:        id,
       title:     name,
-      start:     duration[:start_time],
-      end:       duration[:end_time],
+      start:     duration.start_time,
+      end:       duration.end_time,
       type:      "time_entry",
       color:     "#D5FCD7",
       textColor: "#000000"

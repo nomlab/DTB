@@ -15,8 +15,7 @@ class Task < ActiveRecord::Base
   end
 
   def duration
-    time_array = durations.map(&:values).flatten.compact
-    return {start_time: time_array.min, end_time: time_array.max}
+    return durations.inject{|d1, d2| d1.merge d2}
   end
 
   def unified_histories
@@ -47,8 +46,8 @@ class Task < ActiveRecord::Base
     return {
       id:        id,
       title:     name,
-      start:     duration[:start_time],
-      end:       duration[:end_time],
+      start:     duration.start_time,
+      end:       duration.end_time,
       type:      "task",
       color:     "#FFD5AC",
       textColor: "#000000"
