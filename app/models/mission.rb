@@ -62,4 +62,10 @@ class Mission < ActiveRecord::Base
       textColor: "#000000"
     }
   end
+
+  def progress
+    all_tasks = children.map(&:tasks).flatten + tasks
+    completed = all_tasks.select(&:status)
+    return completed.length.to_f / all_tasks.length.to_f
+  end
 end
