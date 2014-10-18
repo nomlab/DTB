@@ -1,4 +1,10 @@
-<li><%= link_to mission.name, {controller:"missions", action:"show", id: mission.id}, {class: "mission"} %>
+<li>
+  <% if mission.status %>
+    <span class="icon-ok-sign"></span>
+  <% else %>
+    <span class="icon-remove-sign"></span>
+  <% end %>
+  <%= link_to mission.name, {controller:"missions", action:"show", id: mission.id}, {class: "mission"} %>
     <ul>
       <% mission.children.each do |child| %>
         <%= render :partial => "missions/tree_item", :locals => {:mission => child} %>
