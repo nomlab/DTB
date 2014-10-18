@@ -1,9 +1,9 @@
 <% if time_entry == TimeEntry.current %>
-  <%= link_to '<i class="icon-stop"></i>'.html_safe,
+  <%= link_to '<span class="icon-stop"></span>'.html_safe,
       :controller => "time_entries",
       :action     => "stop" %>
 <% else %>
-  <%= link_to '<i class="icon-play"></i>'.html_safe,
+  <%= link_to '<span class="icon-play"></span>'.html_safe,
       :id         => time_entry.id,
       :name       => time_entry.name,
       :task_id    => time_entry.task_id,
