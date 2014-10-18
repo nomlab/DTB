@@ -1,5 +1,5 @@
 class TasksController < ApplicationController
-  before_action :set_task, only: [:show, :edit, :update, :destroy]
+  before_action :set_task, only: [:show, :edit, :update, :destroy, :update_status]
 
   # GET /tasks
   # GET /tasks.json
@@ -86,6 +86,17 @@ class TasksController < ApplicationController
     @task.save ? flash[:success] = "Task was successfully created." :
                  flash[:warning] = "Failed to create task."
     redirect_to :back
+  end
+
+  def update_status
+    @task.update_attribute(:status, params[:status]) unless params[:status].nil?
+    respond_to do |format|
+      format.html {
+        flash[:success] = "Task was successfully updated."
+        redirect_to :back
+      }
+      format.json { render json: @task }
+    end
   end
 
   private
