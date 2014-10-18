@@ -98,12 +98,29 @@
                     <% end %>
                   </div>
                 </li>
+                <li>
+                  <h4>New Task</h4>
+                  <div class="input-append">
+                    <%= form_tag( { controller: "tasks", action: "simple_create"} ) do %>
+                      <%= text_field_tag "name", nil, placeholder: "Input new task" %>
+                      <button type="submit" class="btn btn-success">Create</button>
+                    <% end %>
+                  </div>
+                </li>
+                <li>
+                  <h4>Mission Tree</h4>
+                </li>
               </ul>
             </div>
           </div>
           <div class="span8">
-            <%= bootstrap_flash %>
-            <%= yield %>
+              <% flash.each do |name, msg| %>
+                <div class="alert alert-<%= name %>">
+                  <button type="button" class="close" data-dismiss="alert">×</button>
+                  <%= msg %>
+                </div>
+              <% end %>
+              <%= yield %>
           </div>
         </div>
     </div>

@@ -37,7 +37,10 @@ class MissionsController < ApplicationController
 
     respond_to do |format|
       if @mission.save
-        format.html { redirect_to @mission, notice: 'Mission was successfully created.' }
+        format.html {
+          flash[:success] = "Mission was successfully created."
+          redirect_to @mission
+        }
         format.json { render action: 'show', status: :created, location: @mission }
       else
         format.html { render action: 'new' }
@@ -51,7 +54,10 @@ class MissionsController < ApplicationController
   def update
     respond_to do |format|
       if @mission.update(mission_params)
-        format.html { redirect_to @mission, notice: 'Mission was successfully updated.' }
+        format.html {
+          flash[:success] = "Mission was successfully created."
+          redirect_to @mission
+        }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }

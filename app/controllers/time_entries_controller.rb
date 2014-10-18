@@ -24,7 +24,10 @@ class TimeEntriesController < ApplicationController
 
     respond_to do |format|
       if @time_entry.save
-        format.html { redirect_to @time_entry, notice: 'Time entry was successfully created.' }
+        format.html {
+          flash[:success] = "Time entry was successfully created."
+          redirect_to @time_entry
+        }
         format.json { render action: 'show', status: :created, location: @time_entry }
       else
         format.html { render action: 'new' }
@@ -36,7 +39,10 @@ class TimeEntriesController < ApplicationController
   def update
     respond_to do |format|
       if @time_entry.update(time_entry_params)
-        format.html { redirect_to @time_entry, notice: 'Time entry was successfully updated.' }
+        format.html {
+          flash[:success] = "Time entry was successfully updated."
+          redirect_to @time_entry
+        }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -54,18 +60,18 @@ class TimeEntriesController < ApplicationController
   end
 
   def continue
-    TimeEntry.start({:description => params[:name]}, params[:task_id])
-    redirect_to :back, notice: 'TimeEntry is started.'
+    if TimeEntry.start({:description => params[:name]}, params[:task_id])
+      flash[:success] = "Time entry was successfully started."
+    else
+      flash[:warning] = "Failed to start time entry"
+    end
+    redirect_to :back
   end
 
   def stop
-    TimeEntry.stop
-    redirect_to :back, notice: 'TimeEntry is stoped.'
-  end
-
-  def import
-    TimeEntry.import
-    redirect_to :back, notice: 'Import time entry'
+    TimeEntry.stop ? flash[:success] = "Time entry was successfully stopped." :
+                     flash[:warnig] = "Failed to stop time entry."
+    redirect_to :back
   end
 
   private

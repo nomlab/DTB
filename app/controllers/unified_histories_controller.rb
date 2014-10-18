@@ -29,7 +29,10 @@ class UnifiedHistoriesController < ApplicationController
 
     respond_to do |format|
       if @unified_history.save
-        format.html { redirect_to @unified_history, notice: 'Unified history was successfully created.' }
+        format.html {
+          flash[:success] = "Unified history was successfully created."
+          redirect_to @unified_history
+        }
         format.json { render action: 'show', status: :created, location: @unified_history }
       else
         format.html { render action: 'new' }
@@ -43,7 +46,10 @@ class UnifiedHistoriesController < ApplicationController
   def update
     respond_to do |format|
       if @unified_history.update(unified_history_params)
-        format.html { redirect_to @unified_history, notice: 'Unified history was successfully updated.' }
+        format.html {
+          flash[:success] = "Unified history was successfully updated."
+          redirect_to @unified_history
+        }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -75,7 +81,10 @@ class UnifiedHistoriesController < ApplicationController
   def update_usage
     @unified_history.update_attribute(:usage, params[:usage]) unless params[:usage].nil?
     respond_to do |format|
-      format.html { redirect_to @unified_history, notice: 'Unified history was successfully updated.' }
+      format.html {
+        flash[:success] = "Unified history was successfully updated."
+        redirect_to @unified_history
+      }
       format.json { render json: @unified_history }
     end
   end

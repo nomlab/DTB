@@ -1,5 +1,3 @@
-<p id="notice"><%= notice %></p>
-
 <h1>
   <%= @task.name %>
   <%= link_to '<i class="icon-play"></i>'.html_safe,
@@ -30,7 +28,11 @@
 
 <p>
   <strong>Mission:</strong>
-  <%= link_to @task.mission.name, @task.mission %>
+  <% if @task.mission.nil? %>
+    No mission
+  <% else %>
+    <%= link_to @task.mission.name, @task.mission %>
+  <% end %>
 </p>
 
 <hr>
