@@ -71,7 +71,7 @@
            #+BEGIN_SRC sh
              $ bundle exec rails runner lib/file_history_scripts/create_file_histories
            #+END_SRC
-     3) 計算機外部の履歴情報について
+     2) 計算機外部の履歴情報について
         1) Firefox の profile に改造版 MindTheTime (MyMindTheTime) のパスを教える
            + hogehoge には適当な文字列が入っている
            + profile_name にはユーザが設定したprofileの名前が入っている(デフォルトであるのは default)
@@ -90,7 +90,12 @@
              #+BEGIN_SRC sh
              $ bundle exec guard -c --no-interactions --watchdir /Users/your_name/Library/Application\ Support/Firefox/Profiles/hogehoge.profile_name/
              #+END_SRC
-  8) DTB の 起動
+  8) Toggl account の設定
+     #+BEGIN_SRC sh
+       $ mv local/toggl.yml.sample local/toggl.yml
+       $ vim local/toggl.yml # -> Input your toggl token
+     #+END_SRC
+  9) DTB の 起動
      #+BEGIN_SRC sh
        $ bundle exec rails s
      #+END_SRC
