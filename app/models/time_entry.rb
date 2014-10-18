@@ -1,5 +1,6 @@
 class TimeEntry < ActiveRecord::Base
   belongs_to :task
+  default_scope { order(created_at: :desc) }
 
   def self.current
     @current_time_entry

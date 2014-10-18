@@ -2,6 +2,7 @@ class Mission < ActiveRecord::Base
   has_many :tasks, :dependent => :destroy
   has_many :children, :class_name => "Mission", :foreign_key => :parent_id
   belongs_to :parent, :class_name => "Mission", :foreign_key => :parent_id
+  default_scope { order(created_at: :desc) }
 
   def durations
     return children.map(&:durations).flatten + tasks.map(&:durations).flatten
