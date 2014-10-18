@@ -109,6 +109,11 @@
                 </li>
                 <li>
                   <h4>Mission Tree</h4>
+                  <ul id="mission_tree" class="treeview">
+                    <% @root_missions.each do |m| %>
+                      <%= render :partial => "missions/tree_item", :locals => {:mission => m} %>
+                    <% end %>
+                  </ul>
                 </li>
               </ul>
             </div>
