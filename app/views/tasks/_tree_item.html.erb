@@ -1,7 +1,7 @@
-<li><%= link_to task.name, task %>
+<li><%= link_to task.name, {controller:"tasks", action:"show", id: task.id}, {class: "task"} %>
   <ul>
     <% task.time_entries.each do |time_entry| %>
-      <li><%= link_to time_entry.name, time_entry %></li>
+      <li><%= link_to time_entry.name,  {controller:"time_entries", action:"show", id: time_entry.id}, {class: "time-entry"} %></li>
     <% end %>
   </ul>
 </li>

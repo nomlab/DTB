@@ -58,7 +58,7 @@ class Mission < ActiveRecord::Base
       start:     duration.start_time,
       end:       duration.end_time,
       type:      "mission",
-      color:     "#D6F0FE",
+      color:     "#9FC6E7",
       textColor: "#000000"
     }
   end

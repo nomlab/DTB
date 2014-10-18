@@ -1,4 +1,4 @@
-<li><%= link_to mission.name, mission %>
+<li><%= link_to mission.name, {controller:"missions", action:"show", id: mission.id}, {class: "mission"} %>
     <ul>
       <% mission.children.each do |child| %>
         <%= render :partial => "missions/tree_item", :locals => {:mission => child} %>

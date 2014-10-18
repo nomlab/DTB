@@ -71,7 +71,7 @@ class TimeEntry < ActiveRecord::Base
       start:     duration.start_time,
       end:       duration.end_time,
       type:      "time_entry",
-      color:     "#D5FCD7",
+      color:     "#7BD148",
       textColor: "#000000"
     }
   end

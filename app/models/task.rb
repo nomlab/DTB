@@ -50,7 +50,7 @@ class Task < ActiveRecord::Base
       start:     duration.start_time,
       end:       duration.end_time,
       type:      "task",
-      color:     "#FFD5AC",
+      color:     "#FAD165",
       textColor: "#000000"
     }
   end
