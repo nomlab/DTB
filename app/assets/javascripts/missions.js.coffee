@@ -1,4 +1,4 @@
-$ ->
+ready = ->
   #-------- for fullcalendar --------
   $('#calendar').fullCalendar
     lang: 'ja'
@@ -34,3 +34,6 @@ $ ->
   $("#mission_tree").treeview
     animated: "fast"
     collapsed: true
+
+$(document).ready(ready)
+$(document).on('page:load', ready)

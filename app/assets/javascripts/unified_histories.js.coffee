@@ -5,7 +5,7 @@ initDraggable = -> $(".draggable").draggable
     $("<span style='white-space:nowrap;'>").text "item"
   revert: true
 
-$ ->
+ready = ->
   initDraggable()
 
   $(".droppable").click (event) ->
@@ -46,3 +46,6 @@ $ ->
         initDraggable()
         currentUsage = usage
       error: (error) -> alert error
+
+$(document).ready(ready)
+$(document).on('page:load', ready)
