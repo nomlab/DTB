@@ -40,7 +40,7 @@
 
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
-        <div class="container">
+        <div class="container-fluid">
           <a class="brand" href="/welcome#index">DTB</a>
           <div class="container nav-collapse">
             <ul class="nav">
@@ -72,26 +72,33 @@
                 </div>
               </li>
             </ul>
-          </div><!--/.nav-collapse -->
+          </div>
         </div>
       </div>
     </div>
 
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
           <div class="span4">
-            <div class="well sidebar-nav">
-              <% if TimeEntry.current.nil? %>
-                <%= form_tag( { controller: "time_entries", action: "continue"} ) do %>
-                  <%= text_field_tag "name", nil, placeholder: "What are you doing?" %>
-                  <button type="submit" class="btn btn-info">Start</button>
-                <% end %>
-              <% else %>
-                <%= form_tag( { controller: "time_entries", action: "stop" } ) do %>
-                  <%= text_field_tag "name", TimeEntry.current.name, readonly: true %>
-                  <button type="submit" class="btn btn-info">Stop</button>
-                <% end %>
-              <% end %>
+            <div class="sidebar">
+              <ul class="nav">
+                <li>
+                  <h4>Current Time Entry</h4>
+                  <div class="input-append">
+                    <% if TimeEntry.current.nil? %>
+                      <%= form_tag( { controller: "time_entries", action: "continue"} ) do %>
+                        <%= text_field_tag "name", nil, placeholder: "What are you doing?" %>
+                        <button type="submit" class="btn btn-success">Start</button>
+                      <% end %>
+                    <% else %>
+                      <%= form_tag( { controller: "time_entries", action: "stop" } ) do %>
+                        <%= text_field_tag "name", TimeEntry.current.name, readonly: true %>
+                        <button type="submit" class="btn btn-danger">Stop</button>
+                      <% end %>
+                    <% end %>
+                  </div>
+                </li>
+              </ul>
             </div>
           </div>
           <div class="span8">
@@ -99,7 +106,6 @@
             <%= yield %>
           </div>
         </div>
-    </div> <!-- /container -->
-
+    </div>
   </body>
 </html>
