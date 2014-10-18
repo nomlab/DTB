@@ -1,5 +1,5 @@
 class TasksController < ApplicationController
-  before_action :set_task, only: [:show, :edit, :update, :destroy, :update_status]
+  before_action :set_task, only: [:show, :edit, :update, :destroy, :update_status, :update_deadline]
 
   # GET /tasks
   # GET /tasks.json
@@ -90,6 +90,17 @@ class TasksController < ApplicationController
 
   def update_status
     @task.update_attribute(:status, params[:status]) unless params[:status].nil?
+    respond_to do |format|
+      format.html {
+        flash[:success] = "Task was successfully updated."
+        redirect_to :back
+      }
+      format.json { render json: @task }
+    end
+  end
+
+  def update_deadline
+    @task.update_attribute(:deadline, params[:deadline]) unless params[:deadline].nil?
     respond_to do |format|
       format.html {
         flash[:success] = "Task was successfully updated."
