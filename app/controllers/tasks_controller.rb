@@ -73,7 +73,7 @@ class TasksController < ApplicationController
 
   def continue
     @task = Task.find(params[:id])
-    if TimeEntry.start({:description => params[:name]}, @task.id)
+    if TimeEntry.start({:description => @task.name}, @task.id)
       flash[:success] = "Time entry was successfully started."
     else
       flash[:warning] = "Failed to start time entry."
