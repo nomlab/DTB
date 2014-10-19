@@ -128,7 +128,7 @@ class TasksController < ApplicationController
     @task.update_attribute(:mission_id, mission_id)
     respond_to do |format|
       format.html {
-        flash[:success] = "Unified history was successfully updated."
+        flash[:success] = "Task was successfully updated."
         redirect_to @task
       }
       format.json { render json: @task }
