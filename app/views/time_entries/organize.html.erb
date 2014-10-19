@@ -1,0 +1,39 @@
+<div class="row">
+  <div class="span2">
+    <table class="tasks table table-hover table-bordered">
+      <thead>
+        <tr>
+          <th>Tasks</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="droppable-task-for-task selected" id="nil">Undefined</td>
+        </tr>
+        <tr>
+          <td class="droppable-task-for-task" id="0">No task</td>
+        </tr>
+        <% @tasks.each do |task| %>
+        <tr>
+          <td class="droppable-task-for-task" id="<%= task.id %>"><%= task.name %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div class="span6">
+    <table class="table table-hover table-bordered">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Duration</th>
+        </tr>
+      </thead>
+      <tbody class="time-entry-inbox">
+        <% @time_entries.each do |time_entry| %>
+          <%= render :partial => "time_entries/inbox_item", :locals => {:time_entry => time_entry} %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

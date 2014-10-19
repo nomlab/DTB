@@ -1,8 +1,13 @@
 class TimeEntriesController < ApplicationController
-  before_action :set_time_entry, only: [:show, :edit, :update, :destroy]
+  before_action :set_time_entry, only: [:show, :edit, :update, :destroy, :update_task_id]
 
   def index
-    @time_entries = TimeEntry.all
+    unless params[:task_id].nil?
+      task_id = params[:task_id] == "nil" ? nil : params[:task_id]
+      @time_entries = TimeEntry.where(task_id: task_id)
+    else
+      @time_entries = TimeEntry.all
+    end
   end
 
   def show
@@ -72,6 +77,24 @@ class TimeEntriesController < ApplicationController
     TimeEntry.stop ? flash[:success] = "Time entry was successfully stopped." :
                      flash[:warnig] = "Failed to stop time entry."
     redirect_to :back
+  end
+
+  def organize
+    @time_entries = TimeEntry.where(task_id: nil)
+    @tasks = Task.all
+  end
+
+  #---------- for ajax ----------
+  def update_task_id
+    task_id = params[:task_id] == "nil" ? nil : params[:task_id] unless params[:task_id].nil?
+    @time_entry.update_attribute(:task_id, task_id)
+    respond_to do |format|
+      format.html {
+        flash[:success] = "TimeEntry was successfully updated."
+        redirect_to @time_entry
+      }
+      format.json { render json: @time_entry }
+    end
   end
 
   private

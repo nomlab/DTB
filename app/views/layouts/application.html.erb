@@ -63,20 +63,31 @@
                     Task
                     <span class="caret"></span>
                   </button>
-                  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="#"></a><%= link_to "List", "/tasks"  %></li>
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="#"></a><%= link_to "Organize", "/tasks/organize"  %></li>
                   </ul>
                 </div>
               </li>
-              <li><%= link_to "TimeEntry List", "/time_entries"  %></li>
               <li>
                 <div class="dropdown">
-                  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown">
+                  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu3" data-toggle="dropdown">
+                    TimeEntry
+                    <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu3">
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#"></a><%= link_to "List", "/time_entries"  %></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#"></a><%= link_to "Organize", "/time_entries/organize"  %></li>
+                  </ul>
+                </div>
+              </li>
+              <li>
+                <div class="dropdown">
+                  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu4" data-toggle="dropdown">
                     History
                     <span class="caret"></span>
                   </button>
-                  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu4">
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="#"></a><%= link_to "List", "/unified_histories"  %></li>
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="#"></a><%= link_to "Organize", "/unified_histories/organize"  %></li>
                   </ul>
