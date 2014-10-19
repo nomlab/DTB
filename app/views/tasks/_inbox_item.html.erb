@@ -1,0 +1,11 @@
+<tr class="draggable-task" id="<%= task.id %>">
+  <td><%= task.name %></td>
+  <td>
+    <% if task.status %>
+      <span class="icon-ok-sign"></span>
+    <% else %>
+      <span class="icon-remove-sign"></span>
+    <% end %>
+  </td>
+  <td><%= task.deadline %></td>
+</tr>

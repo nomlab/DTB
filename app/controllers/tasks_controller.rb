@@ -1,10 +1,17 @@
 class TasksController < ApplicationController
-  before_action :set_task, only: [:show, :edit, :update, :destroy, :update_status, :update_deadline]
+  before_action :set_task, only: [:show, :edit, :update, :destroy,
+                                  :update_status, :update_deadline,
+                                  :update_mission_id]
 
   # GET /tasks
   # GET /tasks.json
   def index
-    @tasks = Task.all
+    unless params[:mission_id].nil?
+      mission_id = params[:mission_id] == "nil" ? nil : params[:mission_id]
+      @tasks = Task.where(mission_id: mission_id)
+    else
+      @tasks = Task.all
+    end
   end
 
   # GET /tasks/1
@@ -105,6 +112,24 @@ class TasksController < ApplicationController
       format.html {
         flash[:success] = "Task was successfully updated."
         redirect_to :back
+      }
+      format.json { render json: @task }
+    end
+  end
+
+  def organize
+    @tasks = Task.where(mission_id: nil)
+    @missions = Mission.all
+  end
+
+  #---------- for ajax ----------
+  def update_mission_id
+    mission_id = params[:mission_id] == "nil" ? nil : params[:mission_id] unless params[:mission_id].nil?
+    @task.update_attribute(:mission_id, mission_id)
+    respond_to do |format|
+      format.html {
+        flash[:success] = "Unified history was successfully updated."
+        redirect_to @task
       }
       format.json { render json: @task }
     end

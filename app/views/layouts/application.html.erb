@@ -57,7 +57,18 @@
                   </ul>
                 </div>
               </li>
-              <li><%= link_to "Task List", "/tasks"  %></li>
+              <li>
+                <div class="dropdown">
+                  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown">
+                    Task
+                    <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#"></a><%= link_to "List", "/tasks"  %></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#"></a><%= link_to "Organize", "/tasks/organize"  %></li>
+                  </ul>
+                </div>
+              </li>
               <li><%= link_to "TimeEntry List", "/time_entries"  %></li>
               <li>
                 <div class="dropdown">
