@@ -8,19 +8,19 @@
       </thead>
       <tbody>
         <tr>
-          <td class="droppable selected" id="undefined">未分類</td>
+          <td class="droppable-usage selected" id="undefined">Undefined</td>
         </tr>
         <tr>
-          <td class="droppable" id="product">作成データ</td>
+          <td class="droppable-usage" id="product">Product</td>
         </tr>
         <tr>
-          <td class="droppable" id="reference">参照データ</td>
+          <td class="droppable-usage" id="reference">Reference</td>
         </tr>
         <tr>
-          <td class="droppable" id="unneeded">不要データ</td>
+          <td class="droppable-usage" id="unneeded">Unneeded</td>
         </tr>
         <tr>
-          <td class="droppable" id="other">その他</td>
+          <td class="droppable-usage" id="other">Other</td>
         </tr>
       </tbody>
     </table>
@@ -34,7 +34,7 @@
           <th>Duration</th>
         </tr>
       </thead>
-      <tbody class="inbox">
+      <tbody class="unified-history-inbox">
         <% @unified_histories.each do |unified_history| %>
           <%= render :partial => "unified_histories/inbox_item", :locals => {:unified_history => unified_history} %>
         <% end %>
