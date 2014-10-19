@@ -83,6 +83,13 @@ class MissionsController < ApplicationController
     @missions = Mission.all
   end
 
+  def simple_create
+    @mission = Mission.new(name: params[:name])
+    @mission.save ? flash[:success] = "Mission was successfully created." :
+                    flash[:warning] = "Failed to create mission."
+    redirect_to :back
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_mission

@@ -47,5 +47,8 @@ ready = ->
         currentMissionForTask = mission
       error: (error) -> alert error
 
+  $(".new-mission-for-task").click (event) ->
+    $('#simple-mission-form').modal('show')
+
 $(document).ready(ready)
 $(document).on('page:load', ready)
