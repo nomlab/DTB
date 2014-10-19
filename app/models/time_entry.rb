@@ -10,23 +10,6 @@ class TimeEntry < ActiveRecord::Base
     @current_time_entry = time_entry
   end
 
-  def self.import
-    TOGGL_API_CLIENT.get_time_entries(Time.parse(base.me["created_at"]), Time.now).each do |te|
-      if TimeEntry.where(["toggl_time_entry_id = ?", te["id"]]).blank?
-        time_entry = TimeEntry.new({name: te["description"], start_time: Time.parse(te["start"]),
-                                     end_time: Time.parse(te["start"]) + te["duration"],
-                                     toggl_time_entry_id: te["id"],
-                                     running_status: te["duration"] >= 0 ? false : true})
-      else
-        time_entry = TimeEntry.where(["toggl_time_entry_id = ?", te["id"]]).first
-        time_entry.update({name: te["description"], start_time: Time.parse(te["start"]),
-                                     end_time: Time.parse(te["start"]) + te["duration"],
-                                     running_status: te["duration"] >= 0 ? false : true})
-      end
-      time_entry.save
-    end
-  end
-
   def self.start(options, task_id)
     response = TOGGL_API_CLIENT.start_time_entry(options)
     return TimeEntry.current = TimeEntry.create(:name => response.description,
@@ -62,6 +45,29 @@ class TimeEntry < ActiveRecord::Base
 
   def restore
     unified_histories.map(&:restore)
+  end
+
+
+  def sync
+    toggl_time_entry = TOGGL_API_CLIENT.get_time_entry(toggl_time_entry_id)
+    if toggl_time_entry.nil?
+      destroy
+    else
+      if Time.parse(toggl_time_entry.at) > updated_at
+        self.name = toggl_time_entry.description
+        self.start_time = toggl_time_entry.start
+        self.end_time = toggl_time_entry.stop
+        save
+      else
+        options = {
+          description: name,
+          start:       start_time.iso8601,
+          stop:        end_time.iso8601,
+          duration:    duration.to_seconds
+        }
+        TOGGL_API_CLIENT.update_time_entry(toggl_time_entry_id, options)
+      end
+    end
   end
 
   def to_event
