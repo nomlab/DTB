@@ -26,6 +26,27 @@ class TimeEntry < ActiveRecord::Base
     time_entry.save
   end
 
+  def self.partial_sync(start_date, end_date)
+    toggl_time_entries = TOGGL_API_CLIENT.get_time_entries(start_date, end_date)
+    toggl_time_entries.each do |toggl_time_entry|
+      dtb_time_entry = TimeEntry.find_by(toggl_time_entry_id: toggl_time_entry.id)
+      if dtb_time_entry
+        dtb_time_entry.sync
+      else
+        TimeEntry.create(
+                         name: toggl_time_entry.description,
+                         start_time: toggl_time_entry.start,
+                         end_time: toggl_time_entry.stop,
+                         toggl_time_entry_id: toggl_time_entry.id
+                         )
+      end
+    end
+  end
+
+  def self.completely_sync
+    TimeEntry.partial_sync(Time.new("2006-01-01"), nil)
+  end
+
   def duration
     return Duration.new(start_time, end_time)
   end
@@ -46,7 +67,6 @@ class TimeEntry < ActiveRecord::Base
   def restore
     unified_histories.map(&:restore)
   end
-
 
   def sync
     toggl_time_entry = TOGGL_API_CLIENT.get_time_entry(toggl_time_entry_id)
