@@ -5,9 +5,11 @@
     <span class="icon-remove-sign"></span>
   <% end %>
   <%= link_to task.name, {controller:"tasks", action:"show", id: task.id}, {class: "task"} %>
-  <ul>
-    <% task.time_entries.each do |time_entry| %>
-      <li><%= link_to time_entry.name,  {controller:"time_entries", action:"show", id: time_entry.id}, {class: "time-entry"} %></li>
-    <% end %>
-  </ul>
+  <% if task.time_entries.present? %>
+    <ul>
+      <% task.time_entries.each do |time_entry| %>
+        <li><%= link_to time_entry.name,  {controller:"time_entries", action:"show", id: time_entry.id}, {class: "time-entry"} %></li>
+      <% end %>
+    </ul>
+  <% end %>
 </li>
