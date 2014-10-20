@@ -70,8 +70,8 @@ class TimeEntry < ActiveRecord::Base
 
   def sync
     toggl_time_entry = TOGGL_API_CLIENT.get_time_entry(toggl_time_entry_id)
-    if toggl_time_entry.nil?
-      destroy
+    if toggl_time_entry.server_deleted_at
+      self.destroy
     else
       if Time.parse(toggl_time_entry.at) > updated_at
         self.name = toggl_time_entry.description
