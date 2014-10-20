@@ -121,6 +121,20 @@
                   </div>
                 </li>
                 <li>
+                  <h4>Sync TimeEntries</h4>
+                  <div class="btn-group">
+                    <% today = Time.now.beginning_of_day %>
+                    <%= link_to "day", {controller: "time_entries", action: "sync", start: today.to_s(:fulltime)},
+                        {method: :post, class: "btn btn-success", type: "button"} %>
+                    <%= link_to "week", {controller: "time_entries", action: "sync", start: (today - 1.week).to_s(:fulltime)},
+                        {method: :post, class: "btn btn-success", type: "button", data: {confirm: "This action is too long. Are you sure?"}} %>
+                    <%= link_to "month", {controller: "time_entries", action: "sync", start: (today - 1.month).to_s(:fulltime)},
+                        {method: :post, class: "btn btn-success", type: "button", data: {confirm: "This action is too long. Are you sure?"}} %>
+                    <%= link_to "all", {controller: "time_entries", action: "sync"},
+                        {method: :post, class: "btn btn-success", type: "button", data: {confirm: "This action is too long. Are you sure?"}} %>
+                  </div>
+                </li>
+                <li>
                   <h4>New Task</h4>
                   <div class="input-append">
                     <%= form_tag( { controller: "tasks", action: "simple_create"} ) do %>

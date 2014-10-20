@@ -84,6 +84,16 @@ class TimeEntriesController < ApplicationController
     @tasks = Task.all
   end
 
+  def sync
+    if params[:start] || params[:end]
+      TimeEntry.partial_sync(params[:start], params[:end])
+    else
+      TimeEntry.completely_sync
+    end
+    flash[:success] = "TimeEntries were successfully synced."
+    redirect_to :back
+  end
+
   #---------- for ajax ----------
   def update_task_id
     task_id = params[:task_id] == "nil" ? nil : params[:task_id] unless params[:task_id].nil?

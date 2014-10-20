@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
   get "time_entries/organize", :to => "time_entries#organize"
   get "time_entries/stop", :to => "time_entries#stop"
+  put "time_entries/sync", :to => "time_entries#sync"
   put "time_entries/update_task_id/:id(.:format)", :to => "time_entries#update_task_id"
   resources :time_entries
 
