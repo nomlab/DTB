@@ -360,30 +360,6 @@ class FocusChangeRecord < ActivityRecord
   end
 end
 
-class FileOpeningWindow
-  attr_reader :pid, :pname, :path, :fd, :window_number
-
-  def initialize(h)
-    @pid, @pname, @path, @fd, @window_number = h[:pid], h[:pname], h[:path], h[:fd], h[:window_number]
-  end
-
-  def same_process?(other)
-    self.pid == other.pid && self.pname == other.pname
-  end
-
-  def same_path?(other)
-    self.path == other.path
-  end
-
-  def same_window?(other)
-    self.window_number == other.window_number
-  end
-
-  def same_fd?(other)
-    self.fd == other.fd
-  end
-end
-
 class WatchingFile
   attr_reader :time, :pid, :pname, :path, :window_number
 
@@ -407,68 +383,55 @@ end
 class FileHistoryFactory
   def initialize
     @file_open_records = []
-    @file_opening_windows = []
-    @watch_files = []
-    @before_focused_window_number = 0
+    @watching_files = []
   end
 
-  def create_history(record)
+  def receive_record(record)
     case record
     when FileOpenRecord
-      @file_open_records << record unless aleady_open?(record)
-    when FocusChangeRecord
-      # Register watching files
-      watching_files = @file_opening_windows.select{|w| w.same_process?(record) && w.same_window?(record)}
-      watching_files.each{|file|
-        @watch_files << WatchingFile.new( time:  record.time,
-                                          pid:   file.pid,
-                                          pname: file.pname,
-                                          path:  file.path,
-                                          window_number: file.window_number)
-      }
-
-      # Register Window from records stopping watching
-      stop_watching_records = @file_open_records.reject{|r| r.same_process?(record)}
-      @file_open_records.select!{|r| r.same_process?(record)}
-      stop_watching_records.each{|r|
-        @file_opening_windows << FileOpeningWindow.new( pid:   r.pid,
-                                                        pname: r.pname,
-                                                        path:  r.path,
-                                                        fd:    r.fd,
-                                                        window_number: @before_focused_window_number)
-        $file_open_processes_copy = @file_opening_windows.clone
-      }
-
-      # Create FH from files and records stopping watching
-      finish_watching_files = @watch_files.reject{|f| f.same_process?(record) && f.same_window?(record)}
-      @watch_files.select!{|f| f.same_process?(record)}
-      finish_watching_files.concat(stop_watching_records)
-      finish_watching_files.each{|f|
-        fh = UnifiedHistory.new( path:         f.path,
-                                 title:        f.path.split("/").last || f.path,
-                                 history_type: "file_history",
-                                 start_time:   f.time,
-                                 end_time:     record.time )
-        puts "history: #{fh.start_time}|#{fh.end_time}|#{fh.title}|#{fh.path}"
-      }
-
-      @before_focused_window_number = record.window_number
+      add_record(record)
     when FileCloseRecord
-      @file_opening_windows.reject!{|w| w.same_fd?(record)}
+      delete_record(record)
+    when FocusChangeRecord
+      end_watch(record)
+      start_watch(record)
     end
   end
 
   private
-  def aleady_open?(record)
-    return already_exist_same_record?(record) || already_opened_by_same_process?(record)
+  def add_record(file_open_record)
+    @file_open_records.push file_open_record
   end
 
-  def already_exist_same_record?(record)
-    return @file_open_records.any?{|r| r.same_path?(record) && r.same_process?(record)}
+  def delete_record(file_close_record)
+    @file_open_records.select!{|r| !r.same_process?(file_close_record) }
   end
 
-  def already_opened_by_same_process?(record)
-    return @file_opening_windows.any?{|p| p.same_path?(record) && p.same_process?(record)}
+  def start_watch(focus_change_record)
+    @file_open_records.select{|r| r.same_process?(focus_change_record)}.each do |record|
+      watching_file = WatchingFile.new ({
+        time:  focus_change_record.time,
+        pid:   record.time,
+        pname: record.pname,
+        path:  record.path,
+        window_number: focus_change_record.window_number
+      })
+      @watching_files.push watching_file
+    end
+  end
+
+  def end_watch(focus_change_record)
+    @watching_files.each do |file|
+      fh = UnifiedHistory.create(
+        path:         file.path,
+        title:        file.path.split("/").last || file.path,
+        history_type: "file_history",
+        start_time:   file.time,
+        end_time:     focus_change_record.time
+      )
+      puts "history: #{fh.start_time}|#{fh.end_time}|#{fh.title}|#{fh.path}"
+    end
+    @watching_files.clear
   end
 end
 
@@ -504,7 +467,7 @@ while 1 do
   if atm.ready?
     record = atm.get_record
     record.print_record
-    fhf.create_history(record)
+    fhf.receive_record(record)
   end
   # sleep 1 #sec
 end
