@@ -204,7 +204,7 @@ class ActivityRecord
   end
 
   def same_process?(other)
-    self.pid == other.pid && self.pname == other.pname
+    self.pid == other.pid
   end
 
   def print_record
@@ -272,7 +272,7 @@ class WatchingFile
   end
 
   def same_process?(other)
-    self.pid == other.pid && self.pname == other.pname
+    self.pid == other.pid
   end
 
   def same_path?(other)
