@@ -52,46 +52,12 @@ class ActivityTracker
       tracker = FileCloseTracker
     when :focus_change
       tracker = FocusChangeTracker
-    when :accept_home_directory_filter
-      tracker = AcceptHomeDirectoryFilter
-    when :ignore_library_filter
-      tracker = IgnoreLibraryFilter
-    when :ignore_finder_filter
-      tracker = IgnoreFinderFilter
-    when :ignore_font_worker_filter
-      tracker = IgnoreFontWorkerFilter
-    when :ignore_truste_valuation_filter
-      tracker = IgnoreTrusteValuationFilter
-    when :ignore_mdworker_filter
-      tracker = IgnoreMdworkerFilter
-    when :ignore_mds_filter
-      tracker = IgnoreMdsFilter
-    when :ignore_ruby_filter
-      tracker = IgnoreRubyFilter
-    when :ignore_mtmd_filter
-      tracker = IgnoreMtmdFilter
-    when :ignore_address_book_mana_filter
-      tracker = IgnoreAddressBookManaFilter
-    when :ignore_address_book_sour_filter
-      tracker = IgnoreAddressBookSourFilter
-    when :ignore_cookied_filter
-      tracker =  IgnoreCookiedFilter
-    when :ignore_cfuser_text_encoding_filter
-      tracker = IgnoreCFUserTextEncodingFilter
-    when :ignore_com_apple_appki_filter
-      tracker = IgnoreComAppleAppkiFilter
-    when :ignore_emacsd_filter
-      tracker = IgnoreEmacsdFilter
-    when :ignore_launchservicesd_filter
-      tracker = IgnoreLaunchServicesdFilter
-    when :ignore_taskgated_filter
-      tracker = IgnoreTaskGatedFilter
-    when :ignore_get_title_of_fo_filter
-      tracker = IgnoreGetTitleOfFoFilter
-    when :accept_wathicng_file_filter
-      tracker = AcceptWathicngFileFilter
-    when :ignore_get_number_of_focused_window_filter
-      tracker = IgnoreGetNumberOfFocusedWindowFilter
+    when :accept_path_filter
+      tracker = AcceptPathFilter
+    when :ignore_path_filter
+      tracker = IgnorePathFilter
+    when :ignore_name_filter
+      tracker = IgnoreNameFilter
     else
       raise "Unknown Tracker type"
     end
@@ -158,129 +124,67 @@ class ActivityTrackerDecorator < ActivityTracker
   end
 end
 
-class AcceptHomeDirectoryFilter < ActivityTrackerDecorator
+class AcceptPathFilter < ActivityTrackerDecorator
   def filter_record(record)
-    return /^#{ENV["HOME"]}/ =~ record.path ? record : nil
+    paths = [
+             "#{ENV["HOME"]}"
+            ]
+
+    paths.each do |path|
+      return record if /^#{path}/ =~ record.path
+    end
+    return nil
   end
 end
 
-class IgnoreLibraryFilter < ActivityTrackerDecorator
+class IgnorePathFilter < ActivityTrackerDecorator
   def filter_record(record)
-    return /^#{ENV["HOME"]}\/Library/ =~ record.path ? nil : record
+    paths = [
+             "#{ENV["HOME"]}/.emacs.d",
+             "#{ENV["HOME"]}/.CFUserTextEncoding",
+             "#{ENV["HOME"]}/Library"
+            ]
+
+    paths.each do |path|
+      return nil if /^#{path}/ =~ record.path
+    end
+    return record
   end
 end
 
-class IgnoreFinderFilter < ActivityTrackerDecorator
+class IgnoreNameFilter < ActivityTrackerDecorator
   def filter_record(record)
-    return /^Finder$/ =~ record.pname ? nil : record
-  end
-end
+    pnames = [
+              "basename",
+              "ps",
+              "discoveryd",
+              "cfprefsd",
+              "TweetDeck",
+              "Slack",
+              "System Events",
+              "grep",
+              "wc",
+              "sh",
+              "get_number_of_f",
+              "osascript",
+              "taskgated",
+              "launchservicesd",
+              "com.apple.appki",
+              "cookied",
+              "AddressBookSour",
+              "mtmd",
+              "ruby",
+              "mds",
+              "mdworker",
+              "trustevaluation",
+              "fontworker",
+              "Finder"
+             ]
 
-class IgnoreFontWorkerFilter < ActivityTrackerDecorator
-  def filter_record(record)
-    return /^fontworker$/ =~ record.pname ? nil : record
-  end
-end
-
-class IgnoreTrusteValuationFilter < ActivityTrackerDecorator
-  def filter_record(record)
-    return /^trustevaluation$/ =~ record.pname ? nil : record
-  end
-end
-
-class IgnoreMdworkerFilter < ActivityTrackerDecorator
-  def filter_record(record)
-    return /^mdworker$/ =~ record.pname ? nil : record
-  end
-end
-
-class IgnoreMdsFilter < ActivityTrackerDecorator
-  def filter_record(record)
-    return /^mds$/ =~ record.pname ? nil : record
-  end
-end
-
-class IgnoreRubyFilter < ActivityTrackerDecorator
-  def filter_record(record)
-    return /^ruby$/ =~ record.pname ? nil : record
-  end
-end
-
-class IgnoreMtmdFilter < ActivityTrackerDecorator
-  def filter_record(record)
-    return /^mtmd$/ =~ record.pname ? nil : record
-  end
-end
-
-class IgnoreAddressBookManaFilter < ActivityTrackerDecorator
-  def filter_record(record)
-    return /^AddressBookMana$/ =~ record.pname ? nil : record
-  end
-end
-
-class IgnoreAddressBookSourFilter < ActivityTrackerDecorator
-  def filter_record(record)
-    return /^AddressBookSour$/ =~ record.pname ? nil : record
-  end
-end
-
-class IgnoreCookiedFilter < ActivityTrackerDecorator
-  def filter_record(record)
-    return /^cookied$/ =~ record.pname ? nil : record
-  end
-end
-
-class IgnoreCFUserTextEncodingFilter < ActivityTrackerDecorator
-  def filter_record(record)
-    return /^#{ENV["HOME"]}\/\.CFUserTextEncoding$/ =~ record.path ? nil : record
-  end
-end
-
-class IgnoreComAppleAppkiFilter < ActivityTrackerDecorator
-  def filter_record(record)
-    return /^com\.apple\.appki$/ =~ record.pname ? nil : record
-  end
-end
-
-class IgnoreEmacsdFilter < ActivityTrackerDecorator
-  def filter_record(record)
-    return /^#{ENV["HOME"]}\/\.emacs\.d/ =~ record.path ? nil : record
-  end
-end
-
-class IgnoreLaunchServicesdFilter < ActivityTrackerDecorator
-  def filter_record(record)
-    return /^launchservicesd/ =~ record.pname ? nil : record
-  end
-end
-
-class IgnoreTaskGatedFilter < ActivityTrackerDecorator
-  def filter_record(record)
-    return /^taskgated/ =~ record.pname ? nil : record
-  end
-end
-
-class IgnoreTaskGatedFilter < ActivityTrackerDecorator
-  def filter_record(record)
-    return /^taskgated/ =~ record.pname ? nil : record
-  end
-end
-
-class IgnoreGetTitleOfFoFilter < ActivityTrackerDecorator
-  def filter_record(record)
-    return /^get_title_of_fo/ =~ record.pname ? nil : record
-  end
-end
-
-class AcceptWathicngFileFilter < ActivityTrackerDecorator
-  def filter_record(record)
-    return $file_open_processes_copy.any?{|p| p.pname == record.pname && p.pid == record.pid && p.fd == record.fd} ? record : nil
-  end
-end
-
-class IgnoreGetNumberOfFocusedWindowFilter < ActivityTrackerDecorator
-  def filter_record(record)
-    return /^get_number_of_f/ =~ record.pname ? nil : record
+    pnames.each do |pname|
+      return nil if /^#{pname}/ =~ record.pname
+    end
+    return record
   end
 end
 
@@ -400,16 +304,18 @@ class FileHistoryFactory
 
   private
   def add_record(file_open_record)
-    @file_open_records.push file_open_record
+    if @file_open_records.select{|r| r.same_process?(file_open_record) && r.same_path?(file_open_record)}.empty?
+      @file_open_records.push file_open_record
+    end
   end
 
   def delete_record(file_close_record)
-    @file_open_records.select!{|r| !r.same_process?(file_close_record) }
+    @file_open_records.select!{|r| !r.same_process?(file_close_record)}
   end
 
   def start_watch(focus_change_record)
     @file_open_records.select{|r| r.same_process?(focus_change_record)}.each do |record|
-      watching_file = WatchingFile.new ({
+      watching_file = WatchingFile.new({
         time:  focus_change_record.time,
         pid:   record.time,
         pname: record.pname,
@@ -439,28 +345,13 @@ end
 # main
 $file_open_processes_copy = []
 atm = ActivityTrackerManager.new
-atm.add_tracker(ActivityTracker.create([:ignore_get_number_of_focused_window_filter,
-                                        :ignore_get_title_of_fo_filter,
-                                        :ignore_taskgated_filter,
-                                        :ignore_launchservicesd_filter,
-                                        :ignore_emacsd_filter,
-                                        :ignore_com_apple_appki_filter,
-                                        :ignore_cfuser_text_encoding_filter,
-                                        :ignore_cookied_filter,
-                                        :ignore_address_book_sour_filter,
-                                        :ignore_address_book_mana_filter,
-                                        :ignore_mtmd_filter,
-                                        :ignore_ruby_filter,
-                                        :ignore_mds_filter,
-                                        :ignore_mdworker_filter,
-                                        :ignore_truste_valuation_filter,
-                                        :ignore_font_worker_filter,
-                                        :ignore_finder_filter,
-                                        :ignore_library_filter,
-                                        :accept_home_directory_filter,
+atm.add_tracker(ActivityTracker.create([:accept_path_filter,
+                                        :ignore_path_filter,
+                                        :ignore_name_filter,
                                         :file_open]))
 sleep 1
-atm.add_tracker(ActivityTracker.create([:accept_wathicng_file_filter, :file_close]))
+atm.add_tracker(ActivityTracker.create([:ignore_name_filter,
+                                        :file_close]))
 atm.add_tracker(ActivityTracker.create([:focus_change]))
 fhf = FileHistoryFactory.new
 while 1 do
