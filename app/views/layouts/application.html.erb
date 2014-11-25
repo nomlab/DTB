@@ -51,9 +51,9 @@
                     <span class="caret"></span>
                   </button>
                   <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#"></a><%= link_to "List", "/missions"  %></li>
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#"></a><%= link_to "Calendar", "/missions/calendar"  %></li>
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#"></a><%= link_to "Tree", "/missions/tree"  %></li>
+                    <li role="presentation"><%= link_to "List", "/missions" %></li>
+                    <li role="presentation"><%= link_to "Calendar", "/missions/calendar" %></li>
+                    <li role="presentation"><%= link_to "Tree", "/missions/tree" %></li>
                   </ul>
                 </div>
               </li>
@@ -64,8 +64,8 @@
                     <span class="caret"></span>
                   </button>
                   <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#"></a><%= link_to "List", "/tasks"  %></li>
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#"></a><%= link_to "Organize", "/tasks/organize"  %></li>
+                    <li role="presentation"><%= link_to "List", "/tasks" %></li>
+                    <li role="presentation"><%= link_to "Organize", "/tasks/organize" %></li>
                   </ul>
                 </div>
               </li>
@@ -76,8 +76,8 @@
                     <span class="caret"></span>
                   </button>
                   <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu3">
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#"></a><%= link_to "List", "/time_entries"  %></li>
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#"></a><%= link_to "Organize", "/time_entries/organize"  %></li>
+                    <li role="presentation"><%= link_to "List", "/time_entries" %></li>
+                    <li role="presentation"><%= link_to "Organize", "/time_entries/organize" %></li>
                   </ul>
                 </div>
               </li>
@@ -88,8 +88,23 @@
                     <span class="caret"></span>
                   </button>
                   <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu4">
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#"></a><%= link_to "List", "/unified_histories"  %></li>
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#"></a><%= link_to "Organize", "/unified_histories/organize"  %></li>
+                    <li role="presentation"><%= link_to "List", "/unified_histories" %></li>
+                    <li role="presentation"><%= link_to "Organize", "/unified_histories/organize" %></li>
+                  </ul>
+                </div>
+              </li>
+              <li>
+                <div class="dropdown">
+                  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu5" data-toggle="dropdown">
+                    Sync
+                    <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu5">
+                    <% today = Time.now.beginning_of_day %>
+                    <li role="presentation"><%= link_to "day", {controller: "time_entries", action: "sync", start: today.to_s(:fulltime)}, {method: :post} %></li>
+                    <li role="presentation"><%= link_to "week", {controller: "time_entries", action: "sync", start: (today - 1.week).to_s(:fulltime)}, {method: :post, data: {confirm: "This action is too long. Are you sure?"}} %></li>
+                    <li role="presentation"><%= link_to "month", {controller: "time_entries", action: "sync", start: (today - 1.month).to_s(:fulltime)}, {method: :post, data: {confirm: "This action is too long. Are you sure?"}} %></li>
+                    <li role="presentation"><%= link_to "all", {controller: "time_entries", action: "sync"}, {method: :post, data: {confirm: "This action is too long. Are you sure?"}} %></li>
                   </ul>
                 </div>
               </li>
@@ -118,20 +133,6 @@
                         <button type="submit" class="btn btn-danger">Stop</button>
                       <% end %>
                     <% end %>
-                  </div>
-                </li>
-                <li>
-                  <h4>Sync TimeEntries</h4>
-                  <div class="btn-group">
-                    <% today = Time.now.beginning_of_day %>
-                    <%= link_to "day", {controller: "time_entries", action: "sync", start: today.to_s(:fulltime)},
-                        {method: :post, class: "btn btn-success", type: "button"} %>
-                    <%= link_to "week", {controller: "time_entries", action: "sync", start: (today - 1.week).to_s(:fulltime)},
-                        {method: :post, class: "btn btn-success", type: "button", data: {confirm: "This action is too long. Are you sure?"}} %>
-                    <%= link_to "month", {controller: "time_entries", action: "sync", start: (today - 1.month).to_s(:fulltime)},
-                        {method: :post, class: "btn btn-success", type: "button", data: {confirm: "This action is too long. Are you sure?"}} %>
-                    <%= link_to "all", {controller: "time_entries", action: "sync"},
-                        {method: :post, class: "btn btn-success", type: "button", data: {confirm: "This action is too long. Are you sure?"}} %>
                   </div>
                 </li>
                 <li>
