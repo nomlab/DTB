@@ -120,7 +120,6 @@
             <div class="sidebar">
               <ul class="nav">
                 <li>
-                  <h4>Current Time Entry</h4>
                   <div class="input-append">
                     <% if TimeEntry.current.nil? %>
                       <%= form_tag( { controller: "time_entries", action: "continue"} ) do %>
@@ -136,7 +135,6 @@
                   </div>
                 </li>
                 <li>
-                  <h4>New Task</h4>
                   <div class="input-append">
                     <%= form_tag( { controller: "tasks", action: "simple_create"} ) do %>
                       <%= text_field_tag "name", nil, placeholder: "Input new task" %>
