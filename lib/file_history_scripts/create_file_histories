@@ -155,6 +155,8 @@ end
 class IgnoreNameFilter < ActivityTrackerDecorator
   def filter_record(record)
     pnames = [
+              "parentalcontrol",
+              "coreservicesd",
               "basename",
               "ps",
               "discoveryd",
