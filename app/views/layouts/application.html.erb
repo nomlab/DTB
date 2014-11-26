@@ -135,16 +135,22 @@
                   </div>
                 </li>
                 <li>
-                  <div class="input-append">
-                    <%= form_tag( { controller: "tasks", action: "simple_create"} ) do %>
-                      <%= text_field_tag "name", nil, placeholder: "Input new task" %>
-                      <button type="submit" class="btn btn-success">Create</button>
-                    <% end %>
-                  </div>
-                </li>
-                <li>
                   <h4>Mission Tree</h4>
                   <ul id="mission_tree" class="treeview">
+                    <li>
+                      <a class="new-mission mission">New mission</a>
+                    </li>
+                    <li>
+                      <%= link_to "Inbox", {controller:"tasks", action:"organize"}, {class: "mission"} %>
+                      <ul>
+                        <li>
+                          <a class="new-task task">New task</a>
+                        </li>
+                        <% @inbox_tasks.each do |t| %>
+                          <%= render :partial => "tasks/tree_item", :locals => {:task => t} %>
+                        <% end %>
+                      </ul>
+                    </li>
                     <% @root_missions.each do |m| %>
                       <%= render :partial => "missions/tree_item", :locals => {:mission => m} %>
                     <% end %>
@@ -164,5 +170,8 @@
           </div>
         </div>
     </div>
+    <!-- For modal windows -->
+    <%= render :partial => "missions/create_form_of_modal" %>
+    <%= render :partial => "tasks/create_form_of_modal" %>
   </body>
 </html>
