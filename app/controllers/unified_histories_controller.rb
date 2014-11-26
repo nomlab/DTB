@@ -5,7 +5,12 @@ class UnifiedHistoriesController < ApplicationController
   # GET /unified_histories
   # GET /unified_histories.json
   def index
-    @unified_histories = params[:usage].nil? ? UnifiedHistory.all : UnifiedHistory.where(usage: params[:usage])
+    unless params[:usage].nil?
+      usage = params[:usage] == "nil" ? nil :  params[:usage]
+      @unified_histories = UnifiedHistory.where(usage: usage)
+    else
+      @unified_histories = UnifiedHistory.all
+    end
   end
 
   # GET /unified_histories/1
@@ -74,12 +79,13 @@ class UnifiedHistoriesController < ApplicationController
   end
 
   def organize
-    @unified_histories = UnifiedHistory.where(usage: "undefined")
+    @unified_histories = UnifiedHistory.where(usage: nil)
   end
 
   #---------- for ajax ----------
   def update_usage
-    @unified_history.update_attribute(:usage, params[:usage]) unless params[:usage].nil?
+    usage = params[:usage] == "nil" ? nil : params[:usage] unless params[:usage].nil?
+    @unified_history.update_attribute(:usage, usage)
     respond_to do |format|
       format.html {
         flash[:success] = "Unified history was successfully updated."

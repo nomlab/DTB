@@ -38,7 +38,7 @@ class CreateDtbBasicTable < ActiveRecord::Migration
       t.string :title
       t.string :path
       t.string :history_type
-      t.string :usage, :default => "undefined"
+      t.string :usage
       t.string :r_path
       t.datetime :start_time
       t.datetime :end_time

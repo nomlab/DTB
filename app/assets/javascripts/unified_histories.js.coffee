@@ -1,4 +1,4 @@
-currentUsage = "undefined"
+currentUsage = "nil"
 
 initDraggableUnifiedHistory = -> $(".draggable-unified-history").draggable
   helper: (event) ->
