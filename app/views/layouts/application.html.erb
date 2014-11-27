@@ -47,23 +47,33 @@
               <li>
                 <div class="dropdown">
                   <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
-                    Mission
+                    Agenda
                     <span class="caret"></span>
                   </button>
                   <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                    <li role="presentation"><%= link_to "List", "/missions" %></li>
-                    <li role="presentation"><%= link_to "Calendar", "/missions/calendar" %></li>
-                    <li role="presentation"><%= link_to "Tree", "/missions/tree" %></li>
+                    <li role="presentation"><%= link_to "Calendar", "/agenda/calendar" %></li>
+                    <li role="presentation"><%= link_to "Tree", "/agenda/tree" %></li>
                   </ul>
                 </div>
               </li>
               <li>
                 <div class="dropdown">
                   <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown">
-                    Task
+                    Mission
                     <span class="caret"></span>
                   </button>
                   <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
+                    <li role="presentation"><%= link_to "List", "/missions" %></li>
+                  </ul>
+                </div>
+              </li>
+              <li>
+                <div class="dropdown">
+                  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu3" data-toggle="dropdown">
+                    Task
+                    <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu3">
                     <li role="presentation"><%= link_to "List", "/tasks" %></li>
                     <li role="presentation"><%= link_to "Organize", "/tasks/organize" %></li>
                   </ul>
@@ -71,11 +81,11 @@
               </li>
               <li>
                 <div class="dropdown">
-                  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu3" data-toggle="dropdown">
+                  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu4" data-toggle="dropdown">
                     TimeEntry
                     <span class="caret"></span>
                   </button>
-                  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu3">
+                  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu4">
                     <li role="presentation"><%= link_to "List", "/time_entries" %></li>
                     <li role="presentation"><%= link_to "Organize", "/time_entries/organize" %></li>
                   </ul>
@@ -83,11 +93,11 @@
               </li>
               <li>
                 <div class="dropdown">
-                  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu4" data-toggle="dropdown">
+                  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu5" data-toggle="dropdown">
                     History
                     <span class="caret"></span>
                   </button>
-                  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu4">
+                  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu5">
                     <li role="presentation"><%= link_to "List", "/unified_histories" %></li>
                     <li role="presentation"><%= link_to "Organize", "/unified_histories/organize" %></li>
                   </ul>
@@ -95,11 +105,11 @@
               </li>
               <li>
                 <div class="dropdown">
-                  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu5" data-toggle="dropdown">
+                  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu6" data-toggle="dropdown">
                     Sync
                     <span class="caret"></span>
                   </button>
-                  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu5">
+                  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu6">
                     <% today = Time.now.beginning_of_day %>
                     <li role="presentation"><%= link_to "day", {controller: "time_entries", action: "sync", start: today.to_s(:fulltime)}, {method: :post} %></li>
                     <li role="presentation"><%= link_to "week", {controller: "time_entries", action: "sync", start: (today - 1.week).to_s(:fulltime)}, {method: :post, data: {confirm: "This action is too long. Are you sure?"}} %></li>

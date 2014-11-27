@@ -1,0 +1,6 @@
+<h1>Mission Tree</h1>
+<ul id="mission_tree" class="treeview">
+  <% @root_missions.each do |m| %>
+    <%= render :partial => "missions/tree_item", :locals => {:mission => m} %>
+  <% end %>
+</ul>
