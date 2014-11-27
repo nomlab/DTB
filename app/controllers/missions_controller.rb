@@ -84,9 +84,14 @@ class MissionsController < ApplicationController
   end
 
   def simple_create
-    @mission = Mission.new(name: params[:name])
-    @mission.save ? flash[:success] = "Mission was successfully created." :
-                    flash[:warning] = "Failed to create mission."
+    state = State.find_by(default: true)
+    if state.nil?
+      flash[:warning] = "Set default state in Setting."
+    else
+      @mission = Mission.new(name: params[:name], state_id: state.id)
+      @mission.save ? flash[:success] = "Mission was successfully created." :
+                      flash[:warning] = "Failed to create mission."
+    end
     redirect_to :back
   end
 
@@ -98,6 +103,6 @@ class MissionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def mission_params
-      params.require(:mission).permit(:name, :description, :deadline, :status, :keyword, :parent_id)
+      params.require(:mission).permit(:name, :description, :deadline, :state_id, :keyword, :parent_id)
     end
 end

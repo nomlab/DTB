@@ -1,9 +1,5 @@
 <li>
-  <% if mission.status %>
-    <span class="icon-ok-sign"></span>
-  <% else %>
-    <span class="icon-remove-sign"></span>
-  <% end %>
+  <%= colored_state(mission.state) %>
   <%= link_to mission.name, {controller:"missions", action:"show", id: mission.id}, {class: "mission"} %>
   <% if mission.children.present? || mission.tasks.present? %>
     <ul>

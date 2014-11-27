@@ -24,8 +24,8 @@
     <%= f.datetime_select :deadline %>
   </div>
   <div class="field">
-    <%= f.label :status %><br>
-    <%= f.check_box :status %>
+    <%= f.label :state_id %><br>
+    <%= f.select :state_id, options_for_select(State.states_for_options, @mission.state_id) %>
   </div>
   <div class="field">
     <%= f.label :keyword %><br>

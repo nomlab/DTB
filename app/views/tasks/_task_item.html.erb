@@ -1,18 +1,6 @@
 <tr>
   <td>
-    <% if task.status %>
-      <%= link_to '<span class="icon-ok-sign"></span>'.html_safe,
-          :id         => task.id,
-          :controller => "tasks",
-          :action     => "update_status",
-          :status     => false %>
-    <% else %>
-      <%= link_to '<span class="icon-remove-sign"></span>'.html_safe,
-          :id         => task.id,
-          :controller => "tasks",
-          :action     => "update_status",
-          :status     => true %>
-    <% end %>
+    <%= colored_state(task.state) %>
   </td>
   <td><%= link_to task.name, task %></td>
   <td>

@@ -1,6 +1,7 @@
 class Task < ActiveRecord::Base
   has_many :time_entries
   belongs_to :mission
+  belongs_to :state
   default_scope { order(created_at: :desc) }
 
   def self.current

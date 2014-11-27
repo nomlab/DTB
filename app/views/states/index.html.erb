@@ -1,0 +1,37 @@
+<h1>Listing states</h1>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Position</th>
+      <th>Name</th>
+      <th>Default</th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @states.each do |state| %>
+      <tr>
+        <td><%= state.position %></td>
+        <td><%= colored_state(state) %></td>
+        <td>
+          <% icon = state.default ? '<span class="icon-star"></span>'.html_safe : '<span class="icon-star-empty"></span>'.html_safe%>
+          <%= link_to icon,
+              :id         => state.id,
+              :controller => "states",
+              :action     => "update_default",
+              :method     => :put %>
+        </td>
+        <td><%= link_to '<span class="icon-pencil"></span>'.html_safe,
+                edit_state_path(state) %></td>
+        <td><%= link_to '<span class="icon-trash"></span>'.html_safe,
+                state, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New State', new_state_path %>

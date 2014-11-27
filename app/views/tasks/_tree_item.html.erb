@@ -1,9 +1,5 @@
 <li>
-  <% if task.status %>
-    <span class="icon-ok-sign"></span>
-  <% else %>
-    <span class="icon-remove-sign"></span>
-  <% end %>
+  <%= colored_state(task.state) %>
   <%= link_to task.name, {controller:"tasks", action:"show", id: task.id}, {class: "task"} %>
   <% if task.time_entries.present? %>
     <ul>

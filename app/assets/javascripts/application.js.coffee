@@ -12,5 +12,13 @@
 #= require fullcalendar
 #= require lang-all
 #----------------------
+#= require jquery.minicolors
 #= require jquery-ui
 #= require_tree .
+
+ready = ->
+  #-------- for minicolors --------
+  $('.minicolors').minicolors()
+
+$(document).ready(ready)
+$(document).on('page:load', ready)

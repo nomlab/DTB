@@ -45,3 +45,5 @@ gem 'toggl_api', github: 'wkang/toggl_api'
 # Watch file
 gem 'guard'
 gem 'guard-shell'
+
+gem 'jquery-minicolors-rails'

@@ -89,14 +89,19 @@ class TasksController < ApplicationController
   end
 
   def simple_create
-    @task = Task.new(name: params[:name])
-    @task.save ? flash[:success] = "Task was successfully created." :
-                 flash[:warning] = "Failed to create task."
+    state = State.find_by(default: true)
+    if state.nil?
+      flash[:warning] = "Set default state in Setting."
+    else
+      @task = Task.new(name: params[:name], state_id: state.id)
+      @task.save ? flash[:success] = "Task was successfully created." :
+                   flash[:warning] = "Failed to create task."
+    end
     redirect_to :back
   end
 
-  def update_status
-    @task.update_attribute(:status, params[:status]) unless params[:status].nil?
+  def update_state
+    @task.update_attribute(:state_id, params[:state_id]) unless params[:state_id].nil?
     respond_to do |format|
       format.html {
         flash[:success] = "Task was successfully updated."
@@ -143,6 +148,6 @@ class TasksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def task_params
-      params.require(:task).permit(:name, :description, :deadline, :status, :keyword, :mission_id)
+      params.require(:task).permit(:name, :description, :deadline, :state_id, :keyword, :mission_id)
     end
 end

@@ -17,9 +17,18 @@ ActiveRecord::Schema.define(version: 20131210025008) do
     t.string   "name"
     t.string   "description"
     t.datetime "deadline"
-    t.boolean  "status",      default: false
+    t.integer  "state_id"
     t.string   "keyword"
     t.integer  "parent_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "states", force: true do |t|
+    t.string   "name"
+    t.string   "color"
+    t.integer  "position"
+    t.boolean  "default",    default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -28,7 +37,7 @@ ActiveRecord::Schema.define(version: 20131210025008) do
     t.string   "name"
     t.string   "description"
     t.datetime "deadline"
-    t.boolean  "status",      default: false
+    t.integer  "state_id"
     t.string   "keyword"
     t.integer  "mission_id"
     t.datetime "created_at"
