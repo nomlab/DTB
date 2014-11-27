@@ -35,5 +35,9 @@ ready = ->
     animated: "fast"
     collapsed: true
 
+  #-------- for treegrid --------
+  $(".table-treegrid").treegrid
+    initialState: "collapsed"
+
 $(document).ready(ready)
 $(document).on('page:load', ready)

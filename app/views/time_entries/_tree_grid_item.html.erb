@@ -1,0 +1,22 @@
+<% if time_entry.task_id.nil? %>
+  <tr class="treegrid-time-entry<%= time_entry.id %>">
+  <% else %>
+  <tr class="treegrid-time-entry<%= time_entry.id %> treegrid-parent-task<%= time_entry.task_id %>">
+<% end %>
+  <td>
+    <%= link_to time_entry.name, {controller:"time_entries", action:"show", id: time_entry.id}, {class: "time-entry"} %>
+  </td>
+  <td>
+    <%= time_entry.duration %>
+  </td>
+  <td>
+    <%= render :partial => "time_entries/start_or_stop_button", :locals => {:time_entry => time_entry} %></td>
+  <td>
+    <%= link_to '<span class="icon-pencil"></span>'.html_safe,
+        edit_time_entry_path(time_entry) %>
+  </td>
+  <td>
+    <%= link_to '<span class="icon-trash"></span>'.html_safe,
+        time_entry, method: :delete, data: { confirm: 'Are you sure?' } %>
+  </td>
+</tr>

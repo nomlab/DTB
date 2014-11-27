@@ -1,0 +1,29 @@
+<% if mission.root? %>
+  <tr class="treegrid-mission<%= mission.id %>">
+  <% else %>
+  <tr class="treegrid-mission<%= mission.id %> treegrid-parent-mission<%= mission.parent_id %>">
+<% end %>
+  <td>
+    <%= colored_state(mission.state) %>
+    <%= link_to mission.name, {controller:"missions", action:"show", id: mission.id}, {class: "mission"} %>
+  </td>
+  <td>
+    <%= mission.deadline %>
+  </td>
+  <td>
+  </td>
+  <td>
+    <%= link_to '<span class="icon-pencil"></span>'.html_safe,
+        edit_mission_path(mission) %>
+  </td>
+  <td>
+    <%= link_to '<span class="icon-trash"></span>'.html_safe,
+        mission, method: :delete, data: { confirm: 'Are you sure?' } %>
+  </td>
+</tr>
+<% mission.children.each do |child| %>
+  <%= render :partial => "missions/tree_grid_item", :locals => {:mission => child} %>
+<% end %>
+<% mission.tasks.each do |task| %>
+  <%= render :partial => "tasks/tree_grid_item", :locals => {:task => task} %>
+<% end %>

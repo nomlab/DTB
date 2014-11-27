@@ -12,7 +12,13 @@
 #= require fullcalendar
 #= require lang-all
 #----------------------
+#-- for minicolors ----
 #= require jquery.minicolors
+#----------------------
+#-- for treegrid ------
+#= require jquery.treegrid
+#= require jquery.treegrid.bootstrap2
+#----------------------
 #= require jquery-ui
 #= require_tree .
 
