@@ -10,5 +10,7 @@ module DTB
   class Application < Rails::Application
     config.autoload_paths += %W(#{config.root}/lib)
     config.time_zone = 'Tokyo'
+    config.assets.paths << Rails.root.join("vendor", "assets", "jquery-treegrid", "js").to_s
+    config.assets.paths << Rails.root.join("vendor", "assets", "jquery-treegrid", "css").to_s
   end
 end
