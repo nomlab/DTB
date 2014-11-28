@@ -138,13 +138,13 @@
                 <h4>Mission Tree</h4>
                 <ul id="mission_tree" class="treeview">
                   <li>
-                    <a class="new-mission mission">New mission</a>
+                    <a class="new-mission mission" data-toggle="modal" data-target="#simple-mission-form">New mission</a>
                   </li>
                   <li>
                     <%= link_to "Inbox", {controller:"tasks", action:"organize"}, {class: "mission"} %>
                     <ul>
                       <li>
-                        <a class="new-task task">New task</a>
+                        <a class="new-task task" data-toggle="modal" data-target="#simple-task-form">New task</a>
                       </li>
                       <% @inbox_tasks.each do |t| %>
                         <%= render :partial => "tasks/tree_item", :locals => {:task => t} %>

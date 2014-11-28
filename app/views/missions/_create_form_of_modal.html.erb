@@ -1,14 +1,20 @@
-<div id="simple-mission-form" class="modal hide fade">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-    <h4>New Mission</h4>
-  </div>
-  <div id="form-body" class="modal-body">
-    <div class="input-append">
-      <%= form_tag( { controller: "missions", action: "simple_create"} ) do %>
-        <%= text_field_tag "name", nil, placeholder: "Input new mission" %>
-        <button type="submit" class="btn btn-success">Create</button>
-      <% end %>
+<div id="simple-mission-form" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">New Mission</h4>
+      </div>
+      <div id="form-body" class="modal-body">
+        <div class="input-group">
+          <%= form_tag( { controller: "missions", action: "simple_create"} ) do %>
+            <%= text_field_tag "name", nil, placeholder: "Input new mission", class: "form-control" %>
+            <span class="input-group-btn">
+              <button type="submit" class="btn btn-success">Create</button>
+            </span>
+          <% end %>
+        </div>
+      </div>
     </div>
   </div>
 </div>
