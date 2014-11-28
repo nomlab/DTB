@@ -172,7 +172,6 @@ PLATFORMS
 
 DEPENDENCIES
   coffee-rails (~> 4.0.0)
-  execjs
   guard
   guard-shell
   jbuilder (~> 1.2)

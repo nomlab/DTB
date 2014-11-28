@@ -5,15 +5,15 @@
   <td><%= link_to task.name, task %></td>
   <td>
     <%= form_tag( { controller: "tasks", action: "update_deadline", id: task.id} ) do %>
-      <%= text_field_tag "deadline", task.deadline , class: "datetimepicker" %>
+      <%= text_field_tag "deadline", task.deadline , class: "datetimepicker form-control" %>
     <% end %>
   </td>
-  <td><%= link_to '<span class="icon-play"></span>'.html_safe,
+  <td><%= link_to '<i class="fa fa-play"></i>'.html_safe,
           :id         => task.id,
           :controller => "tasks",
           :action     => "continue" %></td>
-  <td><%= link_to '<span class="icon-pencil"></span>'.html_safe,
+  <td><%= link_to '<i class="fa fa-pencil"></i>'.html_safe,
           edit_task_path(task) %></td>
-  <td><%= link_to '<span class="icon-trash"></span>'.html_safe,
+  <td><%= link_to '<i class="fa fa-trash-o"></i>'.html_safe,
           task, method: :delete, data: { confirm: 'Are you sure?' } %></td>
 </tr>

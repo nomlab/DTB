@@ -34,10 +34,10 @@ group :doc do
 end
 
 # Twitter Bootstrap
-gem 'less-rails'
-gem 'twitter-bootstrap-rails'
-gem 'execjs'
-gem 'therubyracer'
+# https://github.com/seyhunak/twitter-bootstrap-rails
+gem "therubyracer"
+gem "less-rails"
+gem "twitter-bootstrap-rails"
 
 # Use Toggl API v8
 gem 'toggl_api', github: 'wkang/toggl_api'

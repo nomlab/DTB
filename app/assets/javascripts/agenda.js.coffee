@@ -38,6 +38,8 @@ ready = ->
   #-------- for treegrid --------
   $(".table-treegrid").treegrid
     initialState: "collapsed"
+    expanderExpandedClass: 'fa fa-chevron-down'
+    expanderCollapsedClass: 'fa fa-chevron-right'
 
 $(document).ready(ready)
 $(document).on('page:load', ready)

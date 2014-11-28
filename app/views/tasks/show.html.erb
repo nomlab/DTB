@@ -1,6 +1,6 @@
 <h1>
   <%= @task.name %>
-  <%= link_to '<span class="icon-play"></span>'.html_safe,
+  <%= link_to '<i class="fa fa-play"></i>'.html_safe,
       :id         => @task.id,
       :controller => "tasks",
       :action     => "continue" %>

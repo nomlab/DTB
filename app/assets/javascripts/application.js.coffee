@@ -17,7 +17,7 @@
 #----------------------
 #-- for treegrid ------
 #= require jquery.treegrid
-#= require jquery.treegrid.bootstrap2
+#= require jquery.treegrid.bootstrap3
 #----------------------
 #= require jquery-ui
 #= require_tree .
