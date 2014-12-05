@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   get 'agenda/calendar'
   get 'agenda/tree'
 
+  get "missions/organize"
+  put "missions/update_parent_id/:id(.:format)", :to => "missions#update_parent_id"
   resources :missions
 
   put "states/update_color/:id", :to => "states#update_color"

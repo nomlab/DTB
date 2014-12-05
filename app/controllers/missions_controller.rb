@@ -1,13 +1,14 @@
 class MissionsController < ApplicationController
-  before_action :set_mission, only: [:show, :edit, :update, :destroy]
+  before_action :set_mission, only: [:show, :edit, :update, :destroy, :update_parent_id]
 
   # GET /missions
   # GET /missions.json
   def index
-    @missions = Mission.all
-    respond_to do |format|
-      format.html
-      format.json {render json: @missions.select{|m| m.root? }.map(&:to_event)}
+    unless params[:parent_id].nil?
+      parent_id = params[:parent_id] == "nil" ? nil : params[:parent_id]
+      @missions = Mission.where(parent_id: parent_id)
+    else
+      @missions = Mission.all
     end
   end
 
@@ -76,11 +77,8 @@ class MissionsController < ApplicationController
     end
   end
 
-  def tree
-  end
-
-  def calendar
-    @missions = Mission.all
+  def organize
+    @missions = Mission.where(parent_id: nil)
   end
 
   def simple_create
@@ -93,6 +91,19 @@ class MissionsController < ApplicationController
                       flash[:warning] = "Failed to create mission."
     end
     redirect_to :back
+  end
+
+  #---------- for ajax ----------
+  def update_parent_id
+    parent_id = params[:parent_id] == "nil" ? nil : params[:parent_id] unless params[:parent_id].nil?
+    @mission.update_attribute(:parent_id, parent_id)
+    respond_to do |format|
+      format.html {
+        flash[:success] = "Mission was successfully updated."
+        redirect_to @mission
+      }
+      format.json { render json: @mission }
+    end
   end
 
   private

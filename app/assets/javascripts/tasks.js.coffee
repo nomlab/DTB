@@ -11,8 +11,8 @@ ready = ->
   $(".droppable-mission-for-task").click (event) ->
     $(".droppable-mission-for-task").removeClass "selected"
     $(@).addClass "selected"
-    usage = @id
-    replaceTaskInbox(usage)
+    missionId = @id
+    replaceTaskInbox(missionId)
 
   $(".droppable-mission-for-task").droppable
     tolerance: "pointer"
@@ -25,10 +25,10 @@ ready = ->
         success: (data) -> replaceTaskInbox(currentMissionForTask)
         error: (error) -> alert error
 
-  replaceTaskInbox = (mission) ->
+  replaceTaskInbox = (missionId) ->
     $.ajax
       type:      "GET"
-      url:       "/tasks.json?mission_id=#{mission}"
+      url:       "/tasks.json?mission_id=#{missionId}"
       dataType:  "json"
       success: (data) ->
         entries = data.map (task) ->
@@ -42,7 +42,7 @@ ready = ->
           """
         $(".task-inbox").replaceWith("<tbody class='task-inbox'>#{entries}</tbody>")
         initDraggableTask()
-        currentMissionForTask = mission
+        currentMissionForTask = missionId
       error: (error) -> alert error
 
 $(document).ready(ready)
