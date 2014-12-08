@@ -11,6 +11,9 @@
         <tr>
           <td class="droppable-mission-for-mission selected" id="nil">Inbox</td>
         </tr>
+        <tr>
+          <td class="droppable-mission-for-mission" id="0">Root missions</td>
+        </tr>
         <% @root_missions.each do |mission| %>
           <%= render :partial => "missions/tree_grid_item_in_organize",
               :locals => {:mission => mission, :unfold_task => false, :at => :mission} %>
