@@ -2,19 +2,19 @@ currentTask = "nil"
 
 initDraggableTimeEntry = -> $(".draggable-time-entry").draggable
   helper: (event) ->
-    $("<span style='white-space:nowrap;'>").text "task"
+    $("<span style='white-space:nowrap;'>").text "time entry"
   revert: true
 
 ready = ->
   initDraggableTimeEntry()
 
-  $(".droppable-task-for-task").click (event) ->
-    $(".droppable-task-for-task").removeClass "selected"
+  $(".droppable-task-for-time-entry").click (event) ->
+    $(".droppable-task-for-time-entry").removeClass "selected"
     $(@).addClass "selected"
     usage = @id
     replaceTimeEntryInbox(usage)
 
-  $(".droppable-task-for-task").droppable
+  $(".droppable-task-for-time-entry").droppable
     tolerance: "pointer"
     drop: (event, ui) ->
       timeEntryId = ui.draggable.attr("id")

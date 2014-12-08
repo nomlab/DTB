@@ -124,7 +124,6 @@ class TasksController < ApplicationController
 
   def organize
     @tasks = Task.where(mission_id: nil)
-    @missions = Mission.all
   end
 
   #---------- for ajax ----------

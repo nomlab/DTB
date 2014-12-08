@@ -1,0 +1,8 @@
+<% if task.mission_id.nil? %>
+  <tr class="treegrid-task<%= task.id %>">
+  <% else %>
+  <tr class="treegrid-task<%= task.id %> treegrid-parent-mission<%= task.mission_id %>">
+<% end %>
+<td class="droppable-task-for-time-entry" id="<%= task.id %>">
+  <span class="task"><%= task.name %></span>
+</td>

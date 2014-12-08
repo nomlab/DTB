@@ -1,0 +1,23 @@
+<% if mission.root? %>
+  <tr class="treegrid-mission<%= mission.id %>">
+  <% else %>
+  <tr class="treegrid-mission<%= mission.id %> treegrid-parent-mission<%= mission.parent_id %>">
+<% end %>
+<% if at == :mission %>
+  <td class="droppable-mission-for-mission" id="<%= mission.id %>">
+  <% elsif at == :task %>
+  <td class="droppable-mission-for-task" id="<%= mission.id %>">
+  <% else %>
+  <td>
+<% end %>
+  <span class="mission"><%= mission.name %></span>
+</td>
+<% mission.children.each do |child| %>
+  <%= render :partial => "missions/tree_grid_item_in_organize",
+      :locals => {:mission => child, :unfold_task => unfold_task, :at => at} %>
+<% end %>
+<% if unfold_task %>
+  <% mission.tasks.each do |task| %>
+    <%= render :partial => "tasks/tree_grid_item_in_organize", :locals => {:task => task} %>
+  <% end %>
+<% end %>
