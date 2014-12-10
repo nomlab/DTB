@@ -1,5 +1,6 @@
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy,
+                                  :continue,
                                   :update_status, :update_deadline,
                                   :update_mission_id]
 
@@ -79,7 +80,6 @@ class TasksController < ApplicationController
   end
 
   def continue
-    @task = Task.find(params[:id])
     if TimeEntry.start({:description => @task.name}, @task.id)
       flash[:success] = "Time entry was successfully started."
     else
