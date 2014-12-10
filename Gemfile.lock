@@ -1,6 +1,6 @@
 GIT
-  remote: git://github.com/wkang/toggl_api.git
-  revision: 5aa464af130954f52b9df43dfec7d46d95f64c59
+  remote: git://github.com/okada-takuya/toggl_api.git
+  revision: 158707e8af634caeb1d3d036a905a27d396f341e
   specs:
     toggl_api (0.0.2)
       faraday
@@ -55,14 +55,16 @@ GEM
       multipart-post (>= 1.2, < 3)
     ffi (1.9.6)
     formatador (0.2.5)
-    guard (2.10.0)
+    guard (2.10.2)
       formatador (>= 0.2.4)
       listen (~> 2.7)
       lumberjack (~> 1.0)
       pry (>= 0.9.12)
       thor (>= 0.18.1)
-    guard-shell (0.7.0)
+    guard-compat (1.0.1)
+    guard-shell (0.7.1)
       guard (>= 2.0.0)
+      guard-compat (~> 1.0)
     hashie (3.3.2)
     hike (1.2.3)
     hitimes (1.2.2)
@@ -119,11 +121,11 @@ GEM
       activesupport (= 4.1.6)
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
-    rake (10.4.0)
+    rake (10.4.2)
     rb-fsevent (0.9.4)
     rb-inotify (0.9.5)
       ffi (>= 0.5.0)
-    rdoc (4.1.2)
+    rdoc (4.2.0)
       json (~> 1.4)
     ref (1.0.5)
     sass (3.2.19)
@@ -154,7 +156,7 @@ GEM
     tilt (1.4.1)
     timers (4.0.1)
       hitimes
-    turbolinks (2.5.2)
+    turbolinks (2.5.3)
       coffee-rails
     twitter-bootstrap-rails (3.2.0)
       actionpack (~> 4.1)
@@ -163,7 +165,7 @@ GEM
       railties (~> 4.1)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
-    uglifier (2.5.3)
+    uglifier (2.6.0)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
 
