@@ -1,7 +1,7 @@
 ready = ->
   #-------- for fullcalendar --------
   $('#calendar').fullCalendar
-    lang: 'ja'
+    lang: 'en'
     defaultView: 'month'
     header:
       left:  'today prev,next prevYear,nextYear title'
