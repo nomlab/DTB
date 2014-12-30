@@ -1,0 +1,3 @@
+[submodule "vendor/assets/jquery-treegrid"]
+	path = vendor/assets/jquery-treegrid
+	url = git@github.com:maxazan/jquery-treegrid.git
