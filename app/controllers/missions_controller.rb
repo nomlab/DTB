@@ -1,5 +1,6 @@
 class MissionsController < ApplicationController
-  before_action :set_mission, only: [:show, :edit, :update, :destroy, :update_parent_id]
+  before_action :set_mission, only: [:show, :edit, :update, :destroy, :update_parent_id,
+                                    :update_state, :update_deadline]
 
   # GET /missions
   # GET /missions.json
@@ -91,6 +92,28 @@ class MissionsController < ApplicationController
                       flash[:warning] = "Failed to create mission."
     end
     redirect_to :back
+  end
+
+  def update_state
+    @mission.update_attribute(:state_id, params[:state_id]) unless params[:state_id].nil?
+    respond_to do |format|
+      format.html {
+        flash[:success] = "Mission was successfully updated."
+        redirect_to :back
+      }
+      format.json { render json: @mission }
+    end
+  end
+
+  def update_deadline
+    @mission.update_attribute(:deadline, params[:deadline]) unless params[:deadline].nil?
+    respond_to do |format|
+      format.html {
+        flash[:success] = "Mission was successfully updated."
+        redirect_to :back
+      }
+      format.json { render json: @mission }
+    end
   end
 
   #---------- for ajax ----------
