@@ -47,3 +47,5 @@ gem 'guard'
 gem 'guard-shell'
 
 gem 'jquery-minicolors-rails'
+
+gem 'bootstrap3-datetimepicker-rails'

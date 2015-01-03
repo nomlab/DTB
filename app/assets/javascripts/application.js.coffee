@@ -19,12 +19,27 @@
 #= require jquery.treegrid
 #= require jquery.treegrid.bootstrap3
 #----------------------
+#-- for datetimepicker ------
+#= require bootstrap-datetimepicker
+#----------------------
 #= require jquery-ui
 #= require_tree .
+
+format =
+  'data-date-format': 'YYYY-MM-DD HH:mm:ss'
 
 ready = ->
   #-------- for minicolors --------
   $('.minicolors').minicolors()
+
+  #-------- for datetimepicker ----
+  $('.datetimepicker').attr(format)
+  $('.datetimepicker').datetimepicker
+    icons:
+      time: "fa fa-clock-o",
+      date: "fa fa-calendar",
+      up: "fa fa-chevron-up",
+      down: "fa fa-chevron-down"
 
 $(document).ready(ready)
 $(document).on('page:load', ready)
