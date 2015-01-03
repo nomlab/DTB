@@ -33,7 +33,8 @@ ready = ->
       success: (data) ->
         entries = data.map (task) ->
           timeFormat = 'YYYY-MM-DD HH:mm:ss'
-          deadline = moment(task["deadline"]).format(timeFormat)
+          deadline = if moment(task["deadline"]).format(timeFormat) == "Invalid date" then "" else moment(task["deadline"]).format(timeFormat)
+          deadline = if deadline == "Invalid date" then "" else deadline
           """
           <tr class="draggable-task" id="#{task["id"]}">
             <td>#{task["name"]}</td>
