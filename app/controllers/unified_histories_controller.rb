@@ -78,23 +78,6 @@ class UnifiedHistoriesController < ApplicationController
     redirect_to :back
   end
 
-  def organize
-    @unified_histories = UnifiedHistory.where(usage: nil)
-  end
-
-  #---------- for ajax ----------
-  def update_usage
-    usage = params[:usage] == "nil" ? nil : params[:usage] unless params[:usage].nil?
-    @unified_history.update_attribute(:usage, usage)
-    respond_to do |format|
-      format.html {
-        flash[:success] = "Unified history was successfully updated."
-        redirect_to @unified_history
-      }
-      format.json { render json: @unified_history }
-    end
-  end
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_unified_history

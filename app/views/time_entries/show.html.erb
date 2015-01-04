@@ -34,8 +34,21 @@
 
 <hr>
 
-<%= render :partial => "unified_histories/history_usages",
-    :locals => {:instance => @time_entry} %>
+<p>
+  <strong>File History:</strong>
+  <% @time_entry.file_histories.each do |fh| %>
+    <%= render :partial => "unified_histories/file_history_item",
+        :locals => {:file_history => fh} %>
+  <% end %>
+</p>
+
+<p>
+  <strong>Web History:</strong>
+  <% @time_entry.web_histories.each do |wh| %>
+    <%= render :partial => "unified_histories/web_history_item",
+        :locals => {:file_history => wh} %>
+  <% end %>
+</p>
 
 <%= link_to 'Edit', edit_time_entry_path(@time_entry) %> |
 <%= link_to 'Back', time_entries_path %>

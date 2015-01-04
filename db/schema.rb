@@ -60,7 +60,6 @@ ActiveRecord::Schema.define(version: 20131210025008) do
     t.string   "title"
     t.string   "path"
     t.string   "history_type"
-    t.string   "usage"
     t.string   "r_path"
     t.datetime "start_time"
     t.datetime "end_time"

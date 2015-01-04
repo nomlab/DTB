@@ -23,8 +23,6 @@ Rails.application.routes.draw do
   put "time_entries/update_task_id/:id(.:format)", :to => "time_entries#update_task_id"
   resources :time_entries
 
-  get "unified_histories/organize"
-  put "unified_histories/update_usage/:id(.:format)", :to => "unified_histories#update_usage"
   resources :unified_histories
 
   get ':controller(/:action(/:id(.:format)))'
