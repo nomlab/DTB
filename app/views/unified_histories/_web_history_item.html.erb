@@ -1,5 +1,4 @@
-<%= web_history.title %>
-<%= link_to '<i class="fa fa-folder-open"></i>'.html_safe,
+<%= link_to "<img src='#{web_history.thumbnail}' alt='#{web_history.title}'>".html_safe,
     :id         => web_history.id,
     :controller => "unified_histories",
     :action     => "restore" %>
