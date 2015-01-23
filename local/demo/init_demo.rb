@@ -76,18 +76,18 @@ m_p2 = Mission.create( name:        "TAの業務",
                          path:          DEMO_DIR.join("draft.org").to_s,
                          history_type:  "file_history",
                          start_time:    DateTime.new(2014, 4, 17, 13, 0, 0, '+9') + (WEEK * n-1),
-                         end_time:      DateTime.new(2014, 4, 17, 13, 5, 0, '+9') + (WEEK * n-1) )
+                         end_time:      DateTime.new(2014, 4, 17, 13, 1, 0, '+9') + (WEEK * n-1) )
   UnifiedHistory.create( title:         "Org-mode による HTML 文書作成入門",
                          path:          "http://www.geocities.jp/km_pp1/org-mode/org-mode-document.html",
                          history_type:  "web_history",
-                         start_time:    DateTime.new(2014, 4, 17, 13, 5, 0, '+9') + (WEEK * n-1),
-                         end_time:      DateTime.new(2014, 4, 17, 13, 6, 0, '+9') + (WEEK * n-1),
+                         start_time:    DateTime.new(2014, 4, 17, 13, 1, 0, '+9') + (WEEK * n-1),
+                         end_time:      DateTime.new(2014, 4, 17, 13, 2, 0, '+9') + (WEEK * n-1),
                          thumbnail:     "http://capture.heartrails.com/200x150/shadow?http://www.geocities.jp/km_pp1/org-mode/org-mode-document.html" )
   UnifiedHistory.create( title:         "org-mode + remember-mode で挿入される日付フォーマットを変更するには",
                          path:          "http://d.hatena.ne.jp/kyagi/20090606/1244285675",
                          history_type:  "web_history",
-                         start_time:    DateTime.new(2014, 4, 17, 13, 6, 0, '+9') + (WEEK * n-1),
-                         end_time:      DateTime.new(2014, 4, 17, 13, 8, 0, '+9') + (WEEK * n-1),
+                         start_time:    DateTime.new(2014, 4, 17, 13, 2, 0, '+9') + (WEEK * n-1),
+                         end_time:      DateTime.new(2014, 4, 17, 13, 3, 0, '+9') + (WEEK * n-1),
                          thumbnail:     "http://capture.heartrails.com/200x150/shadow?http://d.hatena.ne.jp/kyagi/20090606/1244285675" )
   UnifiedHistory.create( title:         "2014年度 プログラミング演習",
                          path:          "https://www.swlab.cs.okayama-u.ac.jp/~nom/lect/p2/",
@@ -98,7 +98,7 @@ m_p2 = Mission.create( name:        "TAの業務",
   UnifiedHistory.create( title:         "report.eml",
                          path:          DEMO_DIR.join("draft.eml").to_s,
                          history_type:  "file_history",
-                         start_time:    DateTime.new(2014, 4, 17, 13, 8, 0, '+9') + (WEEK * n-1),
+                         start_time:    DateTime.new(2014, 4, 17, 13, 3, 0, '+9') + (WEEK * n-1),
                          end_time:      DateTime.new(2014, 4, 17, 13, 10, 0, '+9') + (WEEK * n-1) )
 end
 #---------------------------------------------------------------------
