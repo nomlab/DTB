@@ -1,4 +1,7 @@
-<%= link_to "<img src='#{web_history.thumbnail}' alt='#{web_history.title}'>".html_safe,
-    :id         => web_history.id,
-    :controller => "unified_histories",
-    :action     => "restore" %>
+<figure class="web-history">
+  <%= link_to "<img src='#{web_history.thumbnail}' alt='#{web_history.title}'>".html_safe,
+      :id         => web_history.id,
+      :controller => "unified_histories",
+      :action     => "restore" %>
+  <figcaption>(<%= web_history.duration.to_s %>)</figcaption>
+</figure>
