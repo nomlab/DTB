@@ -89,6 +89,12 @@ m_p2 = Mission.create( name:        "TAの業務",
                          start_time:    DateTime.new(2014, 4, 17, 13, 6, 0, '+9') + (WEEK * n-1),
                          end_time:      DateTime.new(2014, 4, 17, 13, 8, 0, '+9') + (WEEK * n-1),
                          thumbnail:     "http://capture.heartrails.com/200x150/shadow?http://d.hatena.ne.jp/kyagi/20090606/1244285675" )
+  UnifiedHistory.create( title:         "2014年度 プログラミング演習",
+                         path:          "https://www.swlab.cs.okayama-u.ac.jp/~nom/lect/p2/",
+                         history_type:  "web_history",
+                         start_time:    DateTime.new(2014, 4, 17, 8, 40, 0, '+9') + (WEEK * n-1),
+                         end_time:      DateTime.new(2014, 4, 17, 8, 50, 0, '+9') + (WEEK * n-1),
+                         thumbnail:     "http://capture.heartrails.com/200x150/shadow/border?https://www.swlab.cs.okayama-u.ac.jp/~nom/lect/p2/" )
   UnifiedHistory.create( title:         "report.eml",
                          path:          DEMO_DIR.join("draft.eml").to_s,
                          history_type:  "file_history",
