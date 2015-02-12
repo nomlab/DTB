@@ -27,51 +27,73 @@ m_p2 = Mission.create( name:        "TAの業務",
                            parent_id:   m_p2.id,
                            state_id:    done.id )
 
-  t_check = Task.create( name:        "講義資料の修正作業",
+  ##################### 講義資料の修正 #####################
+  t_check = Task.create( name:        "講義資料の修正",
                          description: "講義資料の確認と修正",
                          deadline:    DateTime.new(2014, 4, 17, 11, 55, 0, '+9') + (WEEK * n-1),
                          keyword:     "講義資料",
                          mission_id:  m_lect.id,
                          state_id:    done.id )
-  TimeEntry.create( name:       "講義資料の修正作業",
+  TimeEntry.create( name:       "講義資料の修正",
                     keyword:    "講義資料",
                     comment:    "誤字脱字をチェックする",
                     start_time: DateTime.new(2014, 4, 17, 8, 40, 0, '+9') + (WEEK * n-1),
                     end_time: DateTime.new(2014, 4, 17, 8, 50, 0, '+9') + (WEEK * n-1),
                     task_id: t_check.id)
+  TimeEntry.create( name:       "講義資料の修正",
+                    keyword:    "講義資料",
+                    comment:    "誤字脱字をチェックする",
+                    start_time: DateTime.new(2014, 4, 17, 9, 00, 0, '+9') + (WEEK * n-1),
+                    end_time: DateTime.new(2014, 4, 17, 9, 30, 0, '+9') + (WEEK * n-1),
+                    task_id: t_check.id)
+  UnifiedHistory.create( title:         "2014年度 プログラミング演習",
+                         path:          "https://www.swlab.cs.okayama-u.ac.jp/~nom/lect/p2/",
+                         history_type:  "web_history",
+                         start_time:    DateTime.new(2014, 4, 17, 8, 40, 0, '+9') + (WEEK * n-1),
+                         end_time:      DateTime.new(2014, 4, 17, 8, 50, 0, '+9') + (WEEK * n-1),
+                         thumbnail:     "http://capture.heartrails.com/200x150/shadow/border?https://www.swlab.cs.okayama-u.ac.jp/~nom/lect/p2/" )
+  UnifiedHistory.create( title:         "rivised.txt",
+                         path:          DEMO_DIR.join("revise.txt").to_s,
+                         history_type:  "file_history",
+                         start_time:    DateTime.new(2014, 4, 17, 9, 00, 0, '+9') + (WEEK * n-1),
+                         end_time:      DateTime.new(2014, 4, 17, 9, 30, 0, '+9') + (WEEK * n-1),
+                         )
+  ##########################################################
 
-  t_assist_teach = Task.create( name:        "学生への指導補助作業",
+  ##################### 学生への指導補助 #####################
+  t_assist_teach = Task.create( name:        "学生への指導補助",
                                 description: "学生への指導補助",
                                 deadline:    DateTime.new(2014, 4, 17, 11, 55, 0, '+9') + (WEEK * n-1),
                                 keyword:     "質問 回答",
                                 mission_id:  m_lect.id,
                                 state_id:    done.id )
-  TimeEntry.create( name:       "学生への指導補助作業",
+  TimeEntry.create( name:       "学生への指導補助",
                     keyword:    "指導 質問",
                     comment:    "学生からの質問内容はメモしておく",
-                    start_time: DateTime.new(2014, 4, 17, 8, 55, 0, '+9') + (WEEK * n-1),
-                    end_time: DateTime.new(2014, 4, 17, 10, 10, 0, '+9') + (WEEK * n-1),
+                    start_time: DateTime.new(2014, 4, 17, 8, 50, 0, '+9') + (WEEK * n-1),
+                    end_time: DateTime.new(2014, 4, 17, 9, 00, 0, '+9') + (WEEK * n-1),
                     task_id: t_assist_teach.id)
   TimeEntry.create( name:       "学生への指導補助",
                     keyword:    "指導 質問",
                     comment:    "学生からの質問内容はメモしておく",
-                    start_time: DateTime.new(2014, 4, 17, 10, 25, 0, '+9') + (WEEK * n-1),
-                    end_time: DateTime.new(2014, 4, 17, 11, 50, 0, '+9') + (WEEK * n-1),
+                    start_time: DateTime.new(2014, 4, 17, 9, 30, 0, '+9') + (WEEK * n-1),
+                    end_time: DateTime.new(2014, 4, 17, 9, 45, 0, '+9') + (WEEK * n-1),
                     task_id: t_assist_teach.id)
+  ##########################################################
 
-  t_mail = Task.create( name:        "業務日誌の送付作業",
+  ##################### 業務日誌の送付 #####################
+  t_mail = Task.create( name:        "業務日誌の送付",
                         description: "業務日誌の作成と送付",
                         deadline:    DateTime.new(2014, 4, 17, 17, 0, 0, '+9') + (WEEK * n-1),
                         keyword:     "メール 業務日誌",
                         mission_id:  m_lect.id,
                         state_id:    done.id )
-  TimeEntry.create( name:       "業務日誌の送付作業",
+  TimeEntry.create( name:       "業務日誌の送付",
                     keyword:    "メール",
                     comment:    "書いてないことをメールの冒頭に書かないこと",
                     start_time: DateTime.new(2014, 4, 17, 13, 0, 0, '+9') + (WEEK * n-1),
                     end_time: DateTime.new(2014, 4, 17, 13, 10, 0, '+9') + (WEEK * n-1),
                     task_id: t_mail.id)
-
   UnifiedHistory.create( title:         "draft.org",
                          path:          DEMO_DIR.join("draft.org").to_s,
                          history_type:  "file_history",
@@ -89,16 +111,57 @@ m_p2 = Mission.create( name:        "TAの業務",
                          start_time:    DateTime.new(2014, 4, 17, 13, 2, 0, '+9') + (WEEK * n-1),
                          end_time:      DateTime.new(2014, 4, 17, 13, 3, 0, '+9') + (WEEK * n-1),
                          thumbnail:     "http://capture.heartrails.com/200x150/shadow?http://d.hatena.ne.jp/kyagi/20090606/1244285675" )
-  UnifiedHistory.create( title:         "2014年度 プログラミング演習",
-                         path:          "https://www.swlab.cs.okayama-u.ac.jp/~nom/lect/p2/",
-                         history_type:  "web_history",
-                         start_time:    DateTime.new(2014, 4, 17, 8, 40, 0, '+9') + (WEEK * n-1),
-                         end_time:      DateTime.new(2014, 4, 17, 8, 50, 0, '+9') + (WEEK * n-1),
-                         thumbnail:     "http://capture.heartrails.com/200x150/shadow/border?https://www.swlab.cs.okayama-u.ac.jp/~nom/lect/p2/" )
   UnifiedHistory.create( title:         "report.eml",
                          path:          DEMO_DIR.join("draft.eml").to_s,
                          history_type:  "file_history",
                          start_time:    DateTime.new(2014, 4, 17, 13, 3, 0, '+9') + (WEEK * n-1),
                          end_time:      DateTime.new(2014, 4, 17, 13, 10, 0, '+9') + (WEEK * n-1) )
+  ##########################################################
+
+  if(n == 7 || n == 15)
+    t_mail = Task.create( name:        "レポートの提出確認",
+                          description: "レポートの誤字脱字チェック",
+                          deadline:    DateTime.new(2014, 4, 17, 17, 0, 0, '+9') + (WEEK * n-1),
+                          keyword:     "メール 業務日誌",
+                          mission_id:  m_lect.id,
+                          state_id:    done.id )
+    TimeEntry.create( name:       "レポートの提出確認",
+                      keyword:    "レポート",
+                      comment:    "提出状況表を作成",
+                      start_time: DateTime.new(2014, 4, 17, 15, 0, 0, '+9') + (WEEK * n-1),
+                      end_time: DateTime.new(2014, 4, 17, 15, 15, 0, '+9') + (WEEK * n-1),
+                      task_id: t_mail.id)
+    UnifiedHistory.create( title:         "submission_status.xlsx",
+                           path:          DEMO_DIR.join("submission_status.xlsx").to_s,
+                           history_type:  "file_history",
+                           start_time:    DateTime.new(2014, 4, 17, 15, 10, 0, '+9') + (WEEK * n-1),
+                           end_time:      DateTime.new(2014, 4, 17, 15, 15, 0, '+9') + (WEEK * n-1) )
+    UnifiedHistory.create( title:         "09425601.pdf",
+                           path:          DEMO_DIR.join("09425601.pdf").to_s,
+                           history_type:  "file_history",
+                           start_time:    DateTime.new(2014, 4, 17, 15, 0, 0, '+9') + (WEEK * n-1),
+                           end_time:      DateTime.new(2014, 4, 17, 15, 2, 0, '+9') + (WEEK * n-1) )
+    UnifiedHistory.create( title:         "09425602.pdf",
+                           path:          DEMO_DIR.join("09425602.pdf").to_s,
+                           history_type:  "file_history",
+                           start_time:    DateTime.new(2014, 4, 17, 15, 2, 0, '+9') + (WEEK * n-1),
+                           end_time:      DateTime.new(2014, 4, 17, 15, 4, 0, '+9') + (WEEK * n-1) )
+    UnifiedHistory.create( title:         "09425603.pdf",
+                           path:          DEMO_DIR.join("09425603.pdf").to_s,
+                           history_type:  "file_history",
+                           start_time:    DateTime.new(2014, 4, 17, 15, 4, 0, '+9') + (WEEK * n-1),
+                           end_time:      DateTime.new(2014, 4, 17, 15, 6, 0, '+9') + (WEEK * n-1) )
+    UnifiedHistory.create( title:         "09425604.pdf",
+                           path:          DEMO_DIR.join("09425604.pdf").to_s,
+                           history_type:  "file_history",
+                           start_time:    DateTime.new(2014, 4, 17, 15, 6, 0, '+9') + (WEEK * n-1),
+                           end_time:      DateTime.new(2014, 4, 17, 15, 8, 0, '+9') + (WEEK * n-1) )
+    UnifiedHistory.create( title:         "09425605.pdf",
+                           path:          DEMO_DIR.join("09425605.pdf").to_s,
+                           history_type:  "file_history",
+                           start_time:    DateTime.new(2014, 4, 17, 15, 8, 0, '+9') + (WEEK * n-1),
+                           end_time:      DateTime.new(2014, 4, 17, 15, 10, 0, '+9') + (WEEK * n-1) )
+  end
+
 end
 #---------------------------------------------------------------------
