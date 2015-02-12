@@ -27,6 +27,30 @@
 </p>
 <% end %>
 
+<% unless @mission.children.nil? %>
+<p>
+  <strong>Children:</strong><br>
+  <% @mission.children.each do |child| %>
+    <%= colored_state(child.state) %>
+    <%= link_to child.name, child %>
+    (<%= child.deadline %>)
+    <br>
+  <% end %>
+</p>
+<% end %>
+
+<% unless @mission.tasks.nil? %>
+<p>
+  <strong>Tasks:</strong><br>
+  <% @mission.tasks.each do |task| %>
+    <%= colored_state(task.state) %>
+    <%= link_to task.name, task %>
+    (<%= task.deadline %>)
+    <br>
+  <% end %>
+</p>
+<% end %>
+
 <hr>
 
 <p>

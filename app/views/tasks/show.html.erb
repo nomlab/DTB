@@ -26,14 +26,22 @@
   <%= @task.keyword %>
 </p>
 
-<p>
-  <strong>Mission:</strong>
-  <% if @task.mission.nil? %>
-    No mission
-  <% else %>
+<% unless @task.mission.nil? %>
+  <p>
+    <strong>Mission:</strong>
     <%= link_to @task.mission.name, @task.mission %>
-  <% end %>
-</p>
+  </p>
+<% end %>
+
+<% unless @task.time_entries.nil? %>
+  <p>
+    <strong>Time Entries:</strong><br>
+    <% @task.time_entries.each do |time_entry| %>
+      <%= link_to time_entry.name, time_entry %>(<%= time_entry.duration %>)
+      <br>
+    <% end %>
+  </p>
+<% end %>
 
 <hr>
 
