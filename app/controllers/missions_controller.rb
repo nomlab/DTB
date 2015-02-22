@@ -16,6 +16,11 @@ class MissionsController < ApplicationController
   # GET /missions/1
   # GET /missions/1.json
   def show
+    @history_hash = {}
+    @mission.unified_histories.each do |uh|
+      @history_hash[uh.title] = [] if @history_hash[uh.title].nil?
+      @history_hash[uh.title] << uh.duration
+    end
     respond_to do |format|
       format.html
       format.json {render json: @mission.children.map(&:to_event) +

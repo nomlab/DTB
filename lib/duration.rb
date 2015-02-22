@@ -22,6 +22,20 @@ class Duration
     return Duration.new(s_time, e_time)
   end
 
+  def range
+    return (@start_time.to_date)..(@end_time.to_date)
+  end
+
+  def slice(other)
+    if @start_time < other.end_time && other.start_time < @end_time
+      s_time = @start_time < other.start_time ? other.start_time : @start_time
+      e_time = other.end_time < @end_time ? other.start_time : @end_time
+      return Duration.new(s_time, e_time)
+    else
+      return nil
+    end
+  end
+
   def to_seconds
     return (@end_time - @start_time).to_i
   end

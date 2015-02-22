@@ -54,6 +54,48 @@
 <hr>
 
 <p>
+  <strong>Timeline:</strong>(<%= @mission.duration.range %>)<br>
+  <table>
+    <tr>
+      <th></th>
+      <% @mission.duration.range.each do |date| %>
+        <%= date_header(date) %>
+      <% end %>
+    </tr>
+    <% @history_hash.each do |title, durations| %>
+      <tr>
+        <td><%= title %></td>
+        <% @mission.duration.range.each do |date| %>
+          <% date_duration = Duration.new(date.to_time, date.tomorrow.to_time) %>
+          <% sample = durations.map do |duration| %>
+            <% (d = duration.slice(date_duration)) ? d.to_seconds : nil %>
+          <% end %>
+          <% seconds = sample.compact.inject(0) do |total, partial_seconds| %>
+            <% total + partial_seconds %>
+          <% end %>
+          <%= colored_box(seconds) %>
+        <% end %>
+      </tr>
+    <% end %>
+    <tr>
+      <td>time entry</td>
+      <% @mission.duration.range.each do |date| %>
+          <% date_duration = Duration.new(date.to_time, date.tomorrow.to_time) %>
+          <% sample = @mission.durations.map do |duration| %>
+            <% (d = duration.slice(date_duration)) ? d.to_seconds : nil %>
+          <% end %>
+          <% seconds = sample.compact.inject(0) do |total, partial_seconds| %>
+            <% total + partial_seconds %>
+          <% end %>
+          <%= colored_box(seconds) %>
+        <% end %>
+    </tr>
+  </table>
+</p>
+
+<hr>
+
+<p>
   <strong>File History:</strong><br>
   <% @mission.file_histories.each do |fh| %>
     <%= render :partial => "unified_histories/file_history_item",
