@@ -16,10 +16,25 @@ class MissionsController < ApplicationController
   # GET /missions/1
   # GET /missions/1.json
   def show
-    @history_hash = {}
-    @mission.unified_histories.each do |uh|
-      @history_hash[uh.title] = [] if @history_hash[uh.title].nil?
-      @history_hash[uh.title] << uh.duration
+    @sec_per_days_of_histories = {}
+    @grouped_histories = @mission.unified_histories.group_by{|uh| uh.path}
+    @grouped_histories.each do |path, uhs|
+      @mission.duration.range.each do |date|
+        date_duration = Duration.new(date.to_time, date.tomorrow.to_time)
+        partial_sec = uhs.map do |uh|
+          (d = uh.duration.slice(date_duration)) ? d.to_seconds : nil
+        end
+        @sec_per_days_of_histories[path] = [] if @sec_per_days_of_histories[path].nil?
+        @sec_per_days_of_histories[path] << partial_sec.compact.inject(0){|t, sec| t + sec}
+      end
+    end
+    @sec_per_days_of_mission = []
+    @mission.duration.range.each do |date|
+      date_duration = Duration.new(date.to_time, date.tomorrow.to_time)
+      partial_sec = @mission.durations.map do |duration|
+        (d = duration.slice(date_duration)) ? d.to_seconds : nil
+      end
+      @sec_per_days_of_mission << partial_sec.compact.inject(0){|t, sec| t + sec}
     end
     respond_to do |format|
       format.html
