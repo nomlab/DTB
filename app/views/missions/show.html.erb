@@ -56,19 +56,15 @@
 <p>
   <strong>Timeline:</strong>(<%= @mission.duration.range %>)<br>
   <table>
-    <tr>
-      <th></th>
-      <% @mission.duration.range.each do |date| %>
-        <%= date_header(date) %>
-      <% end %>
-    </tr>
     <% @grouped_histories.each do |path, uhs| %>
       <tr>
         <td>
+          <div class="overflow-hidden">
           <%= link_to uhs.first.title,
               :id         => uhs.first.id,
               :controller => "unified_histories",
               :action     => "restore" %>
+          </div>
         </td>
         <% @sec_per_days_of_histories[path].each do |sec| %>
           <%= colored_box(sec) %>

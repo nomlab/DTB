@@ -22,6 +22,9 @@
 #-- for datetimepicker ------
 #= require bootstrap-datetimepicker
 #----------------------
+#-- for jquery.balloon.js ------
+#= require jquery.balloon.js
+#----------------------
 #= require jquery-ui
 #= require_tree .
 
