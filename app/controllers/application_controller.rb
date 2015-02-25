@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
 
   private
   def set_root_missions
-    @root_missions = Mission.all.select(&:root?)
+    @root_missions = Mission.roots
     @inbox_tasks = Task.where(mission_id: nil)
   end
 end
