@@ -7,7 +7,7 @@ class Mission < ActiveRecord::Base
   # has_many :children, :class_name => "Mission", :foreign_key => :parent_id
   # belongs_to :parent, :class_name => "Mission", :foreign_key => :parent_id
   belongs_to :state
-  default_scope { order(created_at: :desc) }
+  default_scope { includes(tasks: :time_entries).order(created_at: :desc) }
 
   def durations
     return children.map(&:durations).flatten + tasks.map(&:durations).flatten
