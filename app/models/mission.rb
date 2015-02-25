@@ -18,18 +18,21 @@ class Mission < ActiveRecord::Base
   end
 
   def unified_histories
-    return (children.map(&:unified_histories) +
-            tasks.map(&:unified_histories)).flatten.uniq
+    return [] if duration.nil?
+    candidates = UnifiedHistory.where(["start_time >= ? and start_time <= ? or end_time >= ? and end_time <= ?",
+                                       duration.start_time, duration.end_time,
+                                       duration.start_time, duration.end_time])
+    return candidates.select do |c|
+      durations.select{|d| d.overlap?(c) }.present?
+    end
   end
 
   def file_histories
-    return (children.map(&:file_histories) +
-            tasks.map(&:file_histories)).flatten.uniq
+    return unified_histories.select{|uh| uh.history_type == "file_history"}
   end
 
   def web_histories
-    return (children.map(&:web_histories) +
-            tasks.map(&:web_histories)).flatten.uniq
+    return unified_histories.select{|uh| uh.history_type == "web_history"}
   end
 
   # If you choice has_many :children and belongs_to :parent,

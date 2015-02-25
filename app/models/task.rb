@@ -21,15 +21,21 @@ class Task < ActiveRecord::Base
   end
 
   def unified_histories
-    return time_entries.map(&:unified_histories).flatten
+    return [] if duration.nil?
+    candidates = UnifiedHistory.where(["start_time >= ? and start_time <= ? or end_time >= ? and end_time <= ?",
+                                       duration.start_time, duration.end_time,
+                                       duration.start_time, duration.end_time])
+    return candidates.select do |c|
+      durations.select{|d| d.overlap?(c) }.present?
+    end
   end
 
   def file_histories
-    return time_entries.map(&:file_histories).flatten
+    return unified_histories.select{|uh| uh.history_type == "file_history"}
   end
 
   def web_histories
-    return time_entries.map(&:web_histories).flatten
+    return unified_histories.select{|uh| uh.history_type == "web_history"}
   end
 
   def restore
