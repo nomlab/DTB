@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131210025008) do
+ActiveRecord::Schema.define(version: 20150225021814) do
 
   create_table "missions", force: true do |t|
     t.string   "name"
@@ -22,7 +22,15 @@ ActiveRecord::Schema.define(version: 20131210025008) do
     t.integer  "parent_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "lft"
+    t.integer  "rgt"
+    t.integer  "depth"
   end
+
+  add_index "missions", ["depth"], name: "index_missions_on_depth"
+  add_index "missions", ["lft"], name: "index_missions_on_lft"
+  add_index "missions", ["parent_id"], name: "index_missions_on_parent_id"
+  add_index "missions", ["rgt"], name: "index_missions_on_rgt"
 
   create_table "states", force: true do |t|
     t.string   "name"
