@@ -63,12 +63,6 @@ class Mission < ActiveRecord::Base
     }
   end
 
-  def progress
-    all_tasks = children.map(&:tasks).flatten + tasks
-    completed = all_tasks.select(&:status)
-    return (completed.length.to_f / all_tasks.length.to_f) * 100
-  end
-
   private
   # If you choice has_many :children and belongs_to :parent,
   # deactivate following methods
