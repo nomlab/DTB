@@ -28,14 +28,6 @@ class Mission < ActiveRecord::Base
             tasks.map(&:web_histories)).flatten.uniq
   end
 
-  def parent
-    parent_id ? Mission.find_by_id(parent_id) : nil
-  end
-
-  def children
-    Mission.where(:parent_id => id)
-  end
-
   def root
     root? ? self : parent.root
   end
