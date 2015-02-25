@@ -53,34 +53,36 @@
 
 <hr>
 
-<p>
-  <strong>Timeline:</strong>(<%= @mission.duration.range %>)<br>
-  <table>
-    <% @grouped_histories.each do |path, uhs| %>
+<% if @mission.duration %>
+  <p>
+    <strong>Timeline:</strong>(<%= @mission.duration.range %>)<br>
+    <table>
+      <% @grouped_histories.each do |path, uhs| %>
+        <tr>
+          <td>
+            <div class="overflow-hidden">
+              <%= link_to uhs.first.title,
+                  :id         => uhs.first.id,
+                  :controller => "unified_histories",
+                  :action     => "restore" %>
+            </div>
+          </td>
+          <% @sec_per_days_of_histories[path].each do |sec| %>
+            <%= colored_box(sec) %>
+          <% end %>
+        </tr>
+      <% end %>
       <tr>
-        <td>
-          <div class="overflow-hidden">
-          <%= link_to uhs.first.title,
-              :id         => uhs.first.id,
-              :controller => "unified_histories",
-              :action     => "restore" %>
-          </div>
-        </td>
-        <% @sec_per_days_of_histories[path].each do |sec| %>
+        <td>time entry</td>
+        <% @sec_per_days_of_mission.each do |sec| %>
           <%= colored_box(sec) %>
         <% end %>
       </tr>
-    <% end %>
-    <tr>
-      <td>time entry</td>
-      <% @sec_per_days_of_mission.each do |sec| %>
-        <%= colored_box(sec) %>
-      <% end %>
-    </tr>
-  </table>
-</p>
+    </table>
+  </p>
 
-<hr>
+  <hr>
+<% end %>
 
 <p>
   <strong>File History:</strong><br>
