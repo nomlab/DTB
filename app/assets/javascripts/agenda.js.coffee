@@ -30,11 +30,6 @@ ready = ->
             $('#calendar').fullCalendar('removeEvents');
             $('#calendar').fullCalendar('addEventSource', events);
 
-  #-------- for treeview --------
-  $("#mission_tree").treeview
-    animated: "fast"
-    collapsed: true
-
   #-------- for treegrid --------
   $(".table-treegrid").treegrid
     initialState: "collapsed"

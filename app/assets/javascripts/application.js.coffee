@@ -44,5 +44,10 @@ ready = ->
       up: "fa fa-chevron-up",
       down: "fa fa-chevron-down"
 
+  #-------- for treeview --------
+  $("#mission_tree").treeview
+    animated: "fast"
+    collapsed: true
+
 $(document).ready(ready)
 $(document).on('page:load', ready)
