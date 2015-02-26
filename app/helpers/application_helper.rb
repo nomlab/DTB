@@ -4,10 +4,6 @@ module ApplicationHelper
     return content_tag(:span, state.name, :style => "color:#{state.color}")
   end
 
-  def date_header(date)
-    return date.day == 1 ? content_tag(:th, date.strftime("%b")) : content_tag(:th)
-  end
-
   def colored_box(seconds)
     color_class = 'none' if seconds == 0
     color_class = 'little' if seconds > 0
