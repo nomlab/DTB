@@ -12,4 +12,53 @@ module ApplicationHelper
     color_class = 'much' if seconds > 600
     return content_tag(:td, "■", :class => color_class, :data_seconds => seconds)
   end
+
+  def treeview_mission_node(mission)
+    return content_tag :li do
+      concat colored_state(mission.state)
+      concat " "
+      concat link_to( mission.name,
+                      { controller: "missions",
+                        action:     "show",
+                        id:         mission.id },
+                      { class:      "mission" } )
+      concat treeview_mission_branch(mission) unless mission.leaf? && mission.tasks.blank?
+    end
+  end
+
+  def treeview_mission_branch(mission)
+    content_tag :ul do
+      mission.children.each{|child| concat treeview_mission_node(child)}
+      mission.tasks.each{|task| concat treeview_task_node(task)}
+    end
+  end
+
+  def treeview_task_node(task)
+    return content_tag :li do
+      concat colored_state(task.state)
+      concat " "
+      concat link_to( task.name,
+                      { controller: "tasks",
+                        action:     "show",
+                        id:         task.id },
+                      { class:      "task" } )
+      concat treeview_task_branch(task) unless task.time_entries.blank?
+    end
+  end
+
+  def treeview_task_branch(task)
+    content_tag :ul do
+      task.time_entries.each{|te| concat treeview_time_entry_node(te)}
+    end
+  end
+
+  def treeview_time_entry_node(time_entry)
+    return content_tag :li do
+      concat link_to( time_entry.name,
+                      { controller: "time_entries",
+                        action:     "show",
+                        id:         time_entry.id },
+                      { class:      "time-entry" } )
+    end
+  end
 end

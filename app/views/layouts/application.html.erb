@@ -122,12 +122,12 @@
                         <a class="new-task task" data-toggle="modal" data-target="#simple-task-form">New task</a>
                       </li>
                       <% @inbox_tasks.each do |t| %>
-                        <%= render :partial => "tasks/tree_item", :locals => {:task => t} %>
+                        <%= treeview_task_node(t) %>
                       <% end %>
                     </ul>
                   </li>
                   <% @root_missions.each do |m| %>
-                    <%= render :partial => "missions/tree_item", :locals => {:mission => m} %>
+                    <%= treeview_mission_node(m) %>
                   <% end %>
                 </ul>
               </li>
