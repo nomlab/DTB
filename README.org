@@ -5,18 +5,22 @@
    本資料では， 以下について述べる．
    + DTB の開発および実行環境
    + インストール手順
+   + 履歴情報収集部実行手順
+   + Webサーバ部実行手順
+     + development
+     + production
 * 開発および実行環境
    現在のDTBの開発(実行)環境は，以下の通りである．
-   | Ruby           | 2.1.3 |
-   | Rails on Rails | 4.1.6  |
-   | Firefox        | 33.0  |
+   | Ruby           | 2.1.5 |
+   | Rails on Rails | 4.1.6 |
+   | Firefox        |  36.0 |
    現在，以下の環境で動作を確認している．
-   + MacOSX 10.9(Marvericks)
+   + Mac OS X 10.10.2(Yosemite)
 * インストール手順
   現在のコードは実装途中であるため，リポジトリの状態によっては
   下記のインストール手順では正常に動作しないことが考えられる．
   不明な点があれば岡田(pitipitiunsyumikan@gmail.com)まで連絡して欲しい．
-  なお，本手順作成時のDTBのコミットIDは *96110e08ac648afc00697396968177815110a785* である．
+  なお，本手順作成時のDTBのコミットIDは *4ab2041a6e55e52ca24e89be82852bff75a55a41* である．
   1) rbenv + ruby-build の install(詳細は [[https://github.com/sstephenson/rbenv#basic-github-checkout][https://github.com/sstephenson/rbenv#basic-github-checkout]])
      #+BEGIN_SRC sh
        $ git clone https://github.com/sstephenson/rbenv.git ~/.rbenv
@@ -56,11 +60,18 @@
      #+BEGIN_SRC sh
        $ bundle install --path vendor/bundle
      #+END_SRC
-  6) DB を migration
+  6) Toggl account の設定
+     #+BEGIN_SRC sh
+       $ mv local/toggl.yml.sample local/toggl.yml
+       $ vim local/toggl.yml # -> Input your toggl token
+     #+END_SRC
+  7) DB を migration
      #+BEGIN_SRC sh
        $ bundle exec rake db:migrate
+       $ bundle exec rake db:migrate RAILS_ENV=production
      #+END_SRC
-  7) 履歴情報収集処理の開始
+* 履歴情報収集部実行手順
+  1) 履歴情報収集処理の開始
      1) 計算機内部の履歴情報について
         1) 実行権限の書換え(dtraceの利用のため)
            #+BEGIN_SRC sh
@@ -90,12 +101,20 @@
              #+BEGIN_SRC sh
              $ bundle exec guard -c --no-interactions --watchdir /Users/your_name/Library/Application\ Support/Firefox/Profiles/hogehoge.profile_name/
              #+END_SRC
-  8) Toggl account の設定
-     #+BEGIN_SRC sh
-       $ mv local/toggl.yml.sample local/toggl.yml
-       $ vim local/toggl.yml # -> Input your toggl token
-     #+END_SRC
-  9) DTB の 起動
-     #+BEGIN_SRC sh
-       $ bundle exec rails s
-     #+END_SRC
+* Webサーバ部実行手順
+** development
+   1) DTB の 起動
+      #+BEGIN_SRC sh
+        $ bundle exec rails s
+      #+END_SRC
+** production
+   1) assets の precompile
+      #+BEGIN_SRC sh
+        $ bundle exec rake assets:precompile RAILS_ENV=production
+        $ bundle exec rake assets:precompile:image
+        $ bundle exec rake assets:precompile:font
+      #+END_SRC
+   2) DTB の 起動
+      #+BEGIN_SRC sh
+        $ bundle exec rails s -e production
+      #+END_SRC
