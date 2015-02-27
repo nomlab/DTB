@@ -27,3 +27,6 @@ vendor/bundle
 
 # Ignore todo list
 TODO.org
+
+# Ignore precompiled assets
+public/assets
