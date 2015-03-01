@@ -13,6 +13,11 @@ class TasksController < ApplicationController
     else
       @tasks = Task.all
     end
+    respond_to do |format|
+      format.html
+      format.json
+      format.event {render json: @tasks.map(&:to_event)}
+    end
   end
 
   # GET /tasks/1

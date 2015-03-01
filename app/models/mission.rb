@@ -58,8 +58,7 @@ class Mission < ActiveRecord::Base
     return {
       id:        id,
       title:     name,
-      start:     duration.start_time,
-      end:       duration.end_time,
+      start:     deadline,
       type:      "mission",
       color:     "#9FC6E7",
       textColor: "#000000"

@@ -14,21 +14,12 @@ ready = ->
     axisFormat: 'HH:mm'
     eventSources: [
       {
-        url: '/missions.json'
+        url: '/tasks.event'
+      }
+      {
+        url: '/missions.event'
       }
     ]
-    eventClick:
-      (calEvent, jsEvent, view) ->
-        url = "/missions/#{calEvent.id}.json" if calEvent.type == "mission"
-        url = "/tasks/#{calEvent.id}.json" if calEvent.type == "task"
-        url = "/time_entries/#{calEvent.id}.json" if calEvent.type == "time_entry"
-        $ . ajax
-          type: "GET"
-          dataType: 'json'
-          url: url
-          success: (events) ->
-            $('#calendar').fullCalendar('removeEvents');
-            $('#calendar').fullCalendar('addEventSource', events);
 
   #-------- for treegrid --------
   $(".table-treegrid").treegrid

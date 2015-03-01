@@ -54,8 +54,7 @@ class Task < ActiveRecord::Base
     return {
       id:        id,
       title:     name,
-      start:     duration.start_time,
-      end:       duration.end_time,
+      start:     deadline,
       type:      "task",
       color:     "#FAD165",
       textColor: "#000000"

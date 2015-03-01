@@ -11,6 +11,11 @@ class MissionsController < ApplicationController
     else
       @missions = Mission.all
     end
+    respond_to do |format|
+      format.html
+      format.json
+      format.event {render json: @missions.map(&:to_event)}
+    end
   end
 
   # GET /missions/1

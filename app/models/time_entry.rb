@@ -89,16 +89,4 @@ class TimeEntry < ActiveRecord::Base
       end
     end
   end
-
-  def to_event
-    return {
-      id:        id,
-      title:     name,
-      start:     duration.start_time,
-      end:       duration.end_time,
-      type:      "time_entry",
-      color:     "#7BD148",
-      textColor: "#000000"
-    }
-  end
 end
