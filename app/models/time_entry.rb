@@ -11,18 +11,22 @@ class TimeEntry < ActiveRecord::Base
   end
 
   def self.start(options, task_id)
-    response = TOGGL_API_CLIENT.start_time_entry(options)
-    return TimeEntry.current = TimeEntry.create(:name => response.description,
-                                                :start_time => Time.parse(response.start).localtime("+09:00"),
-                                                :task_id => task_id,
-                                                :toggl_time_entry_id => response.id)
+    # response = TOGGL_API_CLIENT.start_time_entry(options)
+    # return TimeEntry.current = TimeEntry.create(:name => response.description,
+    #                                             :start_time => Time.parse(response.start).localtime("+09:00"),
+    #                                             :task_id => task_id,
+    #                                             :toggl_time_entry_id => response.id)
+    return TimeEntry.current = TimeEntry.create(:name => options[:description],
+                                                :start_time => Time.current,
+                                                :task_id => task_id
+                                                )
   end
 
   def self.stop
     time_entry = TimeEntry.current
-    response = TOGGL_API_CLIENT.stop_time_entry(TimeEntry.current.toggl_time_entry_id)
+    # response = TOGGL_API_CLIENT.stop_time_entry(TimeEntry.current.toggl_time_entry_id)
     TimeEntry.current = nil
-    time_entry.end_time = Time.parse(response.stop).localtime("+09:00")
+    time_entry.end_time = Time.current
     time_entry.save
   end
 
