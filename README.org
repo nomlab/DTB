@@ -70,6 +70,11 @@
        $ bundle exec rake db:migrate
        $ bundle exec rake db:migrate RAILS_ENV=production
      #+END_SRC
+  8) submodule の install
+     #+BEGIN_SRC sh
+       $ git submodule init
+       $ git submodule update
+     #+END_SRC
 * 履歴情報収集部実行手順
   1) 履歴情報収集処理の開始
      1) 計算機内部の履歴情報について
