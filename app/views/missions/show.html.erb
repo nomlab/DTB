@@ -7,7 +7,7 @@
 
 <p>
   <strong>Deadline:</strong>
-  <%= @mission.deadline %>
+  <%= @mission.deadline.to_s(:date) %>
 </p>
 
 <p>
@@ -33,7 +33,7 @@
   <% @mission.children.each do |child| %>
     <%= colored_state(child.state) %>
     <%= link_to child.name, child %>
-    (<%= child.deadline %>)
+    deadline: <%= child.deadline.to_s(:date) %>
     <br>
   <% end %>
 </p>
@@ -45,7 +45,7 @@
   <% @mission.tasks.each do |task| %>
     <%= colored_state(task.state) %>
     <%= link_to task.name, task %>
-    (<%= task.deadline %>)
+    deadline: <%= task.deadline.to_s(:date) %>
     <br>
   <% end %>
 </p>
