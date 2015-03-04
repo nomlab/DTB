@@ -59,6 +59,8 @@
     <table>
       <% @grouped_histories.each do |path, uhs| %>
         <tr>
+          <td><%= history_icon(uhs.first) %>
+          </td>
           <td>
             <div class="overflow-hidden">
               <%= link_to uhs.first.title,
@@ -75,6 +77,7 @@
         </tr>
       <% end %>
       <tr>
+        <td></td>
         <td><span class="timeline-item">time entry</span></td>
         <td><span class="timeline-margin"/></td>
         <% @sec_per_days_of_mission.each do |sec| %>
