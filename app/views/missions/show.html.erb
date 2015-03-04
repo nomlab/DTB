@@ -7,7 +7,7 @@
 
 <p>
   <strong>Deadline:</strong>
-  <%= @mission.deadline.to_s(:date) %>
+  <%= @mission.deadline.to_s(:date) unless @mission.deadline.nil? %>
 </p>
 
 <p>
