@@ -67,6 +67,7 @@
                   :action     => "restore" %>
             </div>
           </td>
+          <td><span class="timeline-margin"/></td>
           <% @sec_per_days_of_histories[path].each do |sec| %>
             <%= colored_box(sec) %>
           <% end %>
@@ -74,6 +75,7 @@
       <% end %>
       <tr>
         <td>time entry</td>
+        <td><span class="timeline-margin"/></td>
         <% @sec_per_days_of_mission.each do |sec| %>
           <%= colored_box(sec) %>
         <% end %>
