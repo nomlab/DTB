@@ -62,9 +62,10 @@
           <td>
             <div class="overflow-hidden">
               <%= link_to uhs.first.title,
-                  :id         => uhs.first.id,
-                  :controller => "unified_histories",
-                  :action     => "restore" %>
+                  { :id         => uhs.first.id,
+                    :controller => "unified_histories",
+                    :action     => "restore" },
+                  { :class      => "timeline-item" }%>
             </div>
           </td>
           <td><span class="timeline-margin"/></td>
@@ -74,7 +75,7 @@
         </tr>
       <% end %>
       <tr>
-        <td>time entry</td>
+        <td><span class="timeline-item">time entry</span></td>
         <td><span class="timeline-margin"/></td>
         <% @sec_per_days_of_mission.each do |sec| %>
           <%= colored_box(sec) %>
