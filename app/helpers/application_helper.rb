@@ -5,12 +5,14 @@ module ApplicationHelper
   end
 
   def colored_box(seconds)
-    color_class = 'none' if seconds == 0
-    color_class = 'little' if seconds > 0
-    color_class = 'a-little' if seconds > 60
-    color_class = 'not-a-little' if seconds > 300
-    color_class = 'much' if seconds > 600
-    return content_tag(:td, "■", :class => color_class, :data_seconds => seconds)
+    color_class = ' none' if seconds == 0
+    color_class = ' little' if seconds > 0
+    color_class = ' a-little' if seconds > 60
+    color_class = ' not-a-little' if seconds > 300
+    color_class = ' much' if seconds > 600
+    return content_tag(:td, "■",
+                       :class => ("timeline-box" + color_class),
+                       :data_seconds => seconds)
   end
 
   def treeview_mission_node(mission)
