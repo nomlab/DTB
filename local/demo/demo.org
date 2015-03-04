@@ -1,49 +1,47 @@
-#+TITLE: デモ手順
+#+TITLE: DPS162で実施したデモ手順
 #+DATE: <2014-10-11>
 #+AUTHOR: Takuya Okada
-* 準備
-  以下に注意する．
-  + 準備は DTB のルートディレクトリで行う．
+* 注意事項
   + 岡田の Mac で動作を確認した手順である．
-
-  以下の手順で準備する．
+  + README の手順を基に DTB のインストールが完了しているものとする．
+* 準備
+  以下の手順で準備する．準備は DTB のルートディレクトリで行う．
   1) 現在使用中の DB をバックアップ
      #+BEGIN_SRC sh
        $ mv db/development.sqlite3 db/development.sqlite3.bak
      #+END_SRC
   2) DBをマイグレーション
      #+BEGIN_SRC sh
-       $ bundle exec rake db:migrate
+       $ bundle exec rake db:migrate RAILS_ENV=production
      #+END_SRC
   3) デモ用データを追加するスクリプトを実行
      #+BEGIN_SRC sh
-       $ bundle exec rails runner local/demo/init_demo.rb
+       $ bundle exec rails runner local/demo/init_demo.rb -e production
      #+END_SRC
-  4) 履歴情報の収集処理を開始
-     + 計算機内部
-       #+BEGIN_SRC sh
-         $ bundle exec rails runner lib/file_history_scripts/create_file_histories
-       #+END_SRC
-     + 計算機外部
-       1) Firefox の profile に改造版 MindTheTime (MyMindTheTime) のパスを教える
-          + hogehoge には適当な文字列が入っている
-          + profile_name にはユーザが設定したprofileの名前が入っている(デフォルトであるのは default)
-          #+BEGIN_SRC sh
-          $ ~/Library/Application\ Support/Firefox/Profiles/hogehoge.profile_name/extensions/jid0-HYNmqxA9zQGfJADREri4n2AHKSI@jetpack&
-          #+END_SRC
-       2) Firefox の起動と install
-          + 以下のコマンドで profile を指定して起動できる．あとは流れにそって install
-            #+BEGIN_SRC sh
-              $ /Applications/Firefox.app/Contents/MacOS/firefox -ProfileManager
-            #+END_SRC
-          + MyMindTheTime の Timer を動かす
-          + guard で MyMindTheTime が DB を更新するのを監視
-            + your_name にはユーザ名を入力
-            + hogehoge と profile_name は MyMindTheTime のパスを通した profile に合わせる
-            #+BEGIN_SRC sh
-            $ bundle exec guard -c --no-interactions --watchdir /Users/your_name/Library/Application\ Support/Firefox/Profiles/hogehoge.profile_name/
-            #+END_SRC
+  4) デモ用データのバックアップ
+     #+BEGIN_SRC sh
+       $ cp db/development.sqlite3 db/development.sqlite3.demo
+     #+END_SRC
   5) DTB を起動
      #+BEGIN_SRC sh
-       $ bundle exec rails s
+       $ bundle exec rails s -e production
      #+END_SRC
+  6) Emacs を起動しておく
+     #+BEGIN_SRC sh
+       $ emacs &
+     #+END_SRC
+* デモ手順
+** 収集すべき情報の蓄積に関するデモ
+   1) DPS162に関する情報を蓄積するため， =Mission Tree= の =New Mission= から *Mission DPS162* を作成
+   2) DPS162に関する作業である発表を登録するため， =Mission Tree= の =Inbox= を展開し， =New Task= から *Task 発表* を作成
+   3) =Organize tasks= で　*Task 発表* を *Mission DPS162* に整理する．
+   4) 発表に関する作業時間の記録をとるため， *発表* の詳細画面の再生ボタンをクリックし， *Time Entry 発表* を作成
+   5) 裏でファイルやWebページの参照に関するログが取られていることを述べる．
+** 収集すべき情報の収集に関するデモ
+   1) =Mission Tree= の *TAの業務* を展開し， *第15回講義に関する業務* などから *TAの業務* が構成されるという *業務構成* が収集できることを述べる．
+   2) さらに *第15回講義に関する業務* を展開し， *レポートの提出確認* などの作業を行うという *作業一覧* が収集できることを述べる．
+   3) *TAの業務* 詳細画面に遷移する．
+   4) スクロールして =Timeline= に着目し，ここでは横軸に日付をとって各ファイルやWebページの参照時間が色の濃淡で表現されている事を述べる．
+   5) =Timeline= の一番下の行である =time entry= は1日の作業時間の長さを色の濃淡で表示している事をのべ，これを参照することで *作業時期* が収集できることを述べる．
+   6) =Timeline= に表示されたファイルやWebページの一覧から， *成果物* や *参考資料* を収集できることを述べる．
+   7) 成果物や参考資料の詳細を確認したい場合について， *draft.org* をクリックしてみせ，ファイルが容易に再参照できる事を説明する．
