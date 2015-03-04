@@ -29,12 +29,12 @@
      #+END_SRC
   2) Ruby と bundler の install
      #+BEGIN_SRC sh
-       # Install ruby 2.1.2
-       $ rbenv install 2.1.2
+       # Install ruby 2.1.5
+       $ rbenv install 2.1.5
 
        # Installation check
-       $ rbenv global 2.1.2
-       $ ruby -v # -> You will see: ruby 2.1.2...
+       $ rbenv global 2.1.5
+       $ ruby -v # -> You will see: ruby 2.1.5...
 
        # Install bundler for your new Ruby
        $ gem install bundler
@@ -53,8 +53,8 @@
   4) DTB 内での Ruby の default version を設定
      #+BEGIN_SRC sh
        $ cd ~/Programs/DTB
-       $ rbenv local 2.1.2
-       $ ruby -v # -> You will see: ruby 2.1.2...
+       $ rbenv local 2.1.5
+       $ ruby -v # -> You will see: ruby 2.1.5...
      #+END_SRC
   5) 必要な gem を vendor/bundle 以下に install
      #+BEGIN_SRC sh
