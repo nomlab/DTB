@@ -13,7 +13,7 @@ done = State.create( name: "DONE",
 
 m_p2 = Mission.create( name:        "TAの業務",
                        description: "プログラミング演習TAに関する業務",
-                       deadline:    DateTime.new(2014, 7, 28, 0, 0, 0, '+9'),
+                       deadline:    DateTime.new(2014, 7, 30, 0, 0, 0, '+9'),
                        keyword:     "p2 TA",
                        parent_id:   nil, # root mission
                        state_id:    todo.id)
