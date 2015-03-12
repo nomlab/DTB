@@ -114,7 +114,7 @@ class MissionsController < ApplicationController
     if state.nil?
       flash[:warning] = "Set default state in Setting."
     else
-      @mission = Mission.new(name: params[:name], state_id: state.id)
+      @mission = Mission.new(name: params[:name], parent_id: params[:parent_id], state_id: state.id)
       @mission.save ? flash[:success] = "Mission was successfully created." :
                       flash[:warning] = "Failed to create mission."
     end
