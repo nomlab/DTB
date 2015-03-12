@@ -14,6 +14,7 @@ namespace :assets do
     end
 
     task :font do
+      desc "Copy necessary fonts"
       font_dir = Rails.root.join("public","assets","fontss")
       Dir.mkdir(font_dir) unless Dir.exist?(font_dir)
 
