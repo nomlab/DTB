@@ -98,7 +98,9 @@ class TasksController < ApplicationController
     if state.nil?
       flash[:warning] = "Set default state in Setting."
     else
-      @task = Task.new(name: params[:name], state_id: state.id)
+      @task = Task.new( name: params[:name],
+                        mission_id: params[:mission_id],
+                        state_id: state.id )
       @task.save ? flash[:success] = "Task was successfully created." :
                    flash[:warning] = "Failed to create task."
     end

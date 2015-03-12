@@ -51,3 +51,5 @@ gem 'jquery-minicolors-rails'
 gem 'bootstrap3-datetimepicker-rails'
 
 gem 'awesome_nested_set'
+
+gem 'chosen-rails'

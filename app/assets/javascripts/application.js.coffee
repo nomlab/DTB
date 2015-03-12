@@ -25,6 +25,7 @@
 #-- for jquery.balloon.js ------
 #= require jquery.balloon.js
 #----------------------
+#= require chosen-jquery
 #= require jquery-ui
 #= require_tree .
 
@@ -48,6 +49,11 @@ ready = ->
   $("#mission_tree").treeview
     animated: "fast"
     collapsed: true
+
+  $('.chosen-select').chosen
+    allow_single_deselect: true
+    no_results_text: 'No results matched'
+    width: '20em'
 
 $(document).ready(ready)
 $(document).on('page:load', ready)

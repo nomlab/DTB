@@ -6,14 +6,20 @@
         <h4 class="modal-title">New Task</h4>
       </div>
       <div id="form-body" class="modal-body">
-        <div class="input-group">
-          <%= form_tag( { controller: "tasks", action: "simple_create"} ) do %>
+        <%= form_tag( { controller: "tasks", action: "simple_create"}, class: "form-inline" ) do %>
+          <div class="input-group">
+            <span class="input-group-btn">
+              <%= select_tag :mission_id,
+                  options_for_select( [["No Mission", nil]] +
+                                      Mission.all.map{|m| [m.name, m.id]} ),
+                  class: "btn chosen-select" %>
+            </span>
             <%= text_field_tag "name", nil, placeholder: "Input new task", class: "form-control" %>
             <span class="input-group-btn">
               <button type="submit" class="btn btn-success">Create</button>
             </span>
-          <% end %>
-        </div>
+          </div>
+        <% end %>
       </div>
     </div>
   </div>
