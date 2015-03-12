@@ -15,7 +15,7 @@ namespace :assets do
 
     task :font do
       desc "Copy necessary fonts"
-      font_dir = Rails.root.join("public","assets","fontss")
+      font_dir = Rails.root.join("public","assets","fonts")
       Dir.mkdir(font_dir) unless Dir.exist?(font_dir)
 
       # for font awesome in twitter-bootstrap-rails
