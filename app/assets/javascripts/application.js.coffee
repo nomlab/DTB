@@ -6,25 +6,14 @@
 #= require jquery.treeview
 #= require jquery.treeview.edit
 #= require jquery.treeview.async
-#----------------------
-#-- for fullcalendar --
 #= require moment
 #= require fullcalendar
 #= require lang-all
-#----------------------
-#-- for minicolors ----
 #= require jquery.minicolors
-#----------------------
-#-- for treegrid ------
 #= require jquery.treegrid
 #= require jquery.treegrid.bootstrap3
-#----------------------
-#-- for datetimepicker ------
 #= require bootstrap-datetimepicker
-#----------------------
-#-- for jquery.balloon.js ------
 #= require jquery.balloon.js
-#----------------------
 #= require chosen-jquery
 #= require jquery-ui
 #= require_tree .
@@ -33,10 +22,8 @@ format =
   'data-date-format': 'YYYY-MM-DD HH:mm:ss'
 
 ready = ->
-  #-------- for minicolors --------
   $('.minicolors').minicolors()
 
-  #-------- for datetimepicker ----
   $('.datetimepicker').attr(format)
   $('.datetimepicker').datetimepicker
     icons:
@@ -45,7 +32,6 @@ ready = ->
       up: "fa fa-chevron-up",
       down: "fa fa-chevron-down"
 
-  #-------- for treeview --------
   $("#mission_tree").treeview
     animated: "fast"
     collapsed: true
