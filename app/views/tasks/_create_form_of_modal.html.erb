@@ -12,7 +12,7 @@
               <%= select_tag :mission_id,
                   options_for_select( [["No Mission", nil]] +
                                       Mission.all.map{|m| [m.name, m.id]} ),
-                  class: "btn chosen-select" %>
+                  class: "chosen-select" %>
             </span>
             <%= text_field_tag "name", nil, placeholder: "Input new task", class: "form-control" %>
             <span class="input-group-btn">
