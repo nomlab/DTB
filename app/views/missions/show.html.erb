@@ -45,7 +45,7 @@
   <% @mission.tasks.each do |task| %>
     <%= colored_state(task.state) %>
     <%= link_to task.name, task %>
-    deadline: <%= task.deadline.to_s(:date) %>
+    deadline: <%= task.deadline.to_s(:date) unless task.deadline.nil? %>
     <br>
   <% end %>
 </p>
