@@ -13,14 +13,14 @@
    現在のDTBの開発(実行)環境は，以下の通りである．
    | Ruby           | 2.1.5 |
    | Rails on Rails | 4.1.6 |
-   | Firefox        |  36.0 |
+   | Firefox        |  39.0 |
    現在，以下の環境で動作を確認している．
-   + Mac OS X 10.10.2(Yosemite)
+   + Mac OS X 10.10.4(Yosemite)
 * インストール手順
   現在のコードは実装途中であるため，リポジトリの状態によっては
   下記のインストール手順では正常に動作しないことが考えられる．
   不明な点があれば岡田(pitipitiunsyumikan@gmail.com)まで連絡して欲しい．
-  なお，本手順作成時のDTBのコミットIDは *4ab2041a6e55e52ca24e89be82852bff75a55a41* である．
+  なお，本手順作成時のDTBのコミットIDは =20071f62994db4eb0c8daf280a445d8032218c7f= である．
   1) rbenv + ruby-build の install(詳細は [[https://github.com/sstephenson/rbenv#basic-github-checkout][https://github.com/sstephenson/rbenv#basic-github-checkout]])
      #+BEGIN_SRC sh
        $ git clone https://github.com/sstephenson/rbenv.git ~/.rbenv
@@ -75,6 +75,10 @@
        $ git submodule init
        $ git submodule update
      #+END_SRC
+  9) TimeRecorder (Firefox add-on) の install
+     1) profile を選択してFirefox起動: =$ /Applications/Firefox.app/Contents/MacOS/firefox -ProfileManager=
+     2) Add-on fileを選択してimport: =Cmd+o=
+
 * 履歴情報収集部実行手順
   1) 履歴情報収集処理の開始
      1) 計算機内部の履歴情報について
@@ -88,24 +92,9 @@
              $ bundle exec rails runner lib/file_history_scripts/create_file_histories
            #+END_SRC
      2) 計算機外部の履歴情報について
-        1) Firefox の profile に改造版 MindTheTime (MyMindTheTime) のパスを教える
-           + hogehoge には適当な文字列が入っている
-           + profile_name にはユーザが設定したprofileの名前が入っている(デフォルトであるのは default)
-           #+BEGIN_SRC sh
-           $ ~/Library/Application\ Support/Firefox/Profiles/hogehoge.profile_name/extensions/jid0-HYNmqxA9zQGfJADREri4n2AHKSI@jetpack&
-           #+END_SRC
-        2) Firefox の起動と install
-           + 以下のコマンドで profile を指定して起動できる．あとは流れにそって install
-             #+BEGIN_SRC sh
-               $ /Applications/Firefox.app/Contents/MacOS/firefox -ProfileManager
-             #+END_SRC
-           + MyMindTheTime の Timer を動かす
-           + guard で MyMindTheTime が DB を更新するのを監視
-             + your_name にはユーザ名を入力
-             + hogehoge と profile_name は MyMindTheTime のパスを通した profile に合わせる
-             #+BEGIN_SRC sh
-             $ bundle exec guard -c --no-interactions --watchdir /Users/your_name/Library/Application\ Support/Firefox/Profiles/hogehoge.profile_name/
-             #+END_SRC
+        1) TimeRecorder (Firefox add-on) の install
+           1) profile を選択してFirefox起動: =$ /Applications/Firefox.app/Contents/MacOS/firefox -ProfileManager=
+           2) Add-on fileを選択してimport: =Cmd+o=
 * Webサーバ部実行手順
 ** development
    1) DTB の 起動
