@@ -1,0 +1,7 @@
+* TimeRecorder
+  TimeRecorder is a simple add-on to record time for DTB
+** Install
+   Firefoxを起動し， =Cmd(Ctr)+O= で =timerecorder.xpi= を選択
+** 動作概要
+   1) タブがアクティブな時間を計測し続け，DTB（defaultでlocalhost:3000での動作を想定）に送信
+   2) DTBが動作していない時のログは捨てられる
