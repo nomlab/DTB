@@ -67,7 +67,7 @@ ActiveRecord::Schema.define(version: 20150225021814) do
   create_table "unified_histories", force: true do |t|
     t.string   "title"
     t.string   "path"
-    t.string   "history_type"
+    t.string   "type"
     t.string   "r_path"
     t.datetime "start_time"
     t.datetime "end_time"
@@ -75,5 +75,7 @@ ActiveRecord::Schema.define(version: 20150225021814) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "unified_histories", ["type"], name: "index_unified_histories_on_type"
 
 end

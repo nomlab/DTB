@@ -86,6 +86,6 @@ class UnifiedHistoriesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def unified_history_params
-      params.require(:unified_history).permit(:path, :title, :history_type, :r_path, :start_time, :end_time, :thumbnail)
+      params.require(:unified_history).permit(:path, :title, :type, :r_path, :start_time, :end_time, :thumbnail)
     end
 end

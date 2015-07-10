@@ -28,11 +28,11 @@ class Mission < ActiveRecord::Base
   end
 
   def file_histories
-    return unified_histories.select{|uh| uh.history_type == "file_history"}
+    return unified_histories.select{|uh| uh.type == "FileHistory"}
   end
 
   def web_histories
-    return unified_histories.select{|uh| uh.history_type == "web_history"}
+    return unified_histories.select{|uh| uh.type == "WebHistory"}
   end
 
   # If you choice has_many :children and belongs_to :parent,

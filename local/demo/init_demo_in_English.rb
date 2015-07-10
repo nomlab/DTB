@@ -39,13 +39,13 @@ m_p2 = Mission.create( name:        "Work of TA",
                     task_id: t_check.id)
   UnifiedHistory.create( title:         "Programming courses",
                          path:          "https://www.swlab.cs.okayama-u.ac.jp/~nom/lect/p2/",
-                         history_type:  "web_history",
+                         type:  "WebHistory",
                          start_time:    DateTime.new(YEAR, 4, 17, 8, 40, 0, '+9') + (WEEK * n-1),
                          end_time:      DateTime.new(YEAR, 4, 17, 8, 50, 0, '+9') + (WEEK * n-1),
                          thumbnail:     "http://capture.heartrails.com/200x150/shadow/border?https://www.swlab.cs.okayama-u.ac.jp/~nom/lect/p2/" )
   UnifiedHistory.create( title:         "rivised.txt",
                          path:          DEMO_DIR.join("revise.txt").to_s,
-                         history_type:  "file_history",
+                         type:  "FileHistory",
                          start_time:    DateTime.new(YEAR, 4, 17, 9, 00, 0, '+9') + (WEEK * n-1),
                          end_time:      DateTime.new(YEAR, 4, 17, 9, 30, 0, '+9') + (WEEK * n-1),
                          )
@@ -78,24 +78,24 @@ m_p2 = Mission.create( name:        "Work of TA",
                     task_id: t_mail.id)
   UnifiedHistory.create( title:         "draft.org",
                          path:          DEMO_DIR.join("draft.org").to_s,
-                         history_type:  "file_history",
+                         type:  "FileHistory",
                          start_time:    DateTime.new(YEAR, 4, 17, 13, 0, 0, '+9') + (WEEK * n-1),
                          end_time:      DateTime.new(YEAR, 4, 17, 13, 1, 0, '+9') + (WEEK * n-1) )
   UnifiedHistory.create( title:         "HTML-Export-commands",
                          path:          "http://orgmode.org/manual/HTML-Export-commands.html#HTML-Export-commandss",
-                         history_type:  "web_history",
+                         type:  "WebHistory",
                          start_time:    DateTime.new(YEAR, 4, 17, 13, 1, 0, '+9') + (WEEK * n-1),
                          end_time:      DateTime.new(YEAR, 4, 17, 13, 2, 0, '+9') + (WEEK * n-1),
                          thumbnail:     "http://capture.heartrails.com/200x150/shadow/border?http://orgmode.org/manual/HTML-Export-commands.html#HTML-Export-commandss" )
   UnifiedHistory.create( title:         "Emacs: Permanently summing a column in Org-mode tables",
                          path:          "http://stackoverflow.com/questions/6688075/emacs-permanently-summing-a-column-in-org-mode-tables",
-                         history_type:  "web_history",
+                         type:  "WebHistory",
                          start_time:    DateTime.new(YEAR, 4, 17, 13, 2, 0, '+9') + (WEEK * n-1),
                          end_time:      DateTime.new(YEAR, 4, 17, 13, 3, 0, '+9') + (WEEK * n-1),
                          thumbnail:     "http://capture.heartrails.com/200x150/shadow/border?http://stackoverflow.com/questions/6688075/emacs-permanently-summing-a-column-in-org-mode-tables" )
   UnifiedHistory.create( title:         "report.eml",
                          path:          DEMO_DIR.join("draft.eml").to_s,
-                         history_type:  "file_history",
+                         type:  "FileHistory",
                          start_time:    DateTime.new(YEAR, 4, 17, 13, 3, 0, '+9') + (WEEK * n-1),
                          end_time:      DateTime.new(YEAR, 4, 17, 13, 10, 0, '+9') + (WEEK * n-1) )
   ##########################################################
@@ -111,32 +111,32 @@ m_p2 = Mission.create( name:        "Work of TA",
                       task_id: t_mail.id)
     UnifiedHistory.create( title:         "submission_status.xlsx",
                            path:          DEMO_DIR.join("submission_status.xlsx").to_s,
-                           history_type:  "file_history",
+                           type:  "FileHistory",
                            start_time:    DateTime.new(YEAR, 4, 17, 15, 10, 0, '+9') + (WEEK * n-1),
                            end_time:      DateTime.new(YEAR, 4, 17, 15, 15, 0, '+9') + (WEEK * n-1) )
     UnifiedHistory.create( title:         "09425601.pdf",
                            path:          DEMO_DIR.join("09425601.pdf").to_s,
-                           history_type:  "file_history",
+                           type:  "FileHistory",
                            start_time:    DateTime.new(YEAR, 4, 17, 15, 0, 0, '+9') + (WEEK * n-1),
                            end_time:      DateTime.new(YEAR, 4, 17, 15, 2, 0, '+9') + (WEEK * n-1) )
     UnifiedHistory.create( title:         "09425602.pdf",
                            path:          DEMO_DIR.join("09425602.pdf").to_s,
-                           history_type:  "file_history",
+                           type:  "FileHistory",
                            start_time:    DateTime.new(YEAR, 4, 17, 15, 2, 0, '+9') + (WEEK * n-1),
                            end_time:      DateTime.new(YEAR, 4, 17, 15, 4, 0, '+9') + (WEEK * n-1) )
     UnifiedHistory.create( title:         "09425603.pdf",
                            path:          DEMO_DIR.join("09425603.pdf").to_s,
-                           history_type:  "file_history",
+                           type:  "FileHistory",
                            start_time:    DateTime.new(YEAR, 4, 17, 15, 4, 0, '+9') + (WEEK * n-1),
                            end_time:      DateTime.new(YEAR, 4, 17, 15, 6, 0, '+9') + (WEEK * n-1) )
     UnifiedHistory.create( title:         "09425604.pdf",
                            path:          DEMO_DIR.join("09425604.pdf").to_s,
-                           history_type:  "file_history",
+                           type:  "FileHistory",
                            start_time:    DateTime.new(YEAR, 4, 17, 15, 6, 0, '+9') + (WEEK * n-1),
                            end_time:      DateTime.new(YEAR, 4, 17, 15, 8, 0, '+9') + (WEEK * n-1) )
     UnifiedHistory.create( title:         "09425605.pdf",
                            path:          DEMO_DIR.join("09425605.pdf").to_s,
-                           history_type:  "file_history",
+                           type:  "FileHistory",
                            start_time:    DateTime.new(YEAR, 4, 17, 15, 8, 0, '+9') + (WEEK * n-1),
                            end_time:      DateTime.new(YEAR, 4, 17, 15, 10, 0, '+9') + (WEEK * n-1) )
   end

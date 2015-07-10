@@ -37,11 +37,13 @@ class CreateDtbBasicTable < ActiveRecord::Migration
     create_table :unified_histories do |t|
       t.string :title
       t.string :path
-      t.string :history_type
+      t.string :type
       t.string :r_path
       t.datetime :start_time
       t.datetime :end_time
       t.string :thumbnail
+
+      t.index :type # for Single Table Inheritance
 
       t.timestamps
     end

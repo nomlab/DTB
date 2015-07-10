@@ -48,13 +48,13 @@ m_p2 = Mission.create( name:        "TAの業務",
                     task_id: t_check.id)
   UnifiedHistory.create( title:         "2014年度 プログラミング演習",
                          path:          "https://www.swlab.cs.okayama-u.ac.jp/~nom/lect/p2/",
-                         history_type:  "web_history",
+                         type:  "WebHistory",
                          start_time:    DateTime.new(2014, 4, 17, 8, 40, 0, '+9') + (WEEK * n-1),
                          end_time:      DateTime.new(2014, 4, 17, 8, 50, 0, '+9') + (WEEK * n-1),
                          thumbnail:     "http://capture.heartrails.com/200x150/shadow/border?https://www.swlab.cs.okayama-u.ac.jp/~nom/lect/p2/" )
   UnifiedHistory.create( title:         "rivised.txt",
                          path:          DEMO_DIR.join("revise.txt").to_s,
-                         history_type:  "file_history",
+                         type:  "FileHistory",
                          start_time:    DateTime.new(2014, 4, 17, 9, 00, 0, '+9') + (WEEK * n-1),
                          end_time:      DateTime.new(2014, 4, 17, 9, 30, 0, '+9') + (WEEK * n-1),
                          )
@@ -96,24 +96,24 @@ m_p2 = Mission.create( name:        "TAの業務",
                     task_id: t_mail.id)
   UnifiedHistory.create( title:         "draft.org",
                          path:          DEMO_DIR.join("draft.org").to_s,
-                         history_type:  "file_history",
+                         type:  "FileHistory",
                          start_time:    DateTime.new(2014, 4, 17, 13, 0, 0, '+9') + (WEEK * n-1),
                          end_time:      DateTime.new(2014, 4, 17, 13, 1, 0, '+9') + (WEEK * n-1) )
   UnifiedHistory.create( title:         "Org-mode による HTML 文書作成入門",
                          path:          "http://www.geocities.jp/km_pp1/org-mode/org-mode-document.html",
-                         history_type:  "web_history",
+                         type:  "WebHistory",
                          start_time:    DateTime.new(2014, 4, 17, 13, 1, 0, '+9') + (WEEK * n-1),
                          end_time:      DateTime.new(2014, 4, 17, 13, 2, 0, '+9') + (WEEK * n-1),
                          thumbnail:     "http://capture.heartrails.com/200x150/shadow?http://www.geocities.jp/km_pp1/org-mode/org-mode-document.html" )
   UnifiedHistory.create( title:         "org-mode + remember-mode で挿入される日付フォーマットを変更するには",
                          path:          "http://d.hatena.ne.jp/kyagi/20090606/1244285675",
-                         history_type:  "web_history",
+                         type:  "WebHistory",
                          start_time:    DateTime.new(2014, 4, 17, 13, 2, 0, '+9') + (WEEK * n-1),
                          end_time:      DateTime.new(2014, 4, 17, 13, 3, 0, '+9') + (WEEK * n-1),
                          thumbnail:     "http://capture.heartrails.com/200x150/shadow?http://d.hatena.ne.jp/kyagi/20090606/1244285675" )
   UnifiedHistory.create( title:         "report.eml",
                          path:          DEMO_DIR.join("draft.eml").to_s,
-                         history_type:  "file_history",
+                         type:  "FileHistory",
                          start_time:    DateTime.new(2014, 4, 17, 13, 3, 0, '+9') + (WEEK * n-1),
                          end_time:      DateTime.new(2014, 4, 17, 13, 10, 0, '+9') + (WEEK * n-1) )
   ##########################################################
@@ -133,32 +133,32 @@ m_p2 = Mission.create( name:        "TAの業務",
                       task_id: t_mail.id)
     UnifiedHistory.create( title:         "submission_status.xlsx",
                            path:          DEMO_DIR.join("submission_status.xlsx").to_s,
-                           history_type:  "file_history",
+                           type:  "FileHistory",
                            start_time:    DateTime.new(2014, 4, 17, 15, 10, 0, '+9') + (WEEK * n-1),
                            end_time:      DateTime.new(2014, 4, 17, 15, 15, 0, '+9') + (WEEK * n-1) )
     UnifiedHistory.create( title:         "09425601.pdf",
                            path:          DEMO_DIR.join("09425601.pdf").to_s,
-                           history_type:  "file_history",
+                           type:  "FileHistory",
                            start_time:    DateTime.new(2014, 4, 17, 15, 0, 0, '+9') + (WEEK * n-1),
                            end_time:      DateTime.new(2014, 4, 17, 15, 2, 0, '+9') + (WEEK * n-1) )
     UnifiedHistory.create( title:         "09425602.pdf",
                            path:          DEMO_DIR.join("09425602.pdf").to_s,
-                           history_type:  "file_history",
+                           type:  "FileHistory",
                            start_time:    DateTime.new(2014, 4, 17, 15, 2, 0, '+9') + (WEEK * n-1),
                            end_time:      DateTime.new(2014, 4, 17, 15, 4, 0, '+9') + (WEEK * n-1) )
     UnifiedHistory.create( title:         "09425603.pdf",
                            path:          DEMO_DIR.join("09425603.pdf").to_s,
-                           history_type:  "file_history",
+                           type:  "FileHistory",
                            start_time:    DateTime.new(2014, 4, 17, 15, 4, 0, '+9') + (WEEK * n-1),
                            end_time:      DateTime.new(2014, 4, 17, 15, 6, 0, '+9') + (WEEK * n-1) )
     UnifiedHistory.create( title:         "09425604.pdf",
                            path:          DEMO_DIR.join("09425604.pdf").to_s,
-                           history_type:  "file_history",
+                           type:  "FileHistory",
                            start_time:    DateTime.new(2014, 4, 17, 15, 6, 0, '+9') + (WEEK * n-1),
                            end_time:      DateTime.new(2014, 4, 17, 15, 8, 0, '+9') + (WEEK * n-1) )
     UnifiedHistory.create( title:         "09425605.pdf",
                            path:          DEMO_DIR.join("09425605.pdf").to_s,
-                           history_type:  "file_history",
+                           type:  "FileHistory",
                            start_time:    DateTime.new(2014, 4, 17, 15, 8, 0, '+9') + (WEEK * n-1),
                            end_time:      DateTime.new(2014, 4, 17, 15, 10, 0, '+9') + (WEEK * n-1) )
   end

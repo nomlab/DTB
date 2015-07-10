@@ -5,27 +5,23 @@ class UnifiedHistory < ActiveRecord::Base
     return Duration.new(start_time, end_time)
   end
 
-  def extension
-    case history_type
-    when "file_history"
-      return self.path.split("/").last.split(".").last
-    when "web_history"
-      return "html"
-    else
-      return ""
-    end
-  end
-
   def restore
     system "open #{self.path}"
   end
 end
 
 class WebHistory < UnifiedHistory
+  def extension
+    return "html"
+  end
 end
 
 class FileHistory < UnifiedHistory
-  def restore
-    # restore file by git
+  def extension
+    return self.path.split("/").last.split(".").last
   end
+
+  # TODO: restore file by git
+  # def restore
+  # end
 end

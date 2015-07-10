@@ -333,7 +333,7 @@ class FileHistoryFactory
       fh = UnifiedHistory.create(
         path:         file.path,
         title:        file.path.split("/").last || file.path,
-        history_type: "file_history",
+        type:         "FileHistory",
         start_time:   file.time,
         end_time:     focus_change_record.time
       )
