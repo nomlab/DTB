@@ -143,3 +143,12 @@ m_p2 = Mission.create( name:        "Work of TA",
 
 end
 #---------------------------------------------------------------------
+
+democ = Mission.create( name:        "DEMoC-2015",
+                        deadline:    DateTime.new(YEAR, 9, 2, 0, 0, 0, '+9'),
+                        parent_id:   nil, # root mission
+                        state_id:    todo.id)
+Task.create( name:        "Writing thesis",
+             deadline:    DateTime.new(YEAR, 5, 1, 0, 0, 0, '+9'),
+             mission_id:  democ.id,
+             state_id:    done.id)
