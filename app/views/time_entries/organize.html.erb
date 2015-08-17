@@ -11,6 +11,13 @@
         <tr>
           <td class="droppable-task-for-time-entry selected" id="nil">Inbox</td>
         </tr>
+        <% Task.where(mission: nil).each do |t| %>
+          <tr>
+            <td class="droppable-task-for-time-entry" id="<%= t.id %>">
+              <span class="task"><%= t.name %></span>
+            </td>
+          </tr>
+        <% end %>
         <% @root_missions.each do |mission| %>
           <%= render :partial => "missions/tree_grid_item_in_organize",
               :locals => {:mission => mission, :unfold_task => true, :at => :time_entry} %>
