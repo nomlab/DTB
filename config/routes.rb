@@ -24,6 +24,9 @@ Rails.application.routes.draw do
   resources :time_entries
 
   resources :unified_histories
+  # For STL, route file_histories/ and web_histories/ to unified_histories/
+  resources :file_histories, controller: :unified_histories
+  resources :web_histories, controller: :unified_histories
 
   get ':controller(/:action(/:id(.:format)))'
   post ':controller(/:action(/:id(.:format)))'
