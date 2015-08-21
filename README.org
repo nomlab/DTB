@@ -95,6 +95,7 @@
         1) TimeRecorder (Firefox add-on) の install
            1) profile を選択してFirefox起動: =$ /Applications/Firefox.app/Contents/MacOS/firefox -ProfileManager=
            2) Add-on fileを選択してimport: =Cmd+o=
+           3) about:addons ページ中の TimeRecorder の設定から，Your DTB URL を設定
 * Webサーバ部実行手順
 ** development
    1) DTB の 起動
