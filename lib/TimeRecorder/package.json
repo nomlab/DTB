@@ -1,12 +1,19 @@
 {
-  "name": "timerecorder",
-  "title": "TimeRecorder",
-  "id": "jid1-JT9iA58cvudyYg",
-  "description": "DTBと合わせて動作するWebページ参照時間帯記録Add-on",
-  "author": "Takuya Okada",
-  "license": "MPL 2.0",
-  "permissions": {
+    "name": "timerecorder",
+    "title": "TimeRecorder",
+    "id": "jid1-JT9iA58cvudyYg",
+    "description": "DTBと合わせて動作するWebページ参照時間帯記録Add-on",
+    "author": "Takuya Okada",
+    "license": "MPL 2.0",
+    "permissions": {
       "cross-domain-content": ["http://localhost:3000"]
-  },
-  "version": "0.1"
+    },
+    "version": "1.0",
+    "preferences": [{
+        "name": "DTBURL",
+        "title": "Your DTB URL",
+        "description": "Input your DTB URL (app root)",
+        "type": "string",
+        "value": "http://localhost:3000"
+    }]
 }
