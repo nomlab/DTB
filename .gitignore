@@ -30,3 +30,6 @@ TODO.org
 
 # Ignore precompiled assets
 public/assets
+
+# Ignore token file
+config/sercets.yml
