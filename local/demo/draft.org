@@ -1,21 +1,17 @@
-* TA業務日誌
-*** 第7回 <2014-05-26 Mon>
-***** 岡田
-******* 資料の訂正
+* Work Report
+*** 7th <2015-05-26 Mon>
+***** Okada
+******* Lecture material modification
         1) index.org
-           実装すべきコマンドを示した表の％Pコマンドの備
-           考中のn < 0の後ろに「:」を加えた．
-******* 質問内容
-        1) 現在，名簿の要素を選択して削除するdeleteコマン
-           ドを作成している．deleteコマンドで名簿を削除し
-           た後で，削除した構造体の初期化は必要か．
-        回答) mallocした備考を格納しているメモリをfreeす
-           る以外は特に初期化処理は必要ない．mallocしたメ
-           モリをfreeすることについては，理由を調査し確認
-           すること．
-******* 反省と感想
-        1) シャトルシートを受講者に配布していなかった．
-           これは，諮問の際はシャトルシートは配布しなくて
-           良いと勝手な判断をしたためである．
-           今後，普段と違う講義の進め方のときは，業務内容
-           について先生に確認を取る．
+           Add ":" to %P description.
+******* Q&A
+        Q1) I am implimenting %D(delete) command.
+            In %D command, it is necessary to initialize
+            deleted structure after entry is deleted.
+        A1) Initializing is not necessary.
+            But you have to free memory that is allocated by malloc.
+            And you should survey why you have to do it.
+******* Reflection and impressions
+        1) I did not distribute sheets to students.
+           This reason is I thought that sheet is not necessary when oral examination is held.
+           Thereafter, when I face to a different case, I will check with the teacher.
