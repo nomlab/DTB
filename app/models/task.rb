@@ -29,11 +29,11 @@ class Task < ActiveRecord::Base
   end
 
   def file_histories
-    return unified_histories.select{|uh| uh.type == "FileHistory"}
+    return unified_histories.file_histories
   end
 
   def web_histories
-    return unified_histories.select{|uh| uh.type == "WebHistory"}
+    return unified_histories.web_histories
   end
 
   def restore
