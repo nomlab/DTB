@@ -48,6 +48,10 @@ class TimeEntry < ActiveRecord::Base
   end
 
   def self.completely_sync
+    # Toggl API does not provide API to get all time entries
+    # but provide API to get time entries started in a specific time range.
+    # Service of Toggl is started at 2006.
+    # So, in order to get all time entries, "2006-01-01" is used.
     TimeEntry.partial_sync(Time.new("2006-01-01"), nil)
   end
 
