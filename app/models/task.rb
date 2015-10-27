@@ -3,6 +3,7 @@ class Task < ActiveRecord::Base
   belongs_to :mission
   belongs_to :state
   default_scope { includes(:state).order(created_at: :desc) }
+  scope :unorganized, -> { where(mission_id: nil) }
 
   def self.current
     @current_task

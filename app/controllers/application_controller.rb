@@ -5,6 +5,6 @@ class ApplicationController < ActionController::Base
   private
   def set_root_missions
     @root_missions = Mission.roots
-    @inbox_tasks = Task.where(mission_id: nil)
+    @inbox_tasks = Task.unorganized
   end
 end
