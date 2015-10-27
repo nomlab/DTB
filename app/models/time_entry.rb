@@ -56,8 +56,7 @@ class TimeEntry < ActiveRecord::Base
   end
 
   def unified_histories
-    return UnifiedHistory.where(["start_time >= ? and start_time <= ? or end_time >= ? and end_time <= ?",
-                                 start_time, end_time, start_time, end_time])
+    return UnifiedHistory.in(start_time, end_time)
   end
 
   def file_histories

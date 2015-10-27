@@ -22,9 +22,7 @@ class Task < ActiveRecord::Base
 
   def unified_histories
     return [] if duration.nil?
-    candidates = UnifiedHistory.where(["start_time >= ? and start_time <= ? or end_time >= ? and end_time <= ?",
-                                       duration.start_time, duration.end_time,
-                                       duration.start_time, duration.end_time])
+    candidates = UnifiedHistory.in(duration.start_time, duration.end_time)
     return candidates.select do |c|
       durations.select{|d| d.overlap?(c) }.present?
     end
