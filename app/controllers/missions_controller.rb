@@ -106,7 +106,7 @@ class MissionsController < ApplicationController
   end
 
   def organize
-    @missions = Mission.where(parent_id: nil)
+    @missions = Mission.roots
   end
 
   def simple_create
