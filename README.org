@@ -23,12 +23,12 @@
 
   2) Install Ruby and Bundler
      #+BEGIN_SRC sh
-       # Install ruby 2.1.5
-       $ rbenv install 2.1.5
+       # Install ruby 2.2.3
+       $ rbenv install 2.2.3
 
        # Installation check
-       $ rbenv global 2.1.5
-       $ ruby -v # -> You will see: ruby 2.1.5...
+       $ rbenv global 2.2.3
+       $ ruby -v # -> You will see: ruby 2.2.3...
 
        # Install bundler for your new Ruby
        $ gem install bundler
@@ -49,8 +49,7 @@
   4) Setup to use installed ruby
      #+BEGIN_SRC sh
        $ cd ~/Programs/DTB
-       $ rbenv local 2.1.5
-       $ ruby -v # -> You will see: ruby 2.1.5...
+       $ ruby -v # -> You will see: ruby 2.2.3...
      #+END_SRC
 
   5) Install vendor/bundle stuffs
