@@ -49,3 +49,6 @@ gem 'bootstrap3-datetimepicker-rails'
 gem 'awesome_nested_set'
 
 gem 'chosen-rails'
+
+# https://github.com/mbleigh/seed-fu
+gem 'seed-fu', '~> 2.3'

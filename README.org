@@ -69,15 +69,21 @@
        $ bundle exec rake db:migrate RAILS_ENV=production
      #+END_SRC
 
-  8) Install submodule
+  8) Initialize DB
+     #+BEGIN_SRC sh
+       $ bundle exec rake db:seed_fu
+       $ bundle exec rake db:seed_fu RAILS_ENV=production
+     #+END_SRC
+
+  9) Install submodule
      #+BEGIN_SRC sh
        $ git submodule init
        $ git submodule update
      #+END_SRC
 
-  9) Install TimeRecorder (Firefox add-on)
-     1) Drag and Drop lib/TimeRecorder/timerecorder.xpi to your firefox
-     2) From about:addons page, set Your DTB (Rails-app) base URL.
+  10) Install TimeRecorder (Firefox add-on)
+      1) Drag and Drop lib/TimeRecorder/timerecorder.xpi to your firefox
+      2) From about:addons page, set Your DTB (Rails-app) base URL.
 
 * Launch servers and sub processes
   DTB gathers file-access records by Dtrace system-call on your Mac.
