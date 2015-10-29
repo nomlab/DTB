@@ -16,20 +16,15 @@ doc/
 # Ignore a setting file of Finder
 .DS_Store
 
-# Ignore .ruby-gemset
-.ruby-gemset
-
 # Ignore yml file of api_token of toggl
 local/toggl.yml
 
 # Ignore gemfiles
 vendor/bundle
 
-# Ignore todo list
-TODO.org
-
 # Ignore precompiled assets
 public/assets
 
 # Ignore token file
+config/initializers/secret_token.rb
 config/sercets.yml
