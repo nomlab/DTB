@@ -42,10 +42,6 @@ gem "twitter-bootstrap-rails"
 # Use Toggl API v8
 gem 'toggl_api', github: 'okada-takuya/toggl_api'
 
-# Watch file
-gem 'guard'
-gem 'guard-shell'
-
 gem 'jquery-minicolors-rails'
 
 gem 'bootstrap3-datetimepicker-rails'
