@@ -65,7 +65,7 @@ class TimeEntry < ActiveRecord::Base
   end
 
   def unified_histories
-    return UnifiedHistory.in(start_time, end_time)
+    return UnifiedHistory.in(duration)
   end
 
   def file_histories

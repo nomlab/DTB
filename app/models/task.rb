@@ -22,19 +22,18 @@ class Task < ActiveRecord::Base
   end
 
   def unified_histories
-    return [] if duration.nil?
-    candidates = UnifiedHistory.in(duration.start_time, duration.end_time)
+    candidates = UnifiedHistory.in(duration)
     return candidates.select do |c|
       durations.select{|d| d.overlap?(c) }.present?
     end
   end
 
   def file_histories
-    return unified_histories.file_histories
+    return unified_histories.select{|h| h.type == "FileHistory" }
   end
 
   def web_histories
-    return unified_histories.web_histories
+    return unified_histories.select{|h| h.type == "WebHistory" }
   end
 
   def restore
