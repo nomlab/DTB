@@ -7,9 +7,9 @@
   activities grouping and connecting to TODO items.
 
 * Environment
-  | Ruby           | 2.1.5 |
-  | Rails on Rails | 4.1.6 |
-  | Firefox        |  39.0 |
+  | Ruby           |  2.2.3 |
+  | Rails on Rails |  4.2.4 |
+  | Firefox        | 41.0.2 |
 
 * Installation for developers
   I recommend you to install new Ruby and Bundler on the top of Rbenv before install DTB.

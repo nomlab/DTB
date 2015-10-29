@@ -13,7 +13,7 @@
 
 ActiveRecord::Schema.define(version: 20150225021814) do
 
-  create_table "missions", force: true do |t|
+  create_table "missions", force: :cascade do |t|
     t.string   "name"
     t.string   "description"
     t.datetime "deadline"
@@ -32,7 +32,7 @@ ActiveRecord::Schema.define(version: 20150225021814) do
   add_index "missions", ["parent_id"], name: "index_missions_on_parent_id"
   add_index "missions", ["rgt"], name: "index_missions_on_rgt"
 
-  create_table "states", force: true do |t|
+  create_table "states", force: :cascade do |t|
     t.string   "name"
     t.string   "color"
     t.integer  "position"
@@ -41,7 +41,7 @@ ActiveRecord::Schema.define(version: 20150225021814) do
     t.datetime "updated_at"
   end
 
-  create_table "tasks", force: true do |t|
+  create_table "tasks", force: :cascade do |t|
     t.string   "name"
     t.string   "description"
     t.datetime "deadline"
@@ -52,7 +52,7 @@ ActiveRecord::Schema.define(version: 20150225021814) do
     t.datetime "updated_at"
   end
 
-  create_table "time_entries", force: true do |t|
+  create_table "time_entries", force: :cascade do |t|
     t.string   "name"
     t.string   "keyword"
     t.text     "comment"
@@ -64,7 +64,7 @@ ActiveRecord::Schema.define(version: 20150225021814) do
     t.datetime "updated_at"
   end
 
-  create_table "unified_histories", force: true do |t|
+  create_table "unified_histories", force: :cascade do |t|
     t.string   "title"
     t.string   "path"
     t.string   "type"
