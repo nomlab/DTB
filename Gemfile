@@ -40,7 +40,7 @@ gem "less-rails"
 gem "twitter-bootstrap-rails"
 
 # Use Toggl API v8
-gem 'toggl_api'
+gem 'toggl_api', github: 'okada-takuya/toggl_api'
 
 gem 'jquery-minicolors-rails'
 

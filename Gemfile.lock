@@ -1,3 +1,12 @@
+GIT
+  remote: git://github.com/okada-takuya/toggl_api.git
+  revision: 158707e8af634caeb1d3d036a905a27d396f341e
+  specs:
+    toggl_api (0.0.2)
+      faraday
+      hashie
+      multi_json
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -161,10 +170,6 @@ GEM
     thor (0.19.1)
     thread_safe (0.3.5)
     tilt (1.4.1)
-    toggl_api (0.0.2)
-      faraday
-      hashie
-      multi_json
     turbolinks (2.5.3)
       coffee-rails
     twitter-bootstrap-rails (3.2.0)
@@ -196,7 +201,7 @@ DEPENDENCIES
   sdoc
   sqlite3
   therubyracer
-  toggl_api
+  toggl_api!
   turbolinks
   twitter-bootstrap-rails
   uglifier (>= 1.3.0)
