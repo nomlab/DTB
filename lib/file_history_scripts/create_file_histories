@@ -362,7 +362,6 @@ class FileHistoryFactory
   # 評価用に，openコマンドの次にフォーカス来たAPで見始めたことにする．
   def start_watch(focus_change_record)
     # window num = 0 で Excel が開いたり開かなかったりするので，win num = 0 は弾く．
-    puts focus_change_record.window_number
     if focus_change_record.window_number == "0"
       return false
     end
