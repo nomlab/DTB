@@ -56,6 +56,8 @@ class ActivityTracker
       tracker = AcceptPathFilter
     when :ignore_path_filter
       tracker = IgnorePathFilter
+    when :accept_name_filter
+      tracker = AcceptNameFilter
     when :ignore_name_filter
       tracker = IgnoreNameFilter
     else
@@ -152,9 +154,26 @@ class IgnorePathFilter < ActivityTrackerDecorator
   end
 end
 
+# Filter logs by name for evaluation.
+# In m_thesis evaluation, target applications are
+# "Preview" and "Excel."
+class AcceptNameFilter < ActivityTrackerDecorator
+  def filter_record(record)
+    pnames = [
+              "open"
+             ]
+
+    pnames.each do |pname|
+      return record if /^#{pname}/ =~ record.pname
+    end
+    return nil
+  end
+end
+
 class IgnoreNameFilter < ActivityTrackerDecorator
   def filter_record(record)
     pnames = [
+              "Dropbox",
               "parentalcontrol",
               "coreservicesd",
               "basename",
@@ -266,6 +285,7 @@ class FocusChangeRecord < ActivityRecord
   end
 end
 
+# 現在ユーザが参照してるファイルを管理するクラス
 class WatchingFile
   attr_reader :time, :pid, :pname, :path, :window_number
 
@@ -286,10 +306,32 @@ class WatchingFile
   end
 end
 
+# ファイルとウィンドウの対応を管理するクラス
+class FileOpenedByWindow
+  attr_reader :pid, :pname, :path, :window_number
+
+  def initialize(h)
+    @pid, @pname, @path, @window_number = h[:pid], h[:pname], h[:path], h[:window_number]
+  end
+
+  def same_process?(other)
+    self.pid == other.pid
+  end
+
+  def same_path?(other)
+    self.path == other.path
+  end
+
+  def same_window?(other)
+    self.window_number == other.window_number
+  end
+end
+
 class FileHistoryFactory
   def initialize
     @file_open_records = []
     @watching_files = []
+    @file_opened_by_windows = []
   end
 
   def receive_record(record)
@@ -305,6 +347,7 @@ class FileHistoryFactory
   end
 
   private
+  # 同じプロセスで同じファイルパスを開いていなければ，file_open_records 配列に追加する．
   def add_record(file_open_record)
     if @file_open_records.select{|r| r.same_process?(file_open_record) && r.same_path?(file_open_record)}.empty?
       @file_open_records.push file_open_record
@@ -315,17 +358,48 @@ class FileHistoryFactory
     @file_open_records.select!{|r| !r.same_process?(file_close_record)}
   end
 
+  # まず，ファイルを開いてるウィンドウと同じwindow num が来たら対応するファイルをwatchingし始める
+  # 評価用に，openコマンドの次にフォーカス来たAPで見始めたことにする．
   def start_watch(focus_change_record)
-    @file_open_records.select{|r| r.same_process?(focus_change_record)}.each do |record|
+    # window num = 0 で Excel が開いたり開かなかったりするので，win num = 0 は弾く．
+    if focus_change_record.window_number == "0"
+      return false
+    end
+
+    @file_opened_by_windows.select{|fobw| fobw.same_window?(focus_change_record) }.each do |fobw|
+      # 参照開始
       watching_file = WatchingFile.new({
         time:  focus_change_record.time,
-        pid:   record.time,
+        pid:   fobw.pid,
+        pname: fobw.pname,
+        path:  fobw.path,
+        window_number: focus_change_record.window_number
+      })
+      @watching_files.push watching_file
+    end
+
+    @file_open_records.each do |record|
+      # openコマンドで開かれたすべてのファイルを参照開始
+      watching_file = WatchingFile.new({
+        time:  focus_change_record.time,
+        pid:   record.pid,
         pname: record.pname,
         path:  record.path,
         window_number: focus_change_record.window_number
       })
       @watching_files.push watching_file
+
+      # windowとの対応を作成しておく．
+      file_opened_by_window = FileOpenedByWindow.new({
+        pid:   record.pid,
+        pname: record.pname,
+        path:  record.path,
+        window_number: focus_change_record.window_number
+      })
+      @file_opened_by_windows.push file_opened_by_window
     end
+
+    @file_open_records.clear # 全部今回のAPで見たことにするから消してしまう
   end
 
   def end_watch(focus_change_record)
@@ -348,12 +422,14 @@ end
 $file_open_processes_copy = []
 atm = ActivityTrackerManager.new
 atm.add_tracker(ActivityTracker.create([:accept_path_filter,
+                                        :accept_name_filter,
                                         :ignore_path_filter,
-                                        :ignore_name_filter,
+                                        # :ignore_name_filter,
                                         :file_open]))
 sleep 1
-atm.add_tracker(ActivityTracker.create([:ignore_name_filter,
-                                        :file_close]))
+# atm.add_tracker(ActivityTracker.create([:accept_name_filter,
+#                                         :ignore_name_filter,
+#                                         :file_close]))
 atm.add_tracker(ActivityTracker.create([:focus_change]))
 fhf = FileHistoryFactory.new
 while 1 do

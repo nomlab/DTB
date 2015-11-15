@@ -17,6 +17,7 @@ class Duration
   end
 
   def merge(other)
+    @end_time = @end_time || @start_time
     s_time = @start_time < other.start_time ? @start_time : other.start_time
     e_time = @end_time > other.end_time ? @end_time : other.end_time
     return Duration.new(s_time, e_time)
