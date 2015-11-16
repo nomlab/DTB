@@ -1,5 +1,5 @@
 $task-color: #BF9608;
 $task-background-color: #FAD165;
-.task {
+.task, .task:visited {
   color: $task-color;
 }
