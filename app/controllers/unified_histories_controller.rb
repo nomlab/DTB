@@ -11,6 +11,7 @@ class UnifiedHistoriesController < ApplicationController
     else
       @unified_histories = UnifiedHistory.all
     end
+    @unified_histories = @unified_histories.page(params[:page])
   end
 
   # GET /unified_histories/1

@@ -52,3 +52,7 @@ gem 'chosen-rails'
 
 # https://github.com/mbleigh/seed-fu
 gem 'seed-fu', '~> 2.3'
+
+# For pagenation
+# https://github.com/amatsuda/kaminari
+gem 'kaminari'
