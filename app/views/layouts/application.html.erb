@@ -91,23 +91,26 @@
           <div class="well sidebar-nav">
             <ul class="nav nav-list">
               <li>
-                <div class="input-group">
-                  <% if TimeEntry.current.nil? %>
-                    <%= form_tag( { controller: "time_entries", action: "continue"} ) do %>
+                <% if TimeEntry.current.nil? %>
+                  <%= form_tag( { controller: "time_entries", action: "continue"} ) do %>
+                    <div class="input-group">
                       <%= text_field_tag "name", nil, placeholder: "What are you doing?", class: "form-control" %>
                       <span class="input-group-btn">
-                        <button type="submit" class="btn btn-success">Start</button>
+                        <%= button_tag (fa_icon "play"), class: "btn btn-success" %>
                       </span>
-                    <% end %>
-                  <% else %>
-                    <%= form_tag( { controller: "time_entries", action: "stop" } ) do %>
-                      <%= text_field_tag "name", TimeEntry.current.name, readonly: true, class: "form-control" %>
-                      <span class="input-group-btn">
-                        <button type="submit" class="btn btn-danger">Stop</button>
-                      </span>
-                    <% end %>
+                    </div>
                   <% end %>
-                </div>
+                <% else %>
+
+                  <%= form_tag( { controller: "time_entries", action: "stop" } ) do %>
+                      <div class="input-group">
+                        <%= text_field_tag "name", TimeEntry.current.name, readonly: true, class: "form-control" %>
+                        <span class="input-group-btn">
+                          <%= button_tag (fa_icon "stop"), class: "btn btn-success" %>
+                        </span>
+                      </div>
+                  <% end %>
+                <% end %>
               </li>
               <li>
                 <h4>Mission Tree</h4>
