@@ -116,11 +116,11 @@
                     <a class="new-mission mission" data-toggle="modal" data-target="#simple-mission-form">New mission</a>
                   </li>
                   <li>
+                    <a class="new-task task" data-toggle="modal" data-target="#simple-task-form">New task</a>
+                  </li>
+                  <li>
                     <%= link_to "Inbox", {controller:"tasks", action:"organize"}, {class: "mission"} %>
                     <ul>
-                      <li>
-                        <a class="new-task task" data-toggle="modal" data-target="#simple-task-form">New task</a>
-                      </li>
                       <% @inbox_tasks.each do |t| %>
                         <%= treeview_task_node(t) %>
                       <% end %>
