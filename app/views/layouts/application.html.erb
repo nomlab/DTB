@@ -13,7 +13,12 @@
 
     <div class="navbar navbar-default navbar-static-top">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">DTB</a>
+
+        <div class="navbar-header">
+          <%= link_to "DTB", root_path, :class => "navbar-brand" %>
+          <%= button_tag (fa_icon "bars"), class: "navbar-toggle collapsed", data: {toggle: "collapse", target: "#bs-navbar-collapse-1"} %>
+        </div>
+
         <div class="collapse navbar-collapse" id="bs-navbar-collapse-1">
           <ul class="nav navbar-nav">
             <li class="dropdown">
