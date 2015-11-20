@@ -51,62 +51,72 @@
 </p>
 <% end %>
 
-<hr>
+<ul class="nav nav-tabs" role="tablist">
+  <li class="active">
+    <a data-toggle="tab" href="#timeline">Timeline</a>
+  </li>
+  <li>
+    <a data-toggle="tab" href="#file-histories">File histories</a>
+  </li>
+  <li>
+    <a data-toggle="tab" href="#web-histories">Web histories</a>
+  </li>
+</ul>
 
-<% if @mission.duration %>
-  <p>
-    <strong>Timeline:</strong>(<%= @mission.duration.range %>)<br>
-    <table>
-      <% @grouped_histories.each do |path, uhs| %>
-        <tr>
-          <td><%= history_icon(uhs.first) %>
-          </td>
-          <td>
-            <div class="overflow-hidden">
-              <%= link_to uhs.first.title,
-                  { :id         => uhs.first.id,
-                    :controller => "unified_histories",
-                    :action     => "restore" },
-                  { :class      => "timeline-item" }%>
-            </div>
-          </td>
-          <td><span class="timeline-margin"/></td>
-          <% @sec_per_days_of_histories[path].each do |sec| %>
-            <%= colored_box(sec) %>
+<div class="field">
+  <div class="tab-content">
+    <div class="tab-pane active" id="timeline">
+      <% if @mission.duration %>
+        <strong>Duration:</strong>(<%= @mission.duration.range %>)<br>
+        <table>
+          <% @grouped_histories.each do |path, uhs| %>
+            <tr>
+              <td><%= history_icon(uhs.first) %>
+              </td>
+              <td>
+                <div class="overflow-hidden">
+                  <%= link_to uhs.first.title,
+                              { :id         => uhs.first.id,
+                                :controller => "unified_histories",
+                                :action     => "restore" },
+                              { :class      => "timeline-item" }%>
+                </div>
+              </td>
+              <td><span class="timeline-margin"/></td>
+              <% @sec_per_days_of_histories[path].each do |sec| %>
+                <%= colored_box(sec) %>
+              <% end %>
+            </tr>
           <% end %>
-        </tr>
+          <tr>
+            <td></td>
+            <td><span class="timeline-item">time entry</span></td>
+            <td><span class="timeline-margin"/></td>
+            <% @sec_per_days_of_mission.each do |sec| %>
+              <%= colored_box(sec) %>
+            <% end %>
+          </tr>
+        </table>
       <% end %>
-      <tr>
-        <td></td>
-        <td><span class="timeline-item">time entry</span></td>
-        <td><span class="timeline-margin"/></td>
-        <% @sec_per_days_of_mission.each do |sec| %>
-          <%= colored_box(sec) %>
-        <% end %>
-      </tr>
-    </table>
-  </p>
+    </div>
 
-  <hr>
-<% end %>
+    <div class="tab-pane" id="file-histories">
+      <% @mission.file_histories.each do |fh| %>
+        <%= render :partial => "unified_histories/file_history_item",
+                   :locals => {:file_history => fh} %>
+        <br>
+      <% end %>
+    </div>
 
-<p>
-  <strong>Web History:</strong><br>
-  <% @mission.web_histories.each do |wh| %>
-    <%= render :partial => "unified_histories/web_history_item",
-        :locals => {:web_history => wh} %>
-  <% end %>
-  <div class="float-clear"></div>
-</p>
-
-<p>
-  <strong>File History:</strong><br>
-  <% @mission.file_histories.each do |fh| %>
-    <%= render :partial => "unified_histories/file_history_item",
-        :locals => {:file_history => fh} %>
-    <br>
-  <% end %>
-</p>
+    <div class="tab-pane" id="web-histories">
+      <% @mission.web_histories.each do |wh| %>
+        <%= render :partial => "unified_histories/web_history_item",
+                   :locals => {:web_history => wh} %>
+      <% end %>
+      <div class="float-clear"></div>
+    </div>
+  </div>
+</div>
 
 <%= link_to 'Edit', edit_mission_path(@mission) %> |
 <%= link_to 'Back', missions_path %>

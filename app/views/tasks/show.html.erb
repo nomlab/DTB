@@ -43,25 +43,40 @@
   </p>
 <% end %>
 
-<hr>
+<ul class="nav nav-tabs" role="tablist">
+  <li class="active">
+    <a data-toggle="tab" href="#timeline">Timeline</a>
+  </li>
+  <li>
+    <a data-toggle="tab" href="#file-histories">File histories</a>
+  </li>
+  <li>
+    <a data-toggle="tab" href="#web-histories">Web histories</a>
+  </li>
+</ul>
 
-<p>
-  <strong>File History:</strong><br>
-  <% @task.file_histories.each do |fh| %>
-    <%= render :partial => "unified_histories/file_history_item",
-        :locals => {:file_history => fh} %>
-    <br>
-  <% end %>
-</p>
+<div class="field">
+  <div class="tab-content">
+    <div class="tab-pane active" id="timeline">
+    </div>
 
-<p>
-  <strong>Web History:</strong><br>
-  <% @task.web_histories.each do |wh| %>
-    <%= render :partial => "unified_histories/web_history_item",
-        :locals => {:web_history => wh} %>
-  <% end %>
-  <div class="float-clear"></div>
-</p>
+    <div class="tab-pane" id="file-histories">
+        <% @task.file_histories.each do |fh| %>
+          <%= render :partial => "unified_histories/file_history_item",
+                     :locals => {:file_history => fh} %>
+          <br>
+        <% end %>
+    </div>
+
+    <div class="tab-pane" id="web-histories">
+      <% @task.web_histories.each do |wh| %>
+        <%= render :partial => "unified_histories/web_history_item",
+                   :locals => {:web_history => wh} %>
+      <% end %>
+      <div class="float-clear"></div>
+    </div>
+  </div>
+</div>
 
 <%= link_to 'Edit', edit_task_path(@task) %> |
 <%= link_to 'Back', tasks_path %>
