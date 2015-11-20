@@ -7,7 +7,7 @@
 
 <p>
   <strong>Deadline:</strong>
-  <%= @mission.deadline.to_s unless @mission.deadline.nil? %>
+  <%= @mission.deadline.to_s(:date) unless @mission.deadline.nil? %>
 </p>
 
 <p>
@@ -33,7 +33,7 @@
   <% @mission.children.each do |child| %>
     <%= colored_state(child.state) %>
     <%= link_to child.name, child %>
-    deadline: <%= child.deadline.to_s(:date) %>
+    deadline: <%= child.deadline.to_s(:date) unless child.deadline.nil? %>
     <br>
   <% end %>
 </p>
