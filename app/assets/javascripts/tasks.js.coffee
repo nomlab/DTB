@@ -33,12 +33,13 @@ ready = ->
       success: (data) ->
         entries = data.map (task) ->
           timeFormat = 'YYYY-MM-DD HH:mm:ss'
-          deadline = if moment(task["deadline"]).format(timeFormat) == "Invalid date" then "" else moment(task["deadline"]).format(timeFormat)
-          deadline = if deadline == "Invalid date" then "" else deadline
+          startTime = moment(task["duration"]["start_time"]).format(timeFormat)
+          endTime   = moment(task["duration"]["end_time"]).format(timeFormat)
+          duration = "#{startTime} - #{endTime}"
           """
           <tr class="draggable-task" id="#{task["id"]}">
             <td>#{task["name"]}</td>
-            <td>#{deadline}</td>
+            <td>#{duration}</td>
           </tr>
           """
         $(".task-inbox").replaceWith("<tbody class='task-inbox'>#{entries}</tbody>")
