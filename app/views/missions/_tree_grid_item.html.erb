@@ -13,11 +13,11 @@
   <td>
   </td>
   <td>
-    <%= link_to '<i class="fa fa-pencil"></i>'.html_safe,
+    <%= link_to (fa_icon "pencil"),
         edit_mission_path(mission) %>
   </td>
   <td>
-    <%= link_to '<i class="fa fa-trash-o"></i>'.html_safe,
+    <%= link_to (fa_icon "trash-o"),
         mission, method: :delete, data: { confirm: 'Are you sure?' } %>
   </td>
 </tr>

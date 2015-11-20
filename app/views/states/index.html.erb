@@ -16,16 +16,16 @@
         <td><%= state.position %></td>
         <td><%= colored_state(state) %></td>
         <td>
-          <% icon = state.default ? '<i class="fa fa-star"></i>'.html_safe : '<i class="fa fa-star-o"></i>'.html_safe %>
+          <% icon = state.default ? (fa_icon "star") : (fa_icon "star-o") %>
           <%= link_to icon,
               :id         => state.id,
               :controller => "states",
               :action     => "update_default",
               :method     => :put %>
         </td>
-        <td><%= link_to '<i class="fa fa-pencil"></i>'.html_safe,
+        <td><%= link_to (fa_icon "pencil"),
                 edit_state_path(state) %></td>
-        <td><%= link_to '<i class="fa fa-trash-o"></i>'.html_safe,
+        <td><%= link_to (fa_icon "trash-o"),
                 state, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
