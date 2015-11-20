@@ -45,6 +45,10 @@ class Duration
     return (@end_time - @start_time).to_i
   end
 
+  def length
+    return to_seconds
+  end
+
   def to_s(option = nil)
     if option == :hour
       h, mod = self.to_seconds.divmod(3600)

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150225021814) do
+ActiveRecord::Schema.define(version: 20151120055740) do
 
   create_table "missions", force: :cascade do |t|
     t.string   "name"
@@ -74,6 +74,7 @@ ActiveRecord::Schema.define(version: 20150225021814) do
     t.string   "thumbnail"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "importance"
   end
 
   add_index "unified_histories", ["type"], name: "index_unified_histories_on_type"
