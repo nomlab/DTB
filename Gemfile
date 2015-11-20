@@ -33,11 +33,7 @@ group :doc do
   gem 'sdoc', require: false
 end
 
-# Twitter Bootstrap
-# https://github.com/seyhunak/twitter-bootstrap-rails
-gem "therubyracer"
-gem "less-rails"
-gem "twitter-bootstrap-rails"
+gem "therubyracer", platforms: :ruby if RUBY_PLATFORM.match(/linux/)
 
 # Use Toggl API v8
 gem 'toggl_api', github: 'okada-takuya/toggl_api'
@@ -56,3 +52,9 @@ gem 'seed-fu', '~> 2.3'
 # For pagenation
 # https://github.com/amatsuda/kaminari
 gem 'kaminari'
+
+# https://github.com/twbs/bootstrap-sass
+gem 'bootstrap-sass', '~> 3.3.5'
+
+# https://github.com/bokmann/font-awesome-rails
+gem "font-awesome-rails"

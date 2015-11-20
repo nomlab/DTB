@@ -1,6 +1,6 @@
 #= require jquery
+#= require bootstrap-sprockets
 #= require jquery_ujs
-#= require twitter/bootstrap
 #= require turbolinks
 #-- for treeview     --
 #= require jquery.treeview
