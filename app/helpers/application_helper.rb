@@ -15,6 +15,12 @@ module ApplicationHelper
                        :data_seconds => seconds)
   end
 
+  def seconds_to_s(seconds)
+    hour, sec_r = seconds.divmod(3600)
+    time_str = (Time.parse("1/1") + sec_r).strftime("%M:%S")
+    return "#{hour}:#{time_str}"
+  end
+
   def treeview_mission_node(mission)
     return content_tag :li do
       concat colored_state(mission.state)

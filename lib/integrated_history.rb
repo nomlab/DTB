@@ -24,10 +24,18 @@ class IntegratedHistory
   end
 
   def importance
-    @durations.map(&:length).reduce(0, :+)
+    length
   end
 
   def importance_of_day(date)
+    length_of_day(date)
+  end
+
+  def length
+    @durations.map(&:length).reduce(0, :+)
+  end
+
+  def length_of_day(date)
     durations_of_day(date).map(&:length).reduce(0, :+)
   end
 end

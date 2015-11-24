@@ -26,6 +26,10 @@ class Task < ActiveRecord::Base
     durations.map{|duration| duration.slice(date_duration)}.compact
   end
 
+  def work_time_length
+    durations.map(&:length).reduce(0, :+)
+  end
+
   def work_time_length_of_day(date)
     durations_of_day(date).map(&:length).reduce(0, :+)
   end

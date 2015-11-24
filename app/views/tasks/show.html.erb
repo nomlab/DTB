@@ -69,7 +69,7 @@
         <tr>
           <td><%= fa_icon "clock-o", class: "history-icon" %></td>
           <td>Work time</td>
-          <td><span class="timeline-margin"/></td>
+          <td class="timeline-time"><%= seconds_to_s @task.work_time_length %></td>
           <% @task.duration.range.each do |date| %>
             <%= colored_box(@task.work_time_length_of_day(date)) %>
           <% end %>
