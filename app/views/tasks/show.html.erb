@@ -61,7 +61,8 @@
       <strong>Range:</strong>(<%= @task.duration.range %>)
       <table>
         <%= render partial: "unified_histories/timeline",
-                   collection: @task.integrated_histories, as: :integrated_history,
+                   collection: @task.integrated_histories.sort{|a,b| b.importance <=> a.importance},
+                   as: :integrated_history,
                    locals: {range: @task.duration.range} %>
 
         <!-- For work time timeline -->
