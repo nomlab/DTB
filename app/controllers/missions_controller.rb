@@ -21,7 +21,6 @@ class MissionsController < ApplicationController
   # GET /missions/1
   # GET /missions/1.json
   def show
-    @integrated_histories = @mission.integrated_histories
     respond_to do |format|
       format.html
       format.json {render json: @mission.children.map(&:to_event) +
