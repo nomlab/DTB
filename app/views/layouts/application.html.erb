@@ -92,6 +92,7 @@
 
     <div class="container-fluid">
       <div class="row">
+        <!-- Sidebar content -->
         <div class="col-sm-3">
           <div class="well sidebar-nav">
             <ul class="nav nav-list">
@@ -117,6 +118,7 @@
                   <% end %>
                 <% end %>
               </li>
+
               <li>
                 <h4>Mission Tree</h4>
                 <ul id="mission_tree" class="treeview">
@@ -142,6 +144,8 @@
             </ul>
           </div>
         </div>
+
+        <!-- Main content -->
         <div class="col-sm-9">
           <% flash.each do |name, msg| %>
             <div class="alert alert-<%= name %>">
