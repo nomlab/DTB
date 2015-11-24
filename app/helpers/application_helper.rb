@@ -33,7 +33,7 @@ module ApplicationHelper
       return nil
     end
     return image_tag( "#{icon}.png",
-                      {width: '20', height: '20', class: "history-icon"} )
+                      {class: "history-icon"} )
   end
 
   def treeview_mission_node(mission)

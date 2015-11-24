@@ -66,38 +66,38 @@
 <div class="field">
   <div class="tab-content">
     <div class="tab-pane active" id="timeline">
-      <% if @mission.duration %>
-        <strong>Duration:</strong>(<%= @mission.duration.range %>)<br>
-        <table>
-          <% @grouped_histories.each do |path, uhs| %>
-            <tr>
-              <td><%= history_icon(uhs.first) %>
-              </td>
-              <td>
-                <div class="overflow-hidden">
-                  <%= link_to uhs.first.title,
-                              { :id         => uhs.first.id,
-                                :controller => "unified_histories",
-                                :action     => "restore" },
-                              { :class      => "timeline-item" }%>
-                </div>
-              </td>
-              <td><span class="timeline-margin"/></td>
-              <% @sec_per_days_of_histories[path].each do |sec| %>
-                <%= colored_box(sec) %>
-              <% end %>
-            </tr>
-          <% end %>
+      <strong>Range:</strong>(<%= @mission.duration.range %>)
+      <table>
+        <!-- For history timeline -->
+        <% @integrated_histories.each do |integrated_history| %>
           <tr>
-            <td></td>
-            <td><span class="timeline-item">time entry</span></td>
+            <td><%= history_icon(integrated_history.representative_history) %></td>
+            <td>
+              <div class="overflow-hidden">
+                <%= link_to integrated_history.representative_history.title,
+                            { id: integrated_history.representative_history.id,
+                              controller: "unified_histories",
+                              action: "restore" },
+                            { class: "timeline-item" } %>
+              </div>
+            </td>
             <td><span class="timeline-margin"/></td>
-            <% @sec_per_days_of_mission.each do |sec| %>
-              <%= colored_box(sec) %>
+            <% @mission.duration.range.each do |date| %>
+              <%= colored_box(integrated_history.importance_of_day(date)) %>
             <% end %>
           </tr>
-        </table>
-      <% end %>
+        <% end %>
+
+        <!-- For work time timeline -->
+        <tr>
+          <td><%= fa_icon "clock-o", class: "history-icon" %></td>
+          <td>Work time</td>
+          <td><span class="timeline-margin"/></td>
+          <% @mission.duration.range.each do |date| %>
+            <%= colored_box(@mission.work_time_length_of_day(date)) %>
+          <% end %>
+        </tr>
+      </table>
     </div>
 
     <div class="tab-pane" id="file-histories">

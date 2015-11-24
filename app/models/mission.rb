@@ -17,6 +17,15 @@ class Mission < ActiveRecord::Base
     return durations.inject{|d1, d2| d1.merge d2}
   end
 
+  def durations_of_day(date)
+    date_duration = Duration.new(date.to_time, date.tomorrow.to_time)
+    durations.map{|duration| duration.slice(date_duration)}.compact
+  end
+
+  def work_time_length_of_day(date)
+    durations_of_day(date).map(&:length).reduce(0, :+)
+  end
+
   def unified_histories
     candidates = UnifiedHistory.in(duration)
     return candidates.select do |c|
@@ -49,6 +58,11 @@ class Mission < ActiveRecord::Base
 
   def finished?
     return self.status
+  end
+
+  def integrated_histories
+    @grouped_histories = unified_histories.group_by{|uh| uh.path}
+    @grouped_histories.map{|path, uhs| IntegratedHistory.new(uhs)}
   end
 
   def to_event
