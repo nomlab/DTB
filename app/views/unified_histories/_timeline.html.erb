@@ -1,0 +1,16 @@
+<tr>
+  <td><%= history_icon(integrated_history.representative_history) %></td>
+  <td>
+    <div class="overflow-hidden">
+      <%= link_to integrated_history.representative_history.title,
+                  { id: integrated_history.representative_history.id,
+                    controller: "unified_histories",
+                    action: "restore" },
+                  { class: "timeline-item" } %>
+    </div>
+  </td>
+  <td><span class="timeline-margin"/></td>
+  <% range.each do |date| %>
+    <%= colored_box(integrated_history.importance_of_day(date)) %>
+  <% end %>
+</tr>

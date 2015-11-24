@@ -68,25 +68,9 @@
     <div class="tab-pane active" id="timeline">
       <strong>Range:</strong>(<%= @mission.duration.range %>)
       <table>
-        <!-- For history timeline -->
-        <% @integrated_histories.each do |integrated_history| %>
-          <tr>
-            <td><%= history_icon(integrated_history.representative_history) %></td>
-            <td>
-              <div class="overflow-hidden">
-                <%= link_to integrated_history.representative_history.title,
-                            { id: integrated_history.representative_history.id,
-                              controller: "unified_histories",
-                              action: "restore" },
-                            { class: "timeline-item" } %>
-              </div>
-            </td>
-            <td><span class="timeline-margin"/></td>
-            <% @mission.duration.range.each do |date| %>
-              <%= colored_box(integrated_history.importance_of_day(date)) %>
-            <% end %>
-          </tr>
-        <% end %>
+        <%= render partial: "unified_histories/timeline",
+                   collection: @integrated_histories, as: :integrated_history,
+                   locals: {range: @mission.duration.range} %>
 
         <!-- For work time timeline -->
         <tr>
