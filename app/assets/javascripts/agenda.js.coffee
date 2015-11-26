@@ -13,12 +13,7 @@ ready = ->
       day:   'HH:mm'
     axisFormat: 'HH:mm'
     eventSources: [
-      {
-        url: '/tasks.event'
-      }
-      {
-        url: '/missions.event'
-      }
+      url: '/missions.occurrence?root=true'
     ]
 
   #-------- for treegrid --------

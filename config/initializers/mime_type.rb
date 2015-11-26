@@ -1,1 +1,1 @@
-Mime::Type.register "application/json" , :event
+Mime::Type.register "application/json", :occurrence

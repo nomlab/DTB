@@ -5,16 +5,19 @@ class MissionsController < ApplicationController
   # GET /missions
   # GET /missions.json
   def index
+    @missions = Mission.all
+
     unless params[:parent_id].nil?
       parent_id = params[:parent_id] == "nil" ? nil : params[:parent_id]
-      @missions = Mission.where(parent_id: parent_id)
-    else
-      @missions = Mission.all
+      @missions = @missions.where(parent_id: parent_id)
     end
+
+    @missions = @missions.roots if params[:root] == "true"
+
     respond_to do |format|
       format.html
       format.json
-      format.event {render json: @missions.map(&:to_event)}
+      format.occurrence {render json: @missions.map(&:to_occurrences).flatten}
     end
   end
 
@@ -23,8 +26,9 @@ class MissionsController < ApplicationController
   def show
     respond_to do |format|
       format.html
-      format.json {render json: @mission.children.map(&:to_event) +
-                                @mission.tasks.map(&:to_event)}
+      format.json
+      format.occurrence {render json: @mission.children.map(&:to_occurrences) +
+                                      @mission.tasks.map(&:to_occurrences)}
     end
   end
 

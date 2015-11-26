@@ -66,14 +66,16 @@ class Task < ActiveRecord::Base
     @grouped_histories.map{|path, uhs| IntegratedHistory.new(uhs)}
   end
 
-  def to_event
-    return {
-      id:        id,
-      title:     name,
-      start:     deadline,
-      type:      "task",
-      color:     "#FAD165",
-      textColor: "#000000"
-    }
+  def to_occurrences
+    occurrences = durations.map do |d|
+      {
+        id:        id,
+        title:     name,
+        start:     d.start_time.iso8601,
+        end:       d.end_time.iso8601,
+        type:      "task",
+        className: "task-occurrence"
+      }
+    end
   end
 end

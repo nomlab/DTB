@@ -16,7 +16,7 @@ class TasksController < ApplicationController
     respond_to do |format|
       format.html
       format.json
-      format.event {render json: @tasks.map(&:to_event)}
+      format.occurrence {render json: @tasks.map(&:to_occurrences)}
     end
   end
 
@@ -25,7 +25,8 @@ class TasksController < ApplicationController
   def show
     respond_to do |format|
       format.html
-      format.json {render json: @task.time_entries.map(&:to_event)}
+      format.json
+      format.occurrence {render json: @task.time_entries.map(&:to_occurrence)}
     end
   end
 

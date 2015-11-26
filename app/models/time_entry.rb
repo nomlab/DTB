@@ -101,4 +101,15 @@ class TimeEntry < ActiveRecord::Base
       end
     end
   end
+
+  def to_occurrence
+    {
+      id:        id,
+      title:     name,
+      start:     start_time.iso8601,
+      end:       end_time.iso8601,
+      type:      "time-entry",
+      className: "time-entry-occurrence"
+    }
+  end
 end
