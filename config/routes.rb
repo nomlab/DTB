@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root to: "welcome#index"
+  root to: 'agenda#tree'
 
   get 'agenda/calendar'
   get 'agenda/tree'
