@@ -22,23 +22,6 @@
   <%= @task.keyword %>
 </p>
 
-<% unless @task.mission.nil? %>
-  <p>
-    <strong>Mission:</strong>
-    <%= link_to @task.mission.name, @task.mission %>
-  </p>
-<% end %>
-
-<% unless @task.time_entries.nil? %>
-  <p>
-    <strong>Time Entries:</strong><br>
-    <% @task.time_entries.each do |time_entry| %>
-      <%= link_to time_entry.name, time_entry %>(<%= time_entry.duration %>)
-      <br>
-    <% end %>
-  </p>
-<% end %>
-
 <ul class="nav nav-tabs" role="tablist">
   <li class="active">
     <a data-toggle="tab" href="#timeline">Timeline</a>

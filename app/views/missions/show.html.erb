@@ -18,37 +18,6 @@
   <%= @mission.keyword %>
 </p>
 
-<% unless @mission.parent.nil? %>
-<p>
-  <strong>Parent:</strong>
-  <%= link_to @mission.parent.name, @mission.parent %>
-</p>
-<% end %>
-
-<% unless @mission.children.nil? %>
-<p>
-  <strong>Children:</strong><br>
-  <% @mission.children.each do |child| %>
-    <%= colored_state(child.state) %>
-    <%= link_to child.name, child %>
-    deadline: <%= child.deadline.to_s(:date) unless child.deadline.nil? %>
-    <br>
-  <% end %>
-</p>
-<% end %>
-
-<% unless @mission.tasks.nil? %>
-<p>
-  <strong>Tasks:</strong><br>
-  <% @mission.tasks.each do |task| %>
-    <%= colored_state(task.state) %>
-    <%= link_to task.name, task %>
-    deadline: <%= task.deadline.to_s(:date) unless task.deadline.nil? %>
-    <br>
-  <% end %>
-</p>
-<% end %>
-
 <ul class="nav nav-tabs" role="tablist">
   <li class="active">
     <a data-toggle="tab" href="#timeline">Timeline</a>
