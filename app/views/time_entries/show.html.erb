@@ -14,22 +14,8 @@
 </p>
 
 <p>
-  <strong>Start time:</strong>
-  <%= @time_entry.start_time %>
-</p>
-
-<p>
-  <strong>End time:</strong>
-  <%= @time_entry.end_time %>
-</p>
-
-<p>
-  <strong>Task:</strong>
-  <% unless @time_entry.task.nil? %>
-    <%= link_to @time_entry.task.name, @time_entry.task %>
-  <% else %>
-    no task
-  <% end %>
+  <strong>Duration:</strong>
+  <%= @time_entry.duration %>
 </p>
 
 <ul class="nav nav-tabs" role="tablist">
