@@ -1,4 +1,7 @@
-<h1><%= @mission.name %></h1>
+<h1>
+  <%= colored_state(@mission.state) %>
+  <span class="mission"><%= @mission.name %></span>
+</h1>
 
 <p>
   <strong>Description:</strong>
@@ -8,11 +11,6 @@
 <p>
   <strong>Deadline:</strong>
   <%= @mission.deadline.to_s(:date) unless @mission.deadline.nil? %>
-</p>
-
-<p>
-  <strong>State:</strong>
-  <%= colored_state(@mission.state) %>
 </p>
 
 <p>

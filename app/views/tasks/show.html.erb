@@ -1,5 +1,6 @@
 <h1>
-  <%= @task.name %>
+  <%= colored_state(@task.state) %>
+  <span class="task"><%= @task.name %></span>
   <%= link_to (fa_icon "play"),
       :id         => @task.id,
       :controller => "tasks",
@@ -14,11 +15,6 @@
 <p>
   <strong>Deadline:</strong>
   <%= @task.deadline.to_s unless @task.deadline.nil? %>
-</p>
-
-<p>
-  <strong>State:</strong>
-  <%= colored_state(@task.state) %>
 </p>
 
 <p>

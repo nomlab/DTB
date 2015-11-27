@@ -1,5 +1,5 @@
 <h1>
-  <%= @time_entry.name %>
+  <span class="time-entry"><%= @time_entry.name %></span>
   <%= render :partial => "time_entries/start_or_stop_button", :locals => {:time_entry => @time_entry} %>
 </h1>
 
