@@ -39,11 +39,6 @@
     <div class="tab-pane active" id="timeline">
       <strong>Range:</strong>(<%= @task.duration.range %>)
       <table>
-        <%= render partial: "unified_histories/timeline",
-                   collection: @task.integrated_histories.sort{|a,b| b.importance <=> a.importance},
-                   as: :integrated_history,
-                   locals: {range: @task.duration.range} %>
-
         <!-- For work time timeline -->
         <tr>
           <td><%= fa_icon "clock-o", class: "history-icon" %></td>
@@ -53,6 +48,11 @@
             <%= colored_box(@task.work_time_length_of_day(date)) %>
           <% end %>
         </tr>
+
+        <%= render partial: "unified_histories/timeline",
+                   collection: @task.integrated_histories.sort{|a,b| b.importance <=> a.importance},
+                   as: :integrated_history,
+                   locals: {range: @task.duration.range} %>
       </table>
     </div>
 
