@@ -2,6 +2,7 @@ class UnifiedHistory < ActiveRecord::Base
   default_scope { order(created_at: :desc) }
   scope :file_histories, -> { where(type: "FileHistory") }
   scope :web_histories, -> { where(type: "WebHistory") }
+  scope :extension, -> (ext) { where("path like '%.#{ext}'") }
 
   before_save :set_importance
 
