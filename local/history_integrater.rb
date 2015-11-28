@@ -1,11 +1,34 @@
 # ARGV[0] : File extension (org, xlsx, pptx...)
 
 if ARGV[0].nil?
-  puts "Usage: history_integrater.rb FILE_EXTENSION # Display integrated histories of an FILE_EXTENSION"
+  puts "Usage: history_integrater.rb APP_NAME # Display integrated histories path of an APP_NAME"
+  puts "APP_NAME list: Preview Excel Emacs"
   exit
 end
 
-integrated_histories = UnifiedHistory.extension(ARGV[0]).group_by{|uh| uh.path}.map{|path, uhs| IntegratedHistory.new(uhs)}
+def app_to_ext(app_name)
+  table = {
+    "Preview" => :pdf,
+    "Excel"   => :xlsx,
+    "Emacs"   => :other,
+  }
+  table[app_name]
+end
+
+unless ext = app_to_ext(ARGV[0])
+  puts "Error: Unrecognized APP_NAME."
+  exit
+end
+
+case ext
+when :other
+  title = UnifiedHistory.arel_table[:title]
+  uhs = UnifiedHistory.where.not(title.matches("%.#{ext}")).file_histories
+  integrated_histories = uhs.group_by{|uh| uh.path}.map{|path, uhs| IntegratedHistory.new(uhs)}
+else
+  integrated_histories = UnifiedHistory.extension(ext).group_by{|uh| uh.path}.map{|path, uhs| IntegratedHistory.new(uhs)}
+end
+
 integrated_histories.each do |h|
   puts h.path
 end
