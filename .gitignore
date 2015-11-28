@@ -17,7 +17,7 @@ doc/
 .DS_Store
 
 # Ignore yml file of api_token of toggl
-local/toggl.yml
+config/toggl.yml
 
 # Ignore gemfiles
 vendor/bundle
