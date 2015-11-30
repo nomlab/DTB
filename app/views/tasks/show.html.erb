@@ -37,23 +37,25 @@
 <div class="field">
   <div class="tab-content">
     <div class="tab-pane active" id="timeline">
-      <strong>Range:</strong>(<%= @task.duration.range %>)
-      <table>
-        <!-- For work time timeline -->
-        <tr>
-          <td><%= fa_icon "clock-o", class: "history-icon" %></td>
-          <td>Work time</td>
-          <td class="timeline-time"><%= seconds_to_s @task.work_time_length %></td>
-          <% @task.duration.range.each do |date| %>
-            <%= colored_box(@task.work_time_length_of_day(date)) %>
-          <% end %>
-        </tr>
+      <% unless @task.duration.nil? %>
+        <strong>Range:</strong>(<%= @task.duration.range %>)
+        <table>
+          <!-- For work time timeline -->
+          <tr>
+            <td><%= fa_icon "clock-o", class: "history-icon" %></td>
+            <td>Work time</td>
+            <td class="timeline-time"><%= seconds_to_s @task.work_time_length %></td>
+            <% @task.duration.range.each do |date| %>
+              <%= colored_box(@task.work_time_length_of_day(date)) %>
+            <% end %>
+          </tr>
 
-        <%= render partial: "unified_histories/timeline",
-                   collection: @task.integrated_histories.sort{|a,b| b.importance <=> a.importance},
-                   as: :integrated_history,
-                   locals: {range: @task.duration.range} %>
-      </table>
+          <%= render partial: "unified_histories/timeline",
+                     collection: @task.integrated_histories.sort{|a,b| b.importance <=> a.importance},
+                     as: :integrated_history,
+                     locals: {range: @task.duration.range} %>
+        </table>
+      <% end %>
     </div>
 
     <div class="tab-pane" id="file-histories">
