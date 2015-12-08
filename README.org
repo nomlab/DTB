@@ -54,34 +54,48 @@
 
 ** Setup config files
 
-  1) Install vendor/bundle stuffs
-     #+BEGIN_SRC sh
-     $ bundle install --path vendor/bundle
-     #+END_SRC
+   You can setup site-local config files interactively by invoking bin/install.sh:
+   #+BEGIN_SRC sh
+   $ bin/install.sh
+   #+END_SRC
 
-  2) Setup Toggl account if you have
-     #+BEGIN_SRC sh
-     $ mv local/toggl.yml.sample local/toggl.yml
-     $ vim local/toggl.yml # -> Input your toggl token
-     #+END_SRC
+   Or, you can edit config files by hand:
 
-  3) Setup DB
-     #+BEGIN_SRC sh
-     $ bundle exec rake db:migrate
-     $ bundle exec rake db:migrate RAILS_ENV=production
-     #+END_SRC
+   1) Install vendor/bundle stuffs
+      #+BEGIN_SRC sh
+      $ bundle install --path vendor/bundle
+      #+END_SRC
 
-  4) Initialize DB
-     #+BEGIN_SRC sh
-     $ bundle exec rake db:seed_fu
-     $ bundle exec rake db:seed_fu RAILS_ENV=production
-     #+END_SRC
+   2) Setup secret key
+      #+BEGIN_SRC sh
+      $ bundle exec rake secret # -> You will see: foobarbuz... Copy the string.
+      $ cp config/secrets.yml.template config/secrets.yml
+      $ vim config/secrets.yml # -> Replace all <SECRETKEY> with the string outputted
+      #+END_SRC
 
-  5) Install submodule
-     #+BEGIN_SRC sh
-     $ git submodule init
-     $ git submodule update
-     #+END_SRC
+   3) Setup Toggl account if you have
+      #+BEGIN_SRC sh
+      $ cp config/application_settings.yml.template config/application_settings.yml
+      $ vim config/application_settings.yml # -> Input your toggl token
+      #+END_SRC
+
+   4) Setup DB
+      #+BEGIN_SRC sh
+      $ bundle exec rake db:migrate
+      $ bundle exec rake db:migrate RAILS_ENV=production
+      #+END_SRC
+
+   5) Initialize DB
+      #+BEGIN_SRC sh
+      $ bundle exec rake db:seed_fu
+      $ bundle exec rake db:seed_fu RAILS_ENV=production
+      #+END_SRC
+
+   6) Install submodule
+      #+BEGIN_SRC sh
+      $ git submodule init
+      $ git submodule update
+      #+END_SRC
 
 ** Install clients recording history
 
