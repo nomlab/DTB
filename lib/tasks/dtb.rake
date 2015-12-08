@@ -28,7 +28,7 @@ namespace :dtb do
     end
   end
 
-  task :install => :install_application_settings
+  task :install => [:install_application_settings, :install_secrets]
 
   task :install_application_settings do
     engine = DTBShell.new
@@ -44,6 +44,21 @@ namespace :dtb do
       toggl_token:   sh.ask("Toggl API token:")
     }
 
+    engine.create_file_from_template(path, binding)
+  end
+
+  task :install_secrets do
+    engine = DTBShell.new
+    sh = engine.sh
+    path = "config/secrets.yml"
+
+    sh.say_status "info", "Setting up #{path}..."
+    next if engine.warn_file_existance(path)
+
+    # setup variables required in template
+    config = {
+      secret_key_base: SecureRandom.hex(64)
+    }
     engine.create_file_from_template(path, binding)
   end
 end

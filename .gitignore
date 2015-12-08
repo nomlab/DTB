@@ -24,7 +24,7 @@ public/assets
 
 # Ignore token file
 config/initializers/secret_token.rb
-config/sercets.yml
+config/secrets.yml
 
 # Ignore Setting file
 config/application_settings.yml
