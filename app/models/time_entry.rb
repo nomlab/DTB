@@ -11,23 +11,24 @@ class TimeEntry < ActiveRecord::Base
   end
 
   def self.start(options, task_id)
+    # For stand alone
+    unless TOGGL_API_CLIENT.present?
+      return TimeEntry.current = TimeEntry.create(:name => options[:description],
+                                                  :start_time => Time.current,
+                                                  :task_id => task_id)
+    end
+
     # For cooperating with Toggl
     response = TOGGL_API_CLIENT.start_time_entry(options)
     return TimeEntry.current = TimeEntry.create(:name => response.description,
                                                 :start_time => Time.parse(response.start).localtime("+09:00"),
                                                 :task_id => task_id,
                                                 :toggl_time_entry_id => response.id)
-
-    # For stand alone
-    # return TimeEntry.current = TimeEntry.create(:name => options[:description],
-    #                                             :start_time => Time.current,
-    #                                             :task_id => task_id
-    #                                             )
   end
 
   def self.stop
     # For cooperating with Toggl
-    response = TOGGL_API_CLIENT.stop_time_entry(TimeEntry.current.toggl_time_entry_id)
+    response = TOGGL_API_CLIENT.stop_time_entry(TimeEntry.current.toggl_time_entry_id) if TOGGL_API_CLIENT.present?
 
     time_entry = TimeEntry.current
     TimeEntry.current = nil
@@ -36,6 +37,8 @@ class TimeEntry < ActiveRecord::Base
   end
 
   def self.partial_sync(start_date, end_date)
+    return unless TOGGL_API_CLIENT.present?
+
     toggl_time_entries = TOGGL_API_CLIENT.get_time_entries(start_date, end_date)
     toggl_time_entries.each do |toggl_time_entry|
       dtb_time_entry = TimeEntry.find_by(toggl_time_entry_id: toggl_time_entry.id)
@@ -81,6 +84,8 @@ class TimeEntry < ActiveRecord::Base
   end
 
   def sync
+    return unless TOGGL_API_CLIENT.present?
+
     toggl_time_entry = TOGGL_API_CLIENT.get_time_entry(toggl_time_entry_id)
     if toggl_time_entry.server_deleted_at
       self.destroy
