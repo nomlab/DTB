@@ -16,9 +16,6 @@ doc/
 # Ignore a setting file of Finder
 .DS_Store
 
-# Ignore yml file of api_token of toggl
-config/toggl.yml
-
 # Ignore gemfiles
 vendor/bundle
 
@@ -28,3 +25,6 @@ public/assets
 # Ignore token file
 config/initializers/secret_token.rb
 config/sercets.yml
+
+# Ignore Setting file
+config/application_settings.yml

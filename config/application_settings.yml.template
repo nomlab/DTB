@@ -1,0 +1,16 @@
+##
+## config/application_settings.yml
+##
+##
+default: &default
+  toggl:
+    token: foobarbuz
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+production:
+  <<: *default

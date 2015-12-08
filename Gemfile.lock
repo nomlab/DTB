@@ -158,6 +158,7 @@ GEM
     seed-fu (2.3.5)
       activerecord (>= 3.1, < 4.3)
       activesupport (>= 3.1, < 4.3)
+    settingslogic (2.0.9)
     sprockets (2.12.4)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -198,6 +199,7 @@ DEPENDENCIES
   sass-rails (~> 4.0.0)
   sdoc
   seed-fu (~> 2.3)
+  settingslogic
   sqlite3
   toggl_api!
   turbolinks
