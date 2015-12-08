@@ -111,25 +111,72 @@
 
 * Launch DTB
 
+** Launch DTB Rails app
+
+*** development
+
+    You can launch server by invoking bin/server.sh:
+
+    #+BEGIN_SRC sh
+    # start
+    $ bin/server.sh start dev
+
+    # stop
+    $ bin/server.sh stop
+    #+END_SRC
+
+    Or, you can take these procedures by hand:
+
+    #+BEGIN_SRC sh
+    # start
+    $ export RAILS_ENV="development"
+    $ export RAILS_SERVE_STATIC_FILES=true
+    $ bundle exec rails server -p 3000 -d -e "$RAILS_ENV"
+    $ open http://localhost:3000
+
+    # stop
+    $ kill $(cat tmp/pids/server.pid)
+    #+END_SRC
+
+*** production
+
+    You can launch server by invoking bin/server.sh:
+
+    #+BEGIN_SRC sh
+    # start
+    $ bin/server.sh start pro
+
+    # stop
+    $ bin/server.sh stop
+    #+END_SRC
+
+    Or, you can take these procedures by hand:
+
+    #+BEGIN_SRC sh
+    # start
+    $ export RAILS_ENV="production"
+    $ export RAILS_SERVE_STATIC_FILES=true
+    $ bundle exec rails server -p 3000 -d -e "$RAILS_ENV"
+    $ bundle exec rake assets:precompile RAILS_ENV="$RAILS_ENV"
+    $ bundle exec rake assets:precompile:image
+    $ open http://localhost:3000
+
+    # stop
+    $ kill $(cat tmp/pids/server.pid)
+    #+END_SRC
+
 ** Launch sub processes
    DTB gathers file-access records by Dtrace system-call on your Mac.
    It requires super-user privilege.
 
-   #+BEGIN_SRC sh
-   $ sudo bundle exec rails runner lib/file_history_scripts/create_file_histories
-   #+END_SRC
-
-** Launch DTB Rails app
-
 *** development
+
     #+BEGIN_SRC sh
-    $ bundle exec rails s
+    $ sudo bundle exec rails runner lib/file_history_scripts/create_file_histories -e development
     #+END_SRC
 
 *** production
+
     #+BEGIN_SRC sh
-    $ bundle exec rake assets:precompile RAILS_ENV=production
-    $ bundle exec rake assets:precompile:image
-    $ bundle exec rake assets:precompile:font
-    $ bundle exec rails s -e production
+    $ sudo bundle exec rails runner lib/file_history_scripts/create_file_histories -e production
     #+END_SRC
