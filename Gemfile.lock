@@ -201,6 +201,7 @@ DEPENDENCIES
   seed-fu (~> 2.3)
   settingslogic
   sqlite3
+  thor
   toggl_api!
   turbolinks
   uglifier (>= 1.3.0)

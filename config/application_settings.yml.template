@@ -1,10 +1,10 @@
 ##
 ## config/application_settings.yml
-##
+## <%= config[:description] %>
 ##
 default: &default
   toggl:
-    token: foobarbuz
+    token: "<%= config[:toggl_token] %>"
 
 development:
   <<: *default

@@ -59,5 +59,7 @@ gem 'bootstrap-sass', '~> 3.3.5'
 # https://github.com/bokmann/font-awesome-rails
 gem "font-awesome-rails"
 
+gem "thor"
+
 # application settings
 gem "settingslogic"
