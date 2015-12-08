@@ -6,104 +6,116 @@
   Desktop Bookmark is a Rails application to collect your desktop
   activities grouping and connecting to TODO items.
 
-* Environment
-  | Ruby           |  2.2.3 |
-  | Rails on Rails |  4.2.4 |
-  | Firefox        | 41.0.2 |
+* Setup Ruby Environment
+  | Ruby  | 2.2.3 |
+  | Rails | 4.2.4 |
 
-* Installation for developers
   I recommend you to install new Ruby and Bundler on the top of Rbenv before install DTB.
 
   1) Install rbenv + ruby-build (check [[https://github.com/sstephenson/rbenv#basic-github-checkout][https://github.com/sstephenson/rbenv#basic-github-checkout]] for details)
      #+BEGIN_SRC sh
-       $ git clone https://github.com/sstephenson/rbenv.git ~/.rbenv
-       $ git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
-       # Edit your shell dot files to add some path and environment variables.
+     $ git clone https://github.com/sstephenson/rbenv.git ~/.rbenv
+     $ git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
+     # Edit your shell dot files to add some path and environment variables.
      #+END_SRC
 
   2) Install Ruby and Bundler
      #+BEGIN_SRC sh
-       # Install ruby 2.2.3
-       $ rbenv install 2.2.3
+     # Install ruby 2.2.3
+     $ rbenv install 2.2.3
 
-       # Installation check
-       $ rbenv global 2.2.3
-       $ ruby -v # -> You will see: ruby 2.2.3...
+     # Installation check
+     $ rbenv global 2.2.3
+     $ ruby -v # -> You will see: ruby 2.2.3...
 
-       # Install bundler for your new Ruby
-       $ gem install bundler
+     # Install bundler for your new Ruby
+     $ gem install bundler
 
-       # Activate bundler
-       $ rbenv rehash
+     # Activate bundler
+     $ rbenv rehash
 
-       # Get back to your system default Ruby if you want
-       $ rbenv global system # say, /usr/bin/ruby
-       $ ruby -v
+     # Get back to your system default Ruby if you want
+     $ rbenv global system # say, /usr/bin/ruby
+     $ ruby -v
      #+END_SRC
 
-  3) clone DTB from github
+* Install DTB
+** Clone DTB
+   1) clone DTB from github
+      #+BEGIN_SRC sh
+      $ git clone git@github.com:nomlab/DTB.git ~/Programs/DTB
+      #+END_SRC
+
+   2) Setup to use installed ruby
+      #+BEGIN_SRC sh
+      $ cd ~/Programs/DTB
+      $ ruby -v # -> You will see: ruby 2.2.3...
+      #+END_SRC
+
+** Setup config files
+
+  1) Install vendor/bundle stuffs
      #+BEGIN_SRC sh
-       $ git clone git@github.com:nomlab/DTB.git ~/Programs/DTB
+     $ bundle install --path vendor/bundle
      #+END_SRC
 
-  4) Setup to use installed ruby
+  2) Setup Toggl account if you have
      #+BEGIN_SRC sh
-       $ cd ~/Programs/DTB
-       $ ruby -v # -> You will see: ruby 2.2.3...
+     $ mv local/toggl.yml.sample local/toggl.yml
+     $ vim local/toggl.yml # -> Input your toggl token
      #+END_SRC
 
-  5) Install vendor/bundle stuffs
+  3) Setup DB
      #+BEGIN_SRC sh
-       $ bundle install --path vendor/bundle
+     $ bundle exec rake db:migrate
+     $ bundle exec rake db:migrate RAILS_ENV=production
      #+END_SRC
 
-  6) Setup Toggl account if you have
+  4) Initialize DB
      #+BEGIN_SRC sh
-       $ mv local/toggl.yml.sample local/toggl.yml
-       $ vim local/toggl.yml # -> Input your toggl token
+     $ bundle exec rake db:seed_fu
+     $ bundle exec rake db:seed_fu RAILS_ENV=production
      #+END_SRC
 
-  7) Setup DB
+  5) Install submodule
      #+BEGIN_SRC sh
-       $ bundle exec rake db:migrate
-       $ bundle exec rake db:migrate RAILS_ENV=production
+     $ git submodule init
+     $ git submodule update
      #+END_SRC
 
-  8) Initialize DB
-     #+BEGIN_SRC sh
-       $ bundle exec rake db:seed_fu
-       $ bundle exec rake db:seed_fu RAILS_ENV=production
-     #+END_SRC
+** Install clients recording history
 
-  9) Install submodule
-     #+BEGIN_SRC sh
-       $ git submodule init
-       $ git submodule update
-     #+END_SRC
+*** For Emacs Users
 
-  10) Install TimeRecorder (Firefox add-on)
-      1) Drag and Drop lib/TimeRecorder/timerecorder.xpi to your firefox
-      2) From about:addons page, set Your DTB (Rails-app) base URL.
+    1) Install [[https://github.com/okada-takuya/emacs-file-reference-recorder][emacs-file-reference-recorder]]
 
-* Launch servers and sub processes
-  DTB gathers file-access records by Dtrace system-call on your Mac.
-  It requires super-user privilege.
+*** For Firefox Users
 
-  #+BEGIN_SRC sh
-    $ sudo bundle exec rails runner lib/file_history_scripts/create_file_histories
-  #+END_SRC
+    1) Install TimeRecorder add-on
+       1) Drag and Drop lib/TimeRecorder/timerecorder.xpi to your firefox
+       2) From about:addons page, set Your DTB (Rails-app) base URL.
 
-* Launch DTB Rails app
+* Launch DTB
 
-** development
+** Launch sub processes
+   DTB gathers file-access records by Dtrace system-call on your Mac.
+   It requires super-user privilege.
+
    #+BEGIN_SRC sh
-     $ bundle exec rails s
+   $ sudo bundle exec rails runner lib/file_history_scripts/create_file_histories
    #+END_SRC
 
-** production
-   #+BEGIN_SRC sh
-     $ bundle exec rake assets:precompile RAILS_ENV=production
-     $ bundle exec rake assets:precompile:image
-     $ bundle exec rake assets:precompile:font
-     $ bundle exec rails s -e production
-   #+END_SRC
+** Launch DTB Rails app
+
+*** development
+    #+BEGIN_SRC sh
+    $ bundle exec rails s
+    #+END_SRC
+
+*** production
+    #+BEGIN_SRC sh
+    $ bundle exec rake assets:precompile RAILS_ENV=production
+    $ bundle exec rake assets:precompile:image
+    $ bundle exec rake assets:precompile:font
+    $ bundle exec rails s -e production
+    #+END_SRC
