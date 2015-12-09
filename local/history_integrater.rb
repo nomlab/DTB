@@ -23,7 +23,7 @@ end
 case ext
 when :other
   title = UnifiedHistory.arel_table[:title]
-  uhs = UnifiedHistory.where.not(title.matches("%.#{ext}")).file_histories
+  uhs = UnifiedHistory.where.not(title.matches("%.pdf")).where.not(title.matches("%.xlsx")).where.not(title.matches("%.pptx")).file_histories
   integrated_histories = uhs.group_by{|uh| uh.path}.map{|path, uhs| IntegratedHistory.new(uhs)}
 else
   integrated_histories = UnifiedHistory.extension(ext).group_by{|uh| uh.path}.map{|path, uhs| IntegratedHistory.new(uhs)}
