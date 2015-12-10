@@ -1,2 +1,9 @@
-TOGGL_API_CLIENT = Toggl::Base.new(ApplicationSettings.toggl.token)
-TOGGL_API_CLIENT = nil unless TOGGL_API_CLIENT.me(true)
+cli = Toggl::Base.new(ApplicationSettings.toggl.token)
+
+begin
+  cli.me(true)
+  TOGGL_API_CLIENT = cli
+rescue => e
+  warn "Warn: Your Toggl API is invalid. DTB will record work time by itself."
+  TOGGL_API_CLIENT = nil
+end
