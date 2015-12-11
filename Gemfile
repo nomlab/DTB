@@ -63,3 +63,6 @@ gem "thor"
 
 # application settings
 gem "settingslogic"
+
+# Profiler
+gem "ruby-prof"
