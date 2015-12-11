@@ -52,7 +52,7 @@ m_p2 = Mission.create( name:        "TAの業務",
                          start_time:    DateTime.new(2014, 4, 17, 8, 40, 0, '+9') + (WEEK * n-1),
                          end_time:      DateTime.new(2014, 4, 17, 8, 50, 0, '+9') + (WEEK * n-1),
                          thumbnail:     "http://capture.heartrails.com/200x150/shadow/border?https://www.swlab.cs.okayama-u.ac.jp/~nom/lect/p2/" )
-  UnifiedHistory.create( title:         "rivised.txt",
+  UnifiedHistory.create( title:         "revise.txt",
                          path:          DEMO_DIR.join("revise.txt").to_s,
                          type:  "FileHistory",
                          start_time:    DateTime.new(2014, 4, 17, 9, 00, 0, '+9') + (WEEK * n-1),
