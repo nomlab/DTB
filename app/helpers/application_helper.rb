@@ -10,9 +10,13 @@ module ApplicationHelper
     color_class = ' a-little' if seconds > 60
     color_class = ' not-a-little' if seconds > 300
     color_class = ' much' if seconds > 600
-    return content_tag(:td, "■",
+    m, s = seconds.divmod(60)
+    s.to_s.rjust(2, "0")
+    seconds_str = "#{m}:#{s}"
+    return content_tag(:span, "■",
                        :class => ("timeline-box" + color_class),
-                       :data_seconds => seconds)
+                       :title => "Reference Time: #{seconds_str}",
+                       :data => {toggle: "tooltip"})
   end
 
   def seconds_to_s(seconds)

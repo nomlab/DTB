@@ -40,5 +40,7 @@ ready = ->
     no_results_text: 'No results matched'
     width: '20em'
 
+  $('.timeline-box').tooltip
+
 $(document).ready(ready)
 $(document).on('page:load', ready)

@@ -10,7 +10,9 @@
     </div>
   </td>
   <td class="timeline-time"><%= seconds_to_s integrated_history.importance %></td>
-  <% range.each do |date| %>
-    <%= colored_box(integrated_history.importance_of_day(date)) %>
-  <% end %>
+  <td>
+    <% range.each do |date| %>
+      <%= colored_box(integrated_history.importance_of_day(date)) %>
+    <% end %>
+  </td>
 </tr>
