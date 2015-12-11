@@ -2,6 +2,10 @@ class TimeEntry < ActiveRecord::Base
   belongs_to :task
   default_scope { order(created_at: :desc) }
 
+  def self.recording?
+    @current_time_entry.present?
+  end
+
   def self.current
     @current_time_entry
   end
@@ -11,6 +15,8 @@ class TimeEntry < ActiveRecord::Base
   end
 
   def self.start(options, task_id)
+    return nil if TimeEntry.recording?
+
     # For stand alone
     unless TOGGL_API_CLIENT.present?
       return TimeEntry.current = TimeEntry.create(:name => options[:description],
@@ -27,6 +33,8 @@ class TimeEntry < ActiveRecord::Base
   end
 
   def self.stop
+    return false unless TimeEntry.recording?
+
     # For cooperating with Toggl
     response = TOGGL_API_CLIENT.stop_time_entry(TimeEntry.current.toggl_time_entry_id) if TOGGL_API_CLIENT.present?
 
