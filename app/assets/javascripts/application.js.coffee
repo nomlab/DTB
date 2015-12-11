@@ -13,7 +13,6 @@
 #= require jquery.treegrid
 #= require jquery.treegrid.bootstrap3
 #= require bootstrap-datetimepicker
-#= require jquery.balloon.js
 #= require chosen-jquery
 #= require jquery-ui
 #= require_tree .

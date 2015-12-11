@@ -1,6 +1,3 @@
 [submodule "vendor/assets/jquery-treegrid"]
 	path = vendor/assets/jquery-treegrid
 	url = git@github.com:maxazan/jquery-treegrid.git
-[submodule "vendor/assets/jquery.balloon.js"]
-	path = vendor/assets/jquery.balloon.js
-	url = git@github.com:urin/jquery.balloon.js.git
