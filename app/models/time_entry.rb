@@ -45,7 +45,7 @@ class TimeEntry < ActiveRecord::Base
   end
 
   def self.partial_sync(start_date, end_date)
-    return unless TOGGL_API_CLIENT.present?
+    return false unless TOGGL_API_CLIENT.present?
 
     toggl_time_entries = TOGGL_API_CLIENT.get_time_entries(start_date, end_date)
     toggl_time_entries.each do |toggl_time_entry|
