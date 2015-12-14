@@ -172,11 +172,11 @@
 *** development
 
     #+BEGIN_SRC sh
-    $ sudo bundle exec rails runner lib/file_history_scripts/create_file_histories -e development
+    $ bundle exec rails runner lib/file_history_scripts/create_file_histories -e development
     #+END_SRC
 
 *** production
 
     #+BEGIN_SRC sh
-    $ sudo bundle exec rails runner lib/file_history_scripts/create_file_histories -e production
+    $ bundle exec rails runner lib/file_history_scripts/create_file_histories -e production
     #+END_SRC
