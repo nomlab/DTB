@@ -109,7 +109,7 @@ do_start () {
 
   bundle exec rails server -p "$SERVER_PORT" -d -e "$RAILS_ENV"
   print_info "done.\n"
-  print_info "Exec following command and keep running in terminal for recording file history.\nsudo bundle exec rails runner lib/file_history_scripts/create_file_histories -e $RAILS_ENV\n"
+  print_info "Exec following command and keep running in terminal for recording file history.\nbundle exec rails runner lib/file_history_scripts/create_file_histories -e $RAILS_ENV\n"
   return 0
 }
 
