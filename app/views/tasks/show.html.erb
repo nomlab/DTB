@@ -45,9 +45,11 @@
             <td><%= fa_icon "clock-o", class: "history-icon" %></td>
             <td>Work time</td>
             <td class="timeline-time"><%= seconds_to_s @task.work_time_length %></td>
-            <% @task.duration.range.each do |date| %>
-              <%= colored_box(@task.work_time_length_of_day(date)) %>
-            <% end %>
+            <td>
+              <% @task.duration.range.each do |date| %>
+                <%= colored_box(@task.work_time_length_of_day(date)) %>
+              <% end %>
+            </td>
           </tr>
 
           <%= render partial: "unified_histories/timeline",
