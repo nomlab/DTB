@@ -163,10 +163,7 @@ class AcceptNameFilter < ActivityTrackerDecorator
               "open"
              ]
 
-    pnames.each do |pname|
-      return record if /^#{pname}/ =~ record.pname
-    end
-    return nil
+    return pnames.include?(record.pname) ? record : nil
   end
 end
 
@@ -202,10 +199,7 @@ class IgnoreNameFilter < ActivityTrackerDecorator
               "Finder"
              ]
 
-    pnames.each do |pname|
-      return nil if /^#{pname}/ =~ record.pname
-    end
-    return record
+    return pnames.include?(record.pname) ? nil : record
   end
 end
 
