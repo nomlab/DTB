@@ -66,3 +66,4 @@ gem "settingslogic"
 
 # Profiler
 gem "ruby-prof"
+gem "rbtrace"
