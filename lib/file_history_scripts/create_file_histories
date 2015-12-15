@@ -111,14 +111,10 @@ class ActivityTrackerDecorator < ActivityTracker
   end
 
   def ready?
-    while @record.nil?
-      if @tracker.ready?
-        @record = filter_record(@tracker.get_record)
-      else
-        return false
-      end
-    end
-    return true
+    return true if @record
+    return false unless @tracker.ready?
+    @record = filter_record(@tracker.get_record)
+    return !!@record
   end
 
   def stop_track
