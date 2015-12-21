@@ -356,16 +356,13 @@ class FileHistoryFactory
       return false
     end
 
-    @file_opened_by_windows.select{|fobw| fobw.same_window?(focus_change_record) }.each do |fobw|
-      # 参照開始
-      watching_file = WatchingFile.new({
-        time:  focus_change_record.time,
-        pid:   fobw.pid,
-        pname: fobw.pname,
-        path:  fobw.path,
-        window_number: focus_change_record.window_number
-      })
-      @watching_files.push watching_file
+    # 最前面のウィンドウで開かれているファイルを参照開始
+    @watching_files = @watching_files + @file_opened_by_windows.select{|fobw| fobw.same_window?(focus_change_record) }.map do |fobw|
+      WatchingFile.new({ time:  focus_change_record.time,
+                         pid:   fobw.pid,
+                         pname: fobw.pname,
+                         path:  fobw.path,
+                         window_number: focus_change_record.window_number })
     end
 
     @file_open_records.each do |record|
