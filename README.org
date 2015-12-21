@@ -97,17 +97,14 @@
       $ git submodule update
       #+END_SRC
 
-** Install clients recording history
-
-*** For Emacs Users
+* Install clients recording history
+** For Emacs Users
 
     1) Install [[https://github.com/okada-takuya/emacs-file-reference-recorder][emacs-file-reference-recorder]]
 
-*** For Firefox Users
+** For Firefox Users
 
-    1) Install TimeRecorder add-on
-       1) Drag and Drop lib/TimeRecorder/timerecorder.xpi to your firefox
-       2) From about:addons page, set Your DTB (Rails-app) base URL.
+    1) Install [[https://github.com/okada-takuya/TimeRecorder][TimeRecorder]]
 
 * Launch DTB
 
