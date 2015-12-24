@@ -67,3 +67,4 @@ gem "settingslogic"
 # Profiler
 gem "ruby-prof"
 gem "rbtrace"
+gem 'rack-contrib'
