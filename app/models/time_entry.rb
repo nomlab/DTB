@@ -76,7 +76,7 @@ class TimeEntry < ActiveRecord::Base
   end
 
   def unified_histories
-    return UnifiedHistory.in(duration)
+    return UnifiedHistory.overlap(duration)
   end
 
   def file_histories

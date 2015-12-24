@@ -6,7 +6,8 @@ class UnifiedHistory < ActiveRecord::Base
 
   before_save :set_importance
 
-  def self.in(duration)
+  # history.duration が duration と部分的に重複しているような histories を返す
+  def self.overlap(duration)
     duration = Duration.new(nil, nil) if duration.nil?
     where(["start_time >= ? and start_time <= ? or end_time >= ? and end_time <= ?",
            duration.start_time, duration.end_time,

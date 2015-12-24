@@ -31,7 +31,7 @@ class Mission < ActiveRecord::Base
   end
 
   def unified_histories
-    candidates = UnifiedHistory.in(duration)
+    candidates = UnifiedHistory.overlap(duration)
     return candidates.select do |c|
       durations.select{|d| d.overlap?(c) }.present?
     end
