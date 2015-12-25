@@ -64,10 +64,13 @@ gem "thor"
 # application settings
 gem "settingslogic"
 
-# Profiler
 group :development do
+  # For Profiling
   gem 'rack-mini-profiler'
   gem "ruby-prof"
   gem "rbtrace"
   gem 'rack-contrib'
+
+  # For detecting N + 1 problem
+  gem 'bullet'
 end
