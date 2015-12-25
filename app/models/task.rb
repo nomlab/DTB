@@ -35,18 +35,24 @@ class Task < ActiveRecord::Base
   end
 
   def unified_histories
-    candidates = UnifiedHistory.overlap(duration)
-    return candidates.select do |c|
-      durations.select{|d| d.overlap?(c) }.present?
+    tbl   = UnifiedHistory.arel_table
+    durs  = durations
+    d     = durs.pop
+    initial_nodes = tbl[:start_time].gteq(d.start_time).and(tbl[:start_time].lteq(d.end_time))
+                    .or(tbl[:end_time].gteq(d.start_time).and(tbl[:end_time].lteq(d.end_time)))
+    nodes = durs.inject(initial_nodes) do |nodes, d|
+      nodes.or(tbl[:start_time].gteq(d.start_time).and(tbl[:start_time].lteq(d.end_time))
+                .or(tbl[:end_time].gteq(d.start_time).and(tbl[:end_time].lteq(d.end_time))))
     end
+    UnifiedHistory.where(nodes)
   end
 
   def file_histories
-    return unified_histories.select{|h| h.type == "FileHistory" }
+    return unified_histories.file_histories
   end
 
   def web_histories
-    return unified_histories.select{|h| h.type == "WebHistory" }
+    return unified_histories.web_histories
   end
 
   def restore
