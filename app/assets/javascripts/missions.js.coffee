@@ -47,5 +47,4 @@ ready = ->
         currentMissionForTask = parentId
       error: (error) -> alert error
 
-$(document).ready(ready)
-$(document).on('page:load', ready)
+$(document).on 'ready page:load', ready

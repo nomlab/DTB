@@ -7,8 +7,8 @@
     <% provide(:title, TimeEntry.current.name) if TimeEntry.recording? %>
     <title><%= content_for?(:title) ? "DTB - " + yield(:title) : "DTB" %></title>
     <%= csrf_meta_tags %>
-    <%= stylesheet_link_tag "application", :media => "all" %>
-    <%= javascript_include_tag "application" %>
+    <%= stylesheet_link_tag "application", :media => "all", "data-turbolinks-track" => true %>
+    <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   </head>
   <body>
 
