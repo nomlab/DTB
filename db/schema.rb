@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151120055740) do
+ActiveRecord::Schema.define(version: 20151225051638) do
 
   create_table "missions", force: :cascade do |t|
     t.string   "name"
@@ -52,6 +52,8 @@ ActiveRecord::Schema.define(version: 20151120055740) do
     t.datetime "updated_at"
   end
 
+  add_index "tasks", ["mission_id"], name: "index_tasks_on_mission_id"
+
   create_table "time_entries", force: :cascade do |t|
     t.string   "name"
     t.string   "keyword"
@@ -63,6 +65,8 @@ ActiveRecord::Schema.define(version: 20151120055740) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "time_entries", ["task_id"], name: "index_time_entries_on_task_id"
 
   create_table "unified_histories", force: :cascade do |t|
     t.string   "title"
