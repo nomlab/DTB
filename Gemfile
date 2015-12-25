@@ -65,6 +65,9 @@ gem "thor"
 gem "settingslogic"
 
 # Profiler
-gem "ruby-prof"
-gem "rbtrace"
-gem 'rack-contrib'
+group :development do
+  gem 'rack-mini-profiler'
+  gem "ruby-prof"
+  gem "rbtrace"
+  gem 'rack-contrib'
+end
