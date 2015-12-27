@@ -15,6 +15,8 @@
 #= require bootstrap-datetimepicker
 #= require chosen-jquery
 #= require jquery-ui
+#= require nprogress
+#= require nprogress-turbolinks
 #= require_tree .
 
 format =

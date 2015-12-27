@@ -72,3 +72,6 @@ group :development do
   # For detecting N + 1 problem
   gem 'bullet'
 end
+
+# Show progress bar
+gem 'nprogress-rails'

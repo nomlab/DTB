@@ -123,6 +123,7 @@ GEM
     multipart-post (2.0.0)
     nokogiri (1.6.7.1)
       mini_portile2 (~> 2.0.0.rc2)
+    nprogress-rails (0.1.6.7)
     rack (1.6.4)
     rack-contrib (1.4.0)
       git-version-bump (~> 0.15)
@@ -214,6 +215,7 @@ DEPENDENCIES
   jquery-rails
   jquery-ui-rails
   kaminari
+  nprogress-rails
   rack-contrib
   rack-mini-profiler
   rails (= 4.2.5)
