@@ -4,6 +4,11 @@
 class IntegratedHistory
   attr_reader :title, :path, :thumbnail, :durations, :representative_history
 
+  def self.integrate(histories)
+    grouped_histories = histories.group_by{|uh| uh.path}
+    grouped_histories.map{|path, uhs| IntegratedHistory.new(uhs)}
+  end
+
   # grouped_histories: Array of unified_history that has same path.
   def initialize(grouped_histories)
     @title                  = grouped_histories.first.title

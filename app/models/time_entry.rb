@@ -87,6 +87,10 @@ class TimeEntry < ActiveRecord::Base
     return unified_histories.web_histories
   end
 
+  def integrated_histories
+    IntegratedHistory.integrate(unified_histories)
+  end
+
   def restore
     unified_histories.map(&:restore)
   end

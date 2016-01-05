@@ -68,8 +68,7 @@ class Task < ActiveRecord::Base
   end
 
   def integrated_histories
-    @grouped_histories = unified_histories.group_by{|uh| uh.path}
-    @grouped_histories.map{|path, uhs| IntegratedHistory.new(uhs)}
+    IntegratedHistory.integrate(unified_histories)
   end
 
   def to_occurrences
