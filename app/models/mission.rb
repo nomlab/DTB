@@ -31,8 +31,8 @@ class Mission < ActiveRecord::Base
   end
 
   def unified_histories
+    return UnifiedHistory.none if (durs = durations).blank?
     tbl   = UnifiedHistory.arel_table
-    durs  = durations
     d     = durs.pop
     initial_nodes = tbl[:start_time].gteq(d.start_time).and(tbl[:start_time].lteq(d.end_time))
                     .or(tbl[:end_time].gteq(d.start_time).and(tbl[:end_time].lteq(d.end_time)))
