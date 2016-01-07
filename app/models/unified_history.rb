@@ -6,12 +6,28 @@ class UnifiedHistory < ActiveRecord::Base
 
   before_save :set_importance
 
-  # history.duration が duration と部分的に重複しているような histories を返す
+  # history.duration が duration(s) と部分的に重複しているような histories を返す
   def self.overlap(duration)
-    duration = Duration.new(nil, nil) if duration.nil?
-    where(["start_time >= ? and start_time <= ? or end_time >= ? and end_time <= ?",
-           duration.start_time, duration.end_time,
-           duration.start_time, duration.end_time])
+    case duration
+    when Duration
+      where(["start_time >= ? and start_time <= ? or end_time >= ? and end_time <= ?",
+             duration.start_time, duration.end_time,
+             duration.start_time, duration.end_time])
+    when Array
+      durations = duration
+      return none if (durs = durations).blank?
+      tbl   = arel_table
+      d     = durs.pop
+      initial_nodes = tbl[:start_time].gteq(d.start_time).and(tbl[:start_time].lteq(d.end_time))
+                      .or(tbl[:end_time].gteq(d.start_time).and(tbl[:end_time].lteq(d.end_time)))
+      nodes = durs.inject(initial_nodes) do |nodes, d|
+        nodes.or(tbl[:start_time].gteq(d.start_time).and(tbl[:start_time].lteq(d.end_time))
+                  .or(tbl[:end_time].gteq(d.start_time).and(tbl[:end_time].lteq(d.end_time))))
+      end
+      where(nodes)
+    else
+      raise "Operation for #{duration.class} is undefined."
+    end
   end
 
   def duration

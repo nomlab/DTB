@@ -31,16 +31,7 @@ class Mission < ActiveRecord::Base
   end
 
   def unified_histories
-    return UnifiedHistory.none if (durs = durations).blank?
-    tbl   = UnifiedHistory.arel_table
-    d     = durs.pop
-    initial_nodes = tbl[:start_time].gteq(d.start_time).and(tbl[:start_time].lteq(d.end_time))
-                    .or(tbl[:end_time].gteq(d.start_time).and(tbl[:end_time].lteq(d.end_time)))
-    nodes = durs.inject(initial_nodes) do |nodes, d|
-      nodes.or(tbl[:start_time].gteq(d.start_time).and(tbl[:start_time].lteq(d.end_time))
-                .or(tbl[:end_time].gteq(d.start_time).and(tbl[:end_time].lteq(d.end_time))))
-    end
-    UnifiedHistory.where(nodes)
+    UnifiedHistory.overlap(durations)
   end
 
   def file_histories
