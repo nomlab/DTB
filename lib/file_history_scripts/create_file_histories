@@ -17,6 +17,12 @@ class ActivityTrackerManager
     return @records.sort!.shift
   end
 
+  def wait_for_ready
+    begin
+      IO.select(@trackers.map(&:io))
+    end while not ready?
+  end
+
   def ready?
     return @records.present? || @trackers.any?(&:ready?)
   end
@@ -27,6 +33,7 @@ class ActivityTrackerManager
 end
 
 class ActivityTracker
+  attr_reader :io
   def initialize
     @io = exec_cmd
   end
@@ -102,6 +109,10 @@ class ActivityTrackerDecorator < ActivityTracker
     @tracker = tracker
     @record = nil
     return self
+  end
+
+  def io
+    @tracker.io
   end
 
   def get_record
@@ -420,10 +431,8 @@ sleep 1
 atm.add_tracker(ActivityTracker.create([:focus_change]))
 fhf = FileHistoryFactory.new
 while 1 do
-  if atm.ready?
-    record = atm.get_record
-    record.print_record
-    fhf.receive_record(record)
-  end
-  # sleep 1 #sec
+  atm.wait_for_ready # blocking
+  record = atm.get_record
+  record.print_record
+  fhf.receive_record(record)
 end
