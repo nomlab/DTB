@@ -1,10 +1,12 @@
 #!/usr/sbin/dtrace -q -s
 syscall::open:entry
+/execname == "open"/
 {
   unixtime = walltimestamp / 1000000000;
   self->file = arg0;
 }
 syscall::open:return
+/execname == "open"/
 {
   printf("%d|file_open|%d|%s|%s|%d\n", unixtime, pid, execname, copyinstr(self->file), arg1);
   self->file = 0;
