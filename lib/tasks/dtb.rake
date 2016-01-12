@@ -28,7 +28,7 @@ namespace :dtb do
     end
   end
 
-  task :install => [:install_application_settings, :install_secrets, :install_scripts]
+  task :install => [:install_application_settings, :install_secrets]
 
   task :install_application_settings do
     engine = DTBShell.new
@@ -60,22 +60,5 @@ namespace :dtb do
       secret_key_base: SecureRandom.hex(64)
     }
     engine.create_file_from_template(path, binding)
-  end
-
-  task :install_scripts do
-    engine = DTBShell.new
-    sh = engine.sh
-
-    path = "lib/file_history_scripts/get_number_of_focused_window"
-
-    sh.say_status "info", "Setting up #{path}..."
-    next if engine.warn_file_existance(path)
-
-    begin
-      `g++ -w -o #{path} -framework ApplicationServices #{path}.cc`
-      sh.say_status "ok", "create #{path}", :green
-    rescue StandardError => e
-      sh.say_status "failed", "#{e.message.split(' @').first} #{path}", :red
-    end
   end
 end
