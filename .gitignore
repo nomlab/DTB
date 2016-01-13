@@ -31,3 +31,6 @@ config/application_settings.yml
 
 # Ignore exec file of C++
 lib/file_history_scripts/get_number_of_focused_window
+
+# Ignore rubocop todo file
+.rubocop_todo.yml

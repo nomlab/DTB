@@ -14,16 +14,16 @@ class Task < ActiveRecord::Base
   end
 
   def durations
-    return time_entries.map(&:duration)
+    time_entries.map(&:duration)
   end
 
   def duration
-    return durations.inject{|d1, d2| d1.merge d2}
+    durations.inject { |d1, d2| d1.merge d2 }
   end
 
   def durations_of_day(date)
     date_duration = Duration.new(date.to_time, date.tomorrow.to_time)
-    durations.map{|duration| duration.slice(date_duration)}.compact
+    durations.map { |duration| duration.slice(date_duration) }.compact
   end
 
   def work_time_length
@@ -38,24 +38,20 @@ class Task < ActiveRecord::Base
     UnifiedHistory.overlap(durations)
   end
 
-  def file_histories
-    return unified_histories.file_histories
-  end
+  delegate :file_histories, to: :unified_histories
 
-  def web_histories
-    return unified_histories.web_histories
-  end
+  delegate :web_histories, to: :unified_histories
 
   def restore
     unified_histories.map(&:restore)
   end
 
   def finish
-    self.update_attributes :status => true
+    update_attributes status: true
   end
 
   def finished?
-    return self.status
+    status
   end
 
   def integrated_histories
@@ -69,8 +65,8 @@ class Task < ActiveRecord::Base
         title:     name,
         start:     d.start_time.iso8601,
         end:       d.end_time.iso8601,
-        type:      "task",
-        className: "task-occurrence"
+        type:      'task',
+        className: 'task-occurrence'
       }
     end
   end

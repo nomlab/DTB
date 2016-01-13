@@ -28,10 +28,10 @@ class StatesController < ApplicationController
 
     respond_to do |format|
       if @state.save
-        format.html {
+        format.html do
           flash[:success] = 'State was successfully created.'
           redirect_to action: 'index'
-        }
+        end
         format.json { render action: 'show', status: :created, location: @state }
       else
         format.html { render action: 'new' }
@@ -45,10 +45,10 @@ class StatesController < ApplicationController
   def update
     respond_to do |format|
       if @state.update(state_params)
-        format.html {
+        format.html do
           flash[:success] = 'State was successfully updated.'
           redirect_to action: 'index'
-        }
+        end
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -69,7 +69,7 @@ class StatesController < ApplicationController
 
   def update_color
     @state.update_attribute(:color, params[:color])
-    flash[:success] = "State was successfully updated."
+    flash[:success] = 'State was successfully updated.'
     redirect_to :back
   end
 
@@ -77,18 +77,19 @@ class StatesController < ApplicationController
     default_state = State.find_by(default: true)
     default_state.update_attribute(:default, false) unless default_state.nil?
     @state.update_attribute(:default, true)
-    flash[:success] = "Default state was successfully updated."
+    flash[:success] = 'Default state was successfully updated.'
     redirect_to :back
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_state
-      @state = State.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def state_params
-      params.require(:state).permit(:name, :color, :position)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_state
+    @state = State.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def state_params
+    params.require(:state).permit(:name, :color, :position)
+  end
 end

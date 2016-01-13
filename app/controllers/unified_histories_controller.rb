@@ -6,7 +6,7 @@ class UnifiedHistoriesController < ApplicationController
   # GET /unified_histories.json
   def index
     unless params[:usage].nil?
-      usage = params[:usage] == "nil" ? nil :  params[:usage]
+      usage = params[:usage] == 'nil' ? nil : params[:usage]
       @unified_histories = UnifiedHistory.where(usage: usage)
     else
       @unified_histories = UnifiedHistory.all
@@ -35,10 +35,10 @@ class UnifiedHistoriesController < ApplicationController
 
     respond_to do |format|
       if @unified_history.save
-        format.html {
-          flash[:success] = "Unified history was successfully created."
+        format.html do
+          flash[:success] = 'Unified history was successfully created.'
           redirect_to @unified_history
-        }
+        end
         format.json { render action: 'show', status: :created, location: @unified_history }
       else
         format.html { render action: 'new' }
@@ -52,10 +52,10 @@ class UnifiedHistoriesController < ApplicationController
   def update
     respond_to do |format|
       if @unified_history.update(unified_history_params)
-        format.html {
-          flash[:success] = "Unified history was successfully updated."
+        format.html do
+          flash[:success] = 'Unified history was successfully updated.'
           redirect_to @unified_history
-        }
+        end
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -80,13 +80,14 @@ class UnifiedHistoriesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_unified_history
-      @unified_history = UnifiedHistory.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def unified_history_params
-      params.require(:unified_history).permit(:path, :title, :type, :r_path, :start_time, :end_time, :thumbnail)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_unified_history
+    @unified_history = UnifiedHistory.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def unified_history_params
+    params.require(:unified_history).permit(:path, :title, :type, :r_path, :start_time, :end_time, :thumbnail)
+  end
 end

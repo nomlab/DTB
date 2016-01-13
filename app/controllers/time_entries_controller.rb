@@ -3,7 +3,7 @@ class TimeEntriesController < ApplicationController
 
   def index
     unless params[:task_id].nil?
-      task_id = params[:task_id] == "nil" ? nil : params[:task_id]
+      task_id = params[:task_id] == 'nil' ? nil : params[:task_id]
       @time_entries = TimeEntry.where(task_id: task_id)
     else
       @time_entries = TimeEntry.all
@@ -13,7 +13,7 @@ class TimeEntriesController < ApplicationController
   def show
     respond_to do |format|
       format.html
-      format.json {render json: [@time_entry.to_event]}
+      format.json { render json: [@time_entry.to_event] }
     end
   end
 
@@ -29,10 +29,10 @@ class TimeEntriesController < ApplicationController
 
     respond_to do |format|
       if @time_entry.save
-        format.html {
-          flash[:success] = "Time entry was successfully created."
+        format.html do
+          flash[:success] = 'Time entry was successfully created.'
           redirect_to @time_entry
-        }
+        end
         format.json { render action: 'show', status: :created, location: @time_entry }
       else
         format.html { render action: 'new' }
@@ -44,10 +44,10 @@ class TimeEntriesController < ApplicationController
   def update
     respond_to do |format|
       if @time_entry.update(time_entry_params)
-        format.html {
-          flash[:success] = "Time entry was successfully updated."
+        format.html do
+          flash[:success] = 'Time entry was successfully updated.'
           redirect_to @time_entry
-        }
+        end
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -65,17 +65,17 @@ class TimeEntriesController < ApplicationController
   end
 
   def continue
-    if TimeEntry.start({:description => params[:name]}, params[:task_id])
-      flash[:success] = "Time entry was successfully started."
+    if TimeEntry.start({ description: params[:name] }, params[:task_id])
+      flash[:success] = 'Time entry was successfully started.'
     else
-      flash[:warning] = "Failed to start time entry"
+      flash[:warning] = 'Failed to start time entry'
     end
     redirect_to :back
   end
 
   def stop
-    TimeEntry.stop ? flash[:success] = "Time entry was successfully stopped." :
-                     flash[:warnig] = "Failed to stop time entry."
+    TimeEntry.stop ? flash[:success] = 'Time entry was successfully stopped.' :
+                     flash[:warnig] = 'Failed to stop time entry.'
     redirect_to :back
   end
 
@@ -90,24 +90,25 @@ class TimeEntriesController < ApplicationController
     else
       TimeEntry.completely_sync
     end
-    flash[:success] = "TimeEntries were successfully synced."
+    flash[:success] = 'TimeEntries were successfully synced.'
     redirect_to :back
   end
 
   #---------- for ajax ----------
   def update_task_id
-    task_id = params[:task_id] == "nil" ? nil : params[:task_id] unless params[:task_id].nil?
+    task_id = params[:task_id] == 'nil' ? nil : params[:task_id] unless params[:task_id].nil?
     @time_entry.update_attribute(:task_id, task_id)
     respond_to do |format|
-      format.html {
-        flash[:success] = "TimeEntry was successfully updated."
+      format.html do
+        flash[:success] = 'TimeEntry was successfully updated.'
         redirect_to @time_entry
-      }
+      end
       format.json { render json: @time_entry }
     end
   end
 
   private
+
   # Use callbacks to share common setup or constraints between actions.
   def set_time_entry
     @time_entry = TimeEntry.find(params[:id])

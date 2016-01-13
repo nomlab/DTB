@@ -1,9 +1,10 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :null_session
-  before_filter :set_root_missions
-  before_filter :set_inbox_tasks
+  before_action :set_root_missions
+  before_action :set_inbox_tasks
 
   private
+
   def set_root_missions
     @root_missions = Mission.roots
   end

@@ -19,17 +19,17 @@ class TimeEntry < ActiveRecord::Base
 
     # For stand alone
     unless TOGGL_API_CLIENT.present?
-      return TimeEntry.current = TimeEntry.create(:name => options[:description],
-                                                  :start_time => Time.current,
-                                                  :task_id => task_id)
+      return TimeEntry.current = TimeEntry.create(name: options[:description],
+                                                  start_time: Time.current,
+                                                  task_id: task_id)
     end
 
     # For cooperating with Toggl
     response = TOGGL_API_CLIENT.start_time_entry(options)
-    return TimeEntry.current = TimeEntry.create(:name => response.description,
-                                                :start_time => Time.parse(response.start).localtime("+09:00"),
-                                                :task_id => task_id,
-                                                :toggl_time_entry_id => response.id)
+    TimeEntry.current = TimeEntry.create(name: response.description,
+                                         start_time: Time.parse(response.start).localtime('+09:00'),
+                                         task_id: task_id,
+                                         toggl_time_entry_id: response.id)
   end
 
   def self.stop
@@ -53,12 +53,10 @@ class TimeEntry < ActiveRecord::Base
       if dtb_time_entry
         dtb_time_entry.sync
       else
-        TimeEntry.create(
-                         name: toggl_time_entry.description,
+        TimeEntry.create(name: toggl_time_entry.description,
                          start_time: toggl_time_entry.start,
                          end_time: toggl_time_entry.stop,
-                         toggl_time_entry_id: toggl_time_entry.id
-                         )
+                         toggl_time_entry_id: toggl_time_entry.id)
       end
     end
   end
@@ -68,24 +66,20 @@ class TimeEntry < ActiveRecord::Base
     # but provide API to get time entries started in a specific time range.
     # Service of Toggl is started at 2006.
     # So, in order to get all time entries, "2006-01-01" is used.
-    TimeEntry.partial_sync(Time.new("2006-01-01"), nil)
+    TimeEntry.partial_sync(Time.new('2006-01-01'), nil)
   end
 
   def duration
-    return Duration.new(start_time, end_time)
+    Duration.new(start_time, end_time)
   end
 
   def unified_histories
-    return UnifiedHistory.overlap(duration)
+    UnifiedHistory.overlap(duration)
   end
 
-  def file_histories
-    return unified_histories.file_histories
-  end
+  delegate :file_histories, to: :unified_histories
 
-  def web_histories
-    return unified_histories.web_histories
-  end
+  delegate :web_histories, to: :unified_histories
 
   def integrated_histories
     IntegratedHistory.integrate(unified_histories)
@@ -100,7 +94,7 @@ class TimeEntry < ActiveRecord::Base
 
     toggl_time_entry = TOGGL_API_CLIENT.get_time_entry(toggl_time_entry_id)
     if toggl_time_entry.server_deleted_at
-      self.destroy
+      destroy
     else
       if Time.parse(toggl_time_entry.at) > updated_at
         self.name = toggl_time_entry.description
@@ -125,8 +119,8 @@ class TimeEntry < ActiveRecord::Base
       title:     name,
       start:     start_time.iso8601,
       end:       end_time.iso8601,
-      type:      "time-entry",
-      className: "time-entry-occurrence"
+      type:      'time-entry',
+      className: 'time-entry-occurrence'
     }
   end
 end
