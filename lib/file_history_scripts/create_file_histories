@@ -432,9 +432,14 @@ sleep 1
 #                                         :file_close]))
 atm.add_tracker(ActivityTracker.create([:focus_change]))
 fhf = FileHistoryFactory.new
-loop do
-  atm.wait_for_ready # blocking
-  record = atm.get_record
-  record.print_record
-  fhf.receive_record(record)
+
+begin
+  loop do
+    atm.wait_for_ready # blocking
+    record = atm.get_record
+    record.print_record
+    fhf.receive_record(record)
+  end
+rescue Interrupt
+  puts 'Interrupted.'
 end
