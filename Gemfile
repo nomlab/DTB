@@ -71,6 +71,9 @@ group :development do
 
   # For detecting N + 1 problem
   gem 'bullet'
+
+  # Static Ruby code analizer
+  gem 'rubocop', require: false
 end
 
 # Show progress bar
