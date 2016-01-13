@@ -5,8 +5,8 @@ class IntegratedHistory
   attr_reader :title, :path, :thumbnail, :durations, :representative_history
 
   def self.integrate(histories)
-    grouped_histories = histories.group_by{|uh| uh.path}
-    grouped_histories.map{|path, uhs| IntegratedHistory.new(uhs)}
+    grouped_histories = histories.group_by(&:path)
+    grouped_histories.map { |_path, uhs| IntegratedHistory.new(uhs) }
   end
 
   # grouped_histories: Array of unified_history that has same path.
@@ -20,12 +20,12 @@ class IntegratedHistory
   end
 
   def duration
-    @durations.inject{|d1, d2| d1.merge d2}
+    @durations.inject { |d1, d2| d1.merge d2 }
   end
 
   def durations_of_day(date)
     date_duration = Duration.new(date.to_time, date.tomorrow.to_time)
-    @durations.map{|duration| duration.slice(date_duration)}.compact
+    @durations.map { |duration| duration.slice(date_duration) }.compact
   end
 
   def importance

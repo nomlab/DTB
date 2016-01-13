@@ -9,22 +9,22 @@ class ActivityTrackerManager
 
   def add_tracker(tracker)
     @trackers << tracker
-    return self
+    self
   end
 
   def get_record
-    @trackers.each{|t| @records << t.get_record if t.ready? }
-    return @records.sort!.shift
+    @trackers.each { |t| @records << t.get_record if t.ready? }
+    @records.sort!.shift
   end
 
   def wait_for_ready
     begin
       IO.select(@trackers.map(&:io))
-    end while not ready?
+    end while !ready?
   end
 
   def ready?
-    return @records.present? || @trackers.any?(&:ready?)
+    @records.present? || @trackers.any?(&:ready?)
   end
 
   def stop_track
@@ -39,11 +39,11 @@ class ActivityTracker
   end
 
   def get_record
-    return factory_class.new(@io.gets)
+    factory_class.new(@io.gets)
   end
 
   def ready?
-    return @io.ready?
+    @io.ready?
   end
 
   def stop_track
@@ -68,9 +68,9 @@ class ActivityTracker
     when :ignore_name_filter
       tracker = IgnoreNameFilter
     else
-      raise "Unknown Tracker type"
+      fail 'Unknown Tracker type'
     end
-    return tracker_types.empty? ? tracker.new : tracker.new(self.create(tracker_types))
+    tracker_types.empty? ? tracker.new : tracker.new(create(tracker_types))
   end
 end
 
@@ -100,7 +100,7 @@ class FocusChangeTracker < ActivityTracker
   end
 
   def factory_class
-    return FocusChangeRecord
+    FocusChangeRecord
   end
 end
 
@@ -108,7 +108,7 @@ class ActivityTrackerDecorator < ActivityTracker
   def initialize(tracker)
     @tracker = tracker
     @record = nil
-    return self
+    self
   end
 
   def io
@@ -118,14 +118,14 @@ class ActivityTrackerDecorator < ActivityTracker
   def get_record
     record = @record
     @record = nil
-    return record
+    record
   end
 
   def ready?
     return true if @record
     return false unless @tracker.ready?
     @record = filter_record(@tracker.get_record)
-    return !!@record
+    !!@record
   end
 
   def stop_track
@@ -136,28 +136,28 @@ end
 class AcceptPathFilter < ActivityTrackerDecorator
   def filter_record(record)
     paths = [
-             "#{ENV["HOME"]}"
-            ]
+      "#{ENV['HOME']}"
+    ]
 
     paths.each do |path|
       return record if /^#{path}/ =~ record.path
     end
-    return nil
+    nil
   end
 end
 
 class IgnorePathFilter < ActivityTrackerDecorator
   def filter_record(record)
     paths = [
-             "#{ENV["HOME"]}/.emacs.d",
-             "#{ENV["HOME"]}/.CFUserTextEncoding",
-             "#{ENV["HOME"]}/Library"
-            ]
+      "#{ENV['HOME']}/.emacs.d",
+      "#{ENV['HOME']}/.CFUserTextEncoding",
+      "#{ENV['HOME']}/Library"
+    ]
 
     paths.each do |path|
       return nil if /^#{path}/ =~ record.path
     end
-    return record
+    record
   end
 end
 
@@ -167,46 +167,46 @@ end
 class AcceptNameFilter < ActivityTrackerDecorator
   def filter_record(record)
     pnames = [
-              "open"
-             ]
+      'open'
+    ]
 
-    return pnames.include?(record.pname) ? record : nil
+    pnames.include?(record.pname) ? record : nil
   end
 end
 
 class IgnoreNameFilter < ActivityTrackerDecorator
   def filter_record(record)
     pnames = [
-              "Dropbox",
-              "parentalcontrol",
-              "coreservicesd",
-              "basename",
-              "ps",
-              "discoveryd",
-              "cfprefsd",
-              "TweetDeck",
-              "Slack",
-              "System Events",
-              "grep",
-              "wc",
-              "sh",
-              "get_number_of_f",
-              "osascript",
-              "taskgated",
-              "launchservicesd",
-              "com.apple.appki",
-              "cookied",
-              "AddressBookSour",
-              "mtmd",
-              "ruby",
-              "mds",
-              "mdworker",
-              "trustevaluation",
-              "fontworker",
-              "Finder"
-             ]
+      'Dropbox',
+      'parentalcontrol',
+      'coreservicesd',
+      'basename',
+      'ps',
+      'discoveryd',
+      'cfprefsd',
+      'TweetDeck',
+      'Slack',
+      'System Events',
+      'grep',
+      'wc',
+      'sh',
+      'get_number_of_f',
+      'osascript',
+      'taskgated',
+      'launchservicesd',
+      'com.apple.appki',
+      'cookied',
+      'AddressBookSour',
+      'mtmd',
+      'ruby',
+      'mds',
+      'mdworker',
+      'trustevaluation',
+      'fontworker',
+      'Finder'
+    ]
 
-    return pnames.include?(record.pname) ? nil : record
+    pnames.include?(record.pname) ? nil : record
   end
 end
 
@@ -216,17 +216,17 @@ class ActivityRecord
 
   def parse_line(line)
     line.chomp!
-    principle_record = line.split("|")
+    principle_record = line.split('|')
     principle_record[0] = Time.at(principle_record.first.to_i)
-    return principle_record
+    principle_record
   end
 
   def <=>(other)
-    self.time <=> other.time
+    time <=> other.time
   end
 
   def same_process?(other)
-    self.pid == other.pid
+    pid == other.pid
   end
 
   def print_record
@@ -242,11 +242,11 @@ class FileOpenRecord < ActivityRecord
   end
 
   def same_path?(other)
-    self.path == other.path
+    path == other.path
   end
 
   def same_fd?(other)
-    self.fd == other.fd
+    fd == other.fd
   end
 
   def print_record
@@ -262,7 +262,7 @@ class FileCloseRecord < ActivityRecord
   end
 
   def same_fd?(other)
-    self.fd == other.fd
+    fd == other.fd
   end
 
   def print_record
@@ -278,7 +278,7 @@ class FocusChangeRecord < ActivityRecord
   end
 
   def same_window?(other)
-    self.window_number == other.window_number
+    window_number == other.window_number
   end
 
   def print_record
@@ -291,19 +291,23 @@ class WatchingFile
   attr_reader :time, :pid, :pname, :path, :window_number
 
   def initialize(h)
-    @time, @pid, @pname, @path, @window_number = h[:time], h[:pid], h[:pname], h[:path], h[:window_number]
+    @time = h[:time]
+    @pid = h[:pid]
+    @pname = h[:pname]
+    @path = h[:path]
+    @window_number = h[:window_number]
   end
 
   def same_process?(other)
-    self.pid == other.pid
+    pid == other.pid
   end
 
   def same_path?(other)
-    self.path == other.path
+    path == other.path
   end
 
   def same_window?(other)
-    self.window_number == other.window_number
+    window_number == other.window_number
   end
 end
 
@@ -312,19 +316,22 @@ class FileOpenedByWindow
   attr_reader :pid, :pname, :path, :window_number
 
   def initialize(h)
-    @pid, @pname, @path, @window_number = h[:pid], h[:pname], h[:path], h[:window_number]
+    @pid = h[:pid]
+    @pname = h[:pname]
+    @path = h[:path]
+    @window_number = h[:window_number]
   end
 
   def same_process?(other)
-    self.pid == other.pid
+    pid == other.pid
   end
 
   def same_path?(other)
-    self.path == other.path
+    path == other.path
   end
 
   def same_window?(other)
-    self.window_number == other.window_number
+    window_number == other.window_number
   end
 end
 
@@ -348,52 +355,47 @@ class FileHistoryFactory
   end
 
   private
+
   # 同じプロセスで同じファイルパスを開いていなければ，file_open_records 配列に追加する．
   def add_record(file_open_record)
-    if @file_open_records.select{|r| r.same_process?(file_open_record) && r.same_path?(file_open_record)}.empty?
+    if @file_open_records.select { |r| r.same_process?(file_open_record) && r.same_path?(file_open_record) }.empty?
       @file_open_records.push file_open_record
     end
   end
 
   def delete_record(file_close_record)
-    @file_open_records.select!{|r| !r.same_process?(file_close_record)}
+    @file_open_records.select! { |r| !r.same_process?(file_close_record) }
   end
 
   # まず，ファイルを開いてるウィンドウと同じwindow num が来たら対応するファイルをwatchingし始める
   # 評価用に，openコマンドの次にフォーカス来たAPで見始めたことにする．
   def start_watch(focus_change_record)
     # window num = 0 で Excel が開いたり開かなかったりするので，win num = 0 は弾く．
-    if focus_change_record.window_number == "0"
-      return false
-    end
+    return false if focus_change_record.window_number == '0'
 
     # 最前面のウィンドウで開かれているファイルを参照開始
-    @watching_files = @watching_files + @file_opened_by_windows.select{|fobw| fobw.same_window?(focus_change_record) }.map do |fobw|
-      WatchingFile.new({ time:  focus_change_record.time,
-                         pid:   fobw.pid,
-                         pname: fobw.pname,
-                         path:  fobw.path,
-                         window_number: focus_change_record.window_number })
+    @watching_files += @file_opened_by_windows.select { |fobw| fobw.same_window?(focus_change_record) }.map do |fobw|
+      WatchingFile.new(time:  focus_change_record.time,
+                       pid:   fobw.pid,
+                       pname: fobw.pname,
+                       path:  fobw.path,
+                       window_number: focus_change_record.window_number)
     end
 
     @file_open_records.each do |record|
       # openコマンドで開かれたすべてのファイルを参照開始
-      watching_file = WatchingFile.new({
-        time:  focus_change_record.time,
-        pid:   record.pid,
-        pname: record.pname,
-        path:  record.path,
-        window_number: focus_change_record.window_number
-      })
+      watching_file = WatchingFile.new(time:  focus_change_record.time,
+                                       pid:   record.pid,
+                                       pname: record.pname,
+                                       path:  record.path,
+                                       window_number: focus_change_record.window_number)
       @watching_files.push watching_file
 
       # windowとの対応を作成しておく．
-      file_opened_by_window = FileOpenedByWindow.new({
-        pid:   record.pid,
-        pname: record.pname,
-        path:  record.path,
-        window_number: focus_change_record.window_number
-      })
+      file_opened_by_window = FileOpenedByWindow.new(pid:   record.pid,
+                                                     pname: record.pname,
+                                                     path:  record.path,
+                                                     window_number: focus_change_record.window_number)
       @file_opened_by_windows.push file_opened_by_window
     end
 
@@ -404,8 +406,8 @@ class FileHistoryFactory
     @watching_files.each do |file|
       fh = UnifiedHistory.create(
         path:         file.path,
-        title:        file.path.split("/").last || file.path,
-        type:         "FileHistory",
+        title:        file.path.split('/').last || file.path,
+        type:         'FileHistory',
         start_time:   file.time,
         end_time:     focus_change_record.time
       )
@@ -430,7 +432,7 @@ sleep 1
 #                                         :file_close]))
 atm.add_tracker(ActivityTracker.create([:focus_change]))
 fhf = FileHistoryFactory.new
-while 1 do
+loop do
   atm.wait_for_ready # blocking
   record = atm.get_record
   record.print_record
