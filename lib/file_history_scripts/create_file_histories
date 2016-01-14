@@ -419,7 +419,6 @@ end
 
 ################################
 # main
-$file_open_processes_copy = []
 atm = ActivityTrackerManager.new
 atm.add_tracker(ActivityTracker.create([:accept_path_filter,
                                         :accept_name_filter,
