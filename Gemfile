@@ -16,7 +16,7 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.0.0'
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-gem "therubyracer", platforms: :ruby if RUBY_PLATFORM.match(/linux/)
+gem 'therubyracer', platforms: :ruby if RUBY_PLATFORM.match(/linux/)
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
@@ -55,18 +55,18 @@ gem 'kaminari'
 gem 'bootstrap-sass', '~> 3.3.5'
 
 # https://github.com/bokmann/font-awesome-rails
-gem "font-awesome-rails"
+gem 'font-awesome-rails'
 
-gem "thor"
+gem 'thor'
 
 # application settings
-gem "settingslogic"
+gem 'settingslogic'
 
 group :development do
   # For Profiling
   gem 'rack-mini-profiler'
-  gem "ruby-prof"
-  gem "rbtrace"
+  gem 'ruby-prof'
+  gem 'rbtrace'
   gem 'rack-contrib'
 
   # For detecting N + 1 problem
