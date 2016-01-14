@@ -20,7 +20,7 @@ class IntegratedHistory
   end
 
   def duration
-    @durations.inject { |d1, d2| d1.merge d2 }
+    @durations.reduce { |a, e| a.merge e }
   end
 
   def durations_of_day(date)
