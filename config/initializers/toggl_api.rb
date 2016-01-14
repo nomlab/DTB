@@ -4,6 +4,6 @@ begin
   cli.me(true)
   TOGGL_API_CLIENT = cli
 rescue => e
-  warn "Warn: Your Toggl API is invalid. DTB will record work time by itself."
+  warn 'Warn: Your Toggl API is invalid. DTB will record work time by itself.'
   TOGGL_API_CLIENT = nil
 end
