@@ -14,7 +14,7 @@ class Mission < ActiveRecord::Base
   end
 
   def duration
-    durations.inject { |d1, d2| d1.merge d2 }
+    durations.reduce { |a, e| a.merge e }
   end
 
   def durations_of_day(date)
@@ -62,15 +62,13 @@ class Mission < ActiveRecord::Base
   end
 
   def to_occurrences
-    occurrences = durations.map do |d|
-      {
-        id:        id,
+    durations.map do |d|
+      { id:        id,
         title:     name,
         start:     d.start_time.iso8601,
         end:       d.end_time.iso8601,
         type:      'mission',
-        className: 'mission-occurrence'
-      }
+        className: 'mission-occurrence' }
     end
   end
 
