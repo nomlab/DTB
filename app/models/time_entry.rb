@@ -27,7 +27,7 @@ class TimeEntry < ActiveRecord::Base
     # For cooperating with Toggl
     response = TOGGL_API_CLIENT.start_time_entry(options)
     TimeEntry.current = TimeEntry.create(name: response.description,
-                                         start_time: Time.parse(response.start).localtime('+09:00'),
+                                         start_time: Time.zone.parse(response.start),
                                          task_id: task_id,
                                          toggl_time_entry_id: response.id)
   end
@@ -36,7 +36,7 @@ class TimeEntry < ActiveRecord::Base
     return false unless TimeEntry.recording?
 
     # For cooperating with Toggl
-    response = TOGGL_API_CLIENT.stop_time_entry(TimeEntry.current.toggl_time_entry_id) if TOGGL_API_CLIENT.present?
+    TOGGL_API_CLIENT.stop_time_entry(TimeEntry.current.toggl_time_entry_id) if TOGGL_API_CLIENT.present?
 
     time_entry = TimeEntry.current
     TimeEntry.current = nil
@@ -66,7 +66,7 @@ class TimeEntry < ActiveRecord::Base
     # but provide API to get time entries started in a specific time range.
     # Service of Toggl is started at 2006.
     # So, in order to get all time entries, "2006-01-01" is used.
-    TimeEntry.partial_sync(Time.new('2006-01-01'), nil)
+    TimeEntry.partial_sync(Time.utc('2006-01-01'), nil)
   end
 
   def duration
@@ -98,7 +98,7 @@ class TimeEntry < ActiveRecord::Base
     if toggl_time_entry.server_deleted_at
       destroy
     else
-      if Time.parse(toggl_time_entry.at) > updated_at
+      if Time.zone.parse(toggl_time_entry.at) > updated_at
         self.name = toggl_time_entry.description
         self.start_time = toggl_time_entry.start
         self.end_time = toggl_time_entry.stop
