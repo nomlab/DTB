@@ -20,15 +20,19 @@ ready = ->
       taskId = ui.draggable.attr("id")
       missionId =  @id
       $ . ajax
-        type:      "PUT"
-        url:       "/tasks/#{taskId}/update_mission_id.json?mission_id=#{missionId}"
+        type: "PATCH"
+        data: $.param
+          task:
+            mission_id: missionId
+        url:  "/tasks/#{taskId}.json"
         success: (data) -> replaceTaskInbox(currentMissionForTask)
         error: (error) -> alert error
 
   replaceTaskInbox = (missionId) ->
+    param = if missionId then "mission_id=#{missionId}" else "unorganized=true"
     $.ajax
       type:      "GET"
-      url:       "/tasks.json?mission_id=#{missionId}"
+      url:       "/tasks.json?#{param}"
       dataType:  "json"
       success: (data) ->
         entries = data.map (task) ->

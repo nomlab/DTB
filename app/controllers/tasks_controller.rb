@@ -1,17 +1,12 @@
 class TasksController < ApplicationController
-  before_action :set_task, only: [:show, :edit, :update, :destroy,
-                                  :continue,
-                                  :update_mission_id]
+  before_action :set_task, only: [:show, :edit, :update, :destroy, :continue]
 
   # GET /tasks
   # GET /tasks.json
   def index
-    unless params[:mission_id].nil?
-      mission_id = params[:mission_id] == 'nil' ? nil : params[:mission_id]
-      @tasks = Task.where(mission_id: mission_id)
-    else
-      @tasks = Task.all
-    end
+    @tasks = Task.all
+    @tasks = Task.where(mission_id: params[:mission_id]) if params[:mission_id]
+    @tasks = Task.where(mission_id: nil) if params[:unorganized]
     respond_to do |format|
       format.html
       format.json
@@ -109,19 +104,6 @@ class TasksController < ApplicationController
 
   def organize
     @tasks = Task.where(mission_id: nil)
-  end
-
-  #---------- for ajax ----------
-  def update_mission_id
-    mission_id = params[:mission_id] == 'nil' ? nil : params[:mission_id] unless params[:mission_id].nil?
-    @task.update_attribute(:mission_id, mission_id)
-    respond_to do |format|
-      format.html do
-        flash[:success] = 'Task was successfully updated.'
-        redirect_to @task
-      end
-      format.json { render json: @task }
-    end
   end
 
   private

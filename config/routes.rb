@@ -30,7 +30,6 @@ Rails.application.routes.draw do
 
     member do
       get 'continue'
-      put 'update_mission_id'
     end
   end
 
