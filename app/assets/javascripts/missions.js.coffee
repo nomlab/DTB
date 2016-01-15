@@ -21,7 +21,7 @@ ready = ->
       parentId =  @id
       $ . ajax
         type:      "PUT"
-        url:       "/missions/update_parent_id/#{missionId}.json?parent_id=#{parentId}"
+        url:       "/missions/#{missionId}/update_parent_id.json?parent_id=#{parentId}"
         success: (data) -> replaceMissionInbox(currentMissionForMission)
         error: (error) -> alert error
 
@@ -33,9 +33,12 @@ ready = ->
       success: (data) ->
         entries = data.map (mission) ->
           timeFormat = 'YYYY-MM-DD HH:mm:ss'
-          startTime = moment(mission["duration"]["start_time"]).format(timeFormat)
-          endTime   = moment(mission["duration"]["end_time"]).format(timeFormat)
-          duration = "#{startTime} - #{endTime}"
+          try
+            startTime = moment(mission["duration"]["start_time"]).format(timeFormat)
+            endTime   = moment(mission["duration"]["end_time"]).format(timeFormat)
+            duration  = "#{startTime} - #{endTime}"
+          catch
+            duration  = "Not performed."
           """
           <tr class="draggable-mission" id="#{mission["id"]}">
             <td>#{mission["name"]}</td>

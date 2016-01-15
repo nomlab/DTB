@@ -21,7 +21,7 @@ ready = ->
       missionId =  @id
       $ . ajax
         type:      "PUT"
-        url:       "/tasks/update_mission_id/#{taskId}.json?mission_id=#{missionId}"
+        url:       "/tasks/#{taskId}/update_mission_id.json?mission_id=#{missionId}"
         success: (data) -> replaceTaskInbox(currentMissionForTask)
         error: (error) -> alert error
 
@@ -33,9 +33,12 @@ ready = ->
       success: (data) ->
         entries = data.map (task) ->
           timeFormat = 'YYYY-MM-DD HH:mm:ss'
-          startTime = moment(task["duration"]["start_time"]).format(timeFormat)
-          endTime   = moment(task["duration"]["end_time"]).format(timeFormat)
-          duration = "#{startTime} - #{endTime}"
+          try
+            startTime = moment(task["duration"]["start_time"]).format(timeFormat)
+            endTime   = moment(task["duration"]["end_time"]).format(timeFormat)
+            duration = "#{startTime} - #{endTime}"
+          catch
+            duration  = "Not performed."
           """
           <tr class="draggable-task" id="#{task["id"]}">
             <td>#{task["name"]}</td>

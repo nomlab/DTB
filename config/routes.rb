@@ -1,33 +1,67 @@
 Rails.application.routes.draw do
   root to: 'agenda#tree'
 
-  get 'agenda/calendar'
-  get 'agenda/tree'
+  # Directs /agenda/* to AgendaController
+  # (app/controllers/agenda_controller.rb)
+  namespace :agenda do
+    get  'calendar'
+    get  'tree'
+  end
 
-  get 'missions/organize'
-  put 'missions/update_parent_id/:id(.:format)', to: 'missions#update_parent_id'
-  resources :missions
+  resources :missions do
+    collection do
+      get  'organize'
+      post 'simple_create'
+    end
 
-  put 'states/update_color/:id', to: 'states#update_color'
-  put 'states/update_default/:id', to: 'states#update_default'
-  resources :states
+    member do
+      put  'update_parent_id'
+      post 'update_deadline' # FIXME: post is unmatch to action
+    end
+  end
 
-  get 'tasks/organize'
-  put 'tasks/update_mission_id/:id(.:format)', to: 'tasks#update_mission_id'
-  put 'tasks/update_state/:id', to: 'tasks#update_state'
-  resources :tasks
+  resources :states do
+    member do
+      put  'update_color'
+      put  'update_default'
+    end
+  end
 
-  get 'time_entries/organize'
-  get 'time_entries/stop'
-  put 'time_entries/sync'
-  put 'time_entries/update_task_id/:id(.:format)', to: 'time_entries#update_task_id'
-  resources :time_entries
+  resources :tasks do
+    collection do
+      get  'organize'
+      post 'simple_create'
+    end
 
-  resources :unified_histories
-  # For STL, route file_histories/ and web_histories/ to unified_histories/
+    member do
+      get  'continue'
+      put  'update_mission_id'
+      post 'update_deadline'    # FIXME: post is unmatch to action. It is changed routing
+      put  'update_state'
+    end
+  end
+
+  resources :time_entries do
+    collection do
+      get  'organize'
+      post 'start', to: 'time_entries#continue'
+      post 'stop' # FIXME: post is unmatch
+      post 'sync'
+    end
+
+    member do
+      post 'continue'
+      put  'update_task_id'
+    end
+  end
+
+  resources :unified_histories do
+    member do
+      get  'restore'
+    end
+  end
+
+  # For STI
   resources :file_histories, controller: :unified_histories
-  resources :web_histories, controller: :unified_histories
-
-  get ':controller(/:action(/:id(.:format)))'
-  post ':controller(/:action(/:id(.:format)))'
+  resources :web_histories,  controller: :unified_histories
 end

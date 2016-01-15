@@ -21,7 +21,7 @@ ready = ->
       taskId =  @id
       $ . ajax
         type:      "PUT"
-        url:       "/time_entries/update_task_id/#{timeEntryId}.json?task_id=#{taskId}"
+        url:       "/time_entries/#{timeEntryId}/update_task_id.json?task_id=#{taskId}"
         success: (data) -> replaceTimeEntryInbox(currentTask)
         error: (error) -> alert error
 
@@ -33,9 +33,12 @@ ready = ->
       success: (data) ->
         entries = data.map (timeEntry) ->
           timeFormat = 'YYYY-MM-DD HH:mm:ss'
-          startTime = moment(timeEntry["start_time"]).format(timeFormat)
-          endTime   = moment(timeEntry["end_time"]).format(timeFormat)
-          duration = "#{startTime} - #{endTime}"
+          try
+            startTime = moment(timeEntry["start_time"]).format(timeFormat)
+            endTime   = moment(timeEntry["end_time"]).format(timeFormat)
+            duration = "#{startTime} - #{endTime}"
+          catch
+            duration  = "Not performed."
           """
           <tr class="draggable-time-entry" id="#{timeEntry["id"]}">
             <td>#{timeEntry["name"]}</td>

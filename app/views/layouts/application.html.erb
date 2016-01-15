@@ -99,7 +99,7 @@
             <ul class="nav nav-list">
               <li>
                 <% if TimeEntry.current.nil? %>
-                  <%= form_tag( { controller: "time_entries", action: "continue"} ) do %>
+                  <%= form_tag(start_time_entries_path) do %>
                     <div class="input-group">
                       <%= text_field_tag "name", nil, placeholder: "What are you doing?", class: "form-control" %>
                       <span class="input-group-btn">
