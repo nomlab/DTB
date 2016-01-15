@@ -4,46 +4,46 @@ Rails.application.routes.draw do
   # Directs /agenda/* to AgendaController
   # (app/controllers/agenda_controller.rb)
   namespace :agenda do
-    get  'calendar'
-    get  'tree'
+    get 'calendar'
+    get 'tree'
   end
 
   resources :missions do
     collection do
-      get  'organize'
+      get 'organize'
       post 'simple_create'
     end
 
     member do
-      put  'update_parent_id'
+      put 'update_parent_id'
       post 'update_deadline' # FIXME: post is unmatch to action
     end
   end
 
   resources :states do
     member do
-      put  'update_color'
-      put  'update_default'
+      put 'update_color'
+      put 'update_default'
     end
   end
 
   resources :tasks do
     collection do
-      get  'organize'
+      get 'organize'
       post 'simple_create'
     end
 
     member do
-      get  'continue'
-      put  'update_mission_id'
-      post 'update_deadline'    # FIXME: post is unmatch to action. It is changed routing
-      put  'update_state'
+      get 'continue'
+      put 'update_mission_id'
+      post 'update_deadline' # FIXME: post is unmatch to action. It is changed routing
+      put 'update_state'
     end
   end
 
   resources :time_entries do
     collection do
-      get  'organize'
+      get 'organize'
       post 'start', to: 'time_entries#continue'
       post 'stop' # FIXME: post is unmatch
       post 'sync'
@@ -51,13 +51,13 @@ Rails.application.routes.draw do
 
     member do
       post 'continue'
-      put  'update_task_id'
+      put 'update_task_id'
     end
   end
 
   resources :unified_histories do
     member do
-      get  'restore'
+      get 'restore'
     end
   end
 
