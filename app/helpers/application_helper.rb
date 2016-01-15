@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 module ApplicationHelper
   def colored_state(state)
     content_tag(:span, state.name, style: "color:#{state.color}")

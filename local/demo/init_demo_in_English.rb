@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 DEMO_DIR = Rails.root.join('local').join('demo')
 WEEK = 7
 YEAR = 2015
