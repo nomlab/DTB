@@ -37,7 +37,6 @@ Rails.application.routes.draw do
       get 'continue'
       put 'update_mission_id'
       post 'update_deadline' # FIXME: post is unmatch to action. It is changed routing
-      put 'update_state'
     end
   end
 

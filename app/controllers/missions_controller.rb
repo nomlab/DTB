@@ -1,6 +1,6 @@
 class MissionsController < ApplicationController
   before_action :set_mission, only: [:show, :edit, :update, :destroy, :update_parent_id,
-                                     :update_state, :update_deadline]
+                                     :update_deadline]
 
   # GET /missions
   # GET /missions.json
@@ -68,10 +68,10 @@ class MissionsController < ApplicationController
     respond_to do |format|
       if @mission.update(mission_params)
         format.html do
-          flash[:success] = 'Mission was successfully created.'
+          flash[:success] = 'Mission was successfully updated.'
           redirect_to @mission
         end
-        format.json { head :no_content }
+        format.json { render action: 'show', status: :ok, location: @mission }
       else
         format.html { render action: 'edit' }
         format.json { render json: @mission.errors, status: :unprocessable_entity }
@@ -106,17 +106,6 @@ class MissionsController < ApplicationController
   end
 
   # FIXME: integrate update method
-  def update_state
-    @mission.update_attribute(:state_id, params[:state_id]) unless params[:state_id].nil?
-    respond_to do |format|
-      format.html do
-        flash[:success] = 'Mission was successfully updated.'
-        redirect_to :back
-      end
-      format.json { render json: @mission }
-    end
-  end
-
   def update_deadline
     @mission.update_attribute(:deadline, params[:deadline]) unless params[:deadline].nil?
     respond_to do |format|
