@@ -10,9 +10,8 @@ class UnifiedHistory < ActiveRecord::Base
   def self.overlap(duration)
     case duration
     when Duration
-      where(['start_time >= ? and start_time <= ? or end_time >= ? and end_time <= ?',
-             duration.start_time, duration.end_time,
-             duration.start_time, duration.end_time])
+      where('start_time >= :s_time and start_time <= :e_time or end_time >= :s_time and end_time <= :e_time',
+            s_time: duration.s_time, e_time: duration.e_time)
     when Array
       durations = duration
       return none if (durs = durations).blank?
