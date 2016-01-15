@@ -2,6 +2,8 @@ class Duration
   attr_reader :start_time, :end_time
 
   def initialize(s_time = Time.current, e_time = Time.current)
+    s_time ||= Time.current
+    e_time ||= Time.current
     @start_time = s_time
     @end_time = e_time
   end
