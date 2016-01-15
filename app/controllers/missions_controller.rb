@@ -105,6 +105,7 @@ class MissionsController < ApplicationController
     redirect_to :back
   end
 
+  # FIXME: integrate update method
   def update_state
     @mission.update_attribute(:state_id, params[:state_id]) unless params[:state_id].nil?
     respond_to do |format|

@@ -89,6 +89,8 @@ class TimeEntry < ActiveRecord::Base
     unified_histories.map(&:restore)
   end
 
+  # FIXME: This method cannot sync running time entry
+  #   because it's end_time is nil.
   def sync
     return unless TOGGL_API_CLIENT.present?
 
