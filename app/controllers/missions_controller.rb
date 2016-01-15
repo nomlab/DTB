@@ -1,6 +1,5 @@
 class MissionsController < ApplicationController
-  before_action :set_mission, only: [:show, :edit, :update, :destroy, :update_parent_id,
-                                     :update_deadline]
+  before_action :set_mission, only: [:show, :edit, :update, :destroy, :update_parent_id]
 
   # GET /missions
   # GET /missions.json
@@ -106,17 +105,6 @@ class MissionsController < ApplicationController
   end
 
   # FIXME: integrate update method
-  def update_deadline
-    @mission.update_attribute(:deadline, params[:deadline]) unless params[:deadline].nil?
-    respond_to do |format|
-      format.html do
-        flash[:success] = 'Mission was successfully updated.'
-        redirect_to :back
-      end
-      format.json { render json: @mission }
-    end
-  end
-
   #---------- for ajax ----------
   def update_parent_id
     parent_id = params[:parent_id] == 'nil' ? nil : params[:parent_id] unless params[:parent_id].nil?

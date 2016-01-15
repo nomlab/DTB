@@ -4,8 +4,8 @@
   </td>
   <td><%= link_to task.name, task %></td>
   <td>
-    <%= form_tag( { controller: "tasks", action: "update_deadline", id: task.id} ) do %>
-      <%= text_field_tag "deadline", task.deadline , class: "datetimepicker form-control" %>
+    <%= form_for task do |f| %>
+      <%= f.text_field :deadline , class: "datetimepicker form-control" %>
     <% end %>
   </td>
   <td><%= link_to (fa_icon "play"),

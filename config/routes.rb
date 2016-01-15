@@ -16,7 +16,6 @@ Rails.application.routes.draw do
 
     member do
       put 'update_parent_id'
-      post 'update_deadline' # FIXME: post is unmatch to action
     end
   end
 
@@ -36,7 +35,6 @@ Rails.application.routes.draw do
     member do
       get 'continue'
       put 'update_mission_id'
-      post 'update_deadline' # FIXME: post is unmatch to action. It is changed routing
     end
   end
 

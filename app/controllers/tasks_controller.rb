@@ -1,7 +1,6 @@
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy,
                                   :continue,
-                                  :update_deadline,
                                   :update_mission_id]
 
   # GET /tasks
@@ -106,17 +105,6 @@ class TasksController < ApplicationController
                    flash[:warning] = 'Failed to create task.'
     end
     redirect_to :back
-  end
-
-  def update_deadline
-    @task.update_attribute(:deadline, params[:deadline]) unless params[:deadline].nil?
-    respond_to do |format|
-      format.html do
-        flash[:success] = 'Task was successfully updated.'
-        redirect_to :back
-      end
-      format.json { render json: @task }
-    end
   end
 
   def organize
