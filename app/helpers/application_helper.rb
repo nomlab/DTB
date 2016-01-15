@@ -21,7 +21,7 @@ module ApplicationHelper
 
   def seconds_to_s(seconds)
     hour, sec_r = seconds.divmod(3600)
-    time_str = (Time.parse('1/1') + sec_r).strftime('%M:%S')
+    time_str = (Time.zone.parse('1/1') + sec_r).strftime('%M:%S')
     "#{hour}:#{time_str}"
   end
 
