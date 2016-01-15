@@ -16,6 +16,7 @@ class Duration
     other.start_time <= @start_time && @end_time <= other.end_time
   end
 
+  # rertun partial duration sliced by other
   def slice(other)
     return nil unless overlap?(other)
     s_time = @start_time < other.start_time ? other.start_time : @start_time
