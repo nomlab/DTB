@@ -22,7 +22,7 @@ class Task < ActiveRecord::Base
   end
 
   def durations_of_day(date)
-    date_duration = Duration.new(date.to_time, date.tomorrow.to_time)
+    date_duration = Duration.make_from_date(date)
     durations.map { |duration| duration.slice(date_duration) }.compact
   end
 

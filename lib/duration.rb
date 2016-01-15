@@ -1,6 +1,13 @@
 class Duration
   attr_reader :start_time, :end_time
 
+  def self.make_from_date(date)
+    s_time = Time.zone.local(date.year, date.month, date.day)
+    tomorrow = date.tomorrow
+    e_time = Time.zone.local(tomorrow.year, tomorrow.month, tomorrow.day)
+    new(s_time, e_time)
+  end
+
   def initialize(s_time = Time.current, e_time = Time.current)
     s_time ||= Time.current
     e_time ||= Time.current
