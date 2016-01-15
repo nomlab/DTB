@@ -20,15 +20,19 @@ ready = ->
       missionId = ui.draggable.attr("id")
       parentId =  @id
       $ . ajax
-        type:      "PUT"
-        url:       "/missions/#{missionId}/update_parent_id.json?parent_id=#{parentId}"
+        type: "PATCH"
+        data: $.param
+          mission:
+            parent_id: parentId
+        url:  "/missions/#{missionId}.json"
         success: (data) -> replaceMissionInbox(currentMissionForMission)
         error: (error) -> alert error
 
   replaceMissionInbox = (parentId) ->
+    param = if parentId then "parent_id=#{parentId}" else "roots=true"
     $.ajax
       type:      "GET"
-      url:       "/missions.json?parent_id=#{parentId}"
+      url:       "/missions.json?#{param}"
       dataType:  "json"
       success: (data) ->
         entries = data.map (mission) ->

@@ -1,17 +1,12 @@
 class MissionsController < ApplicationController
-  before_action :set_mission, only: [:show, :edit, :update, :destroy, :update_parent_id]
+  before_action :set_mission, only: [:show, :edit, :update, :destroy]
 
   # GET /missions
   # GET /missions.json
   def index
     @missions = Mission.all
-
-    unless params[:parent_id].nil?
-      parent_id = params[:parent_id] == 'nil' ? nil : params[:parent_id]
-      @missions = @missions.where(parent_id: parent_id)
-    end
-
-    @missions = @missions.roots if params[:root] == 'true'
+    @missions = @missions.where(parent_id: params[:parent_id]) unless params[:parent_id].nil?
+    @missions = @missions.roots if params[:roots] == 'true'
 
     respond_to do |format|
       format.html
@@ -102,20 +97,6 @@ class MissionsController < ApplicationController
                       flash[:warning] = 'Failed to create mission.'
     end
     redirect_to :back
-  end
-
-  # FIXME: integrate update method
-  #---------- for ajax ----------
-  def update_parent_id
-    parent_id = params[:parent_id] == 'nil' ? nil : params[:parent_id] unless params[:parent_id].nil?
-    @mission.update_attribute(:parent_id, parent_id)
-    respond_to do |format|
-      format.html do
-        flash[:success] = 'Mission was successfully updated.'
-        redirect_to @mission
-      end
-      format.json { render json: @mission }
-    end
   end
 
   private

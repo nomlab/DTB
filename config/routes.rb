@@ -13,10 +13,6 @@ Rails.application.routes.draw do
       get 'organize'
       post 'simple_create'
     end
-
-    member do
-      put 'update_parent_id'
-    end
   end
 
   resources :states do
