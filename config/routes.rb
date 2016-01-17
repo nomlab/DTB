@@ -43,7 +43,6 @@ Rails.application.routes.draw do
 
     member do
       post 'continue'
-      put 'update_task_id'
     end
   end
 

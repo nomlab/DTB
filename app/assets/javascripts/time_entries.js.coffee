@@ -20,15 +20,19 @@ ready = ->
       timeEntryId = ui.draggable.attr("id")
       taskId =  @id
       $ . ajax
-        type:      "PUT"
-        url:       "/time_entries/#{timeEntryId}/update_task_id.json?task_id=#{taskId}"
+        type: "PATCH"
+        data: $.param
+          time_entry:
+            task_id: taskId
+        url: "/time_entries/#{timeEntryId}.json"
         success: (data) -> replaceTimeEntryInbox(currentTask)
         error: (error) -> alert error
 
-  replaceTimeEntryInbox = (task) ->
+  replaceTimeEntryInbox = (taskId) ->
+    param = if taskId then "task_id=#{taskId}" else "unorganized=true"
     $.ajax
       type:      "GET"
-      url:       "/time_entries.json?task_id=#{task}"
+      url:       "/time_entries.json?#{param}"
       dataType:  "json"
       success: (data) ->
         entries = data.map (timeEntry) ->
@@ -47,7 +51,7 @@ ready = ->
           """
         $(".time-entry-inbox").replaceWith("<tbody class='time-entry-inbox'>#{entries}</tbody>")
         initDraggableTimeEntry()
-        currentTask = task
+        currentTask = taskId
       error: (error) -> alert error
 
 $(document).on 'ready page:load', ready

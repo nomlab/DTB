@@ -1,13 +1,10 @@
 class TimeEntriesController < ApplicationController
-  before_action :set_time_entry, only: [:show, :edit, :update, :destroy, :update_task_id]
+  before_action :set_time_entry, only: [:show, :edit, :update, :destroy]
 
   def index
-    unless params[:task_id].nil?
-      task_id = params[:task_id] == 'nil' ? nil : params[:task_id]
-      @time_entries = TimeEntry.where(task_id: task_id)
-    else
-      @time_entries = TimeEntry.all
-    end
+    @time_entries = TimeEntry.all
+    @time_entries = TimeEntry.where(task_id: params[:task_id]) if params[:task_id]
+    @time_entries = TimeEntry.where(task_id: nil) if params[:unorganized]
   end
 
   def show
@@ -92,19 +89,6 @@ class TimeEntriesController < ApplicationController
     end
     flash[:success] = 'TimeEntries were successfully synced.'
     redirect_to :back
-  end
-
-  #---------- for ajax ----------
-  def update_task_id
-    task_id = params[:task_id] == 'nil' ? nil : params[:task_id] unless params[:task_id].nil?
-    @time_entry.update_attribute(:task_id, task_id)
-    respond_to do |format|
-      format.html do
-        flash[:success] = 'TimeEntry was successfully updated.'
-        redirect_to @time_entry
-      end
-      format.json { render json: @time_entry }
-    end
   end
 
   private
