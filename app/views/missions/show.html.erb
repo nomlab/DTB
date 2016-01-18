@@ -57,18 +57,15 @@
     </div>
 
     <div class="tab-pane" id="file-histories">
-      <% @mission.file_histories.each do |fh| %>
-        <%= render :partial => "unified_histories/file_history_item",
-                   :locals => {:file_history => fh} %>
-        <br>
-      <% end %>
+      <%= render partial: "unified_histories/file_history_item",
+                 collection: @mission.file_histories,
+                 as: :file_history %>
     </div>
 
     <div class="tab-pane" id="web-histories">
-      <% @mission.web_histories.each do |wh| %>
-        <%= render :partial => "unified_histories/web_history_item",
-                   :locals => {:web_history => wh} %>
-      <% end %>
+      <%= render partial: "unified_histories/web_history_item",
+                 collection: @mission.web_histories,
+                 as: :web_history %>
       <div class="float-clear"></div>
     </div>
   </div>
