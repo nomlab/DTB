@@ -49,9 +49,9 @@
           </tr>
 
           <%= render partial: "unified_histories/timeline",
-                     collection: @mission.integrated_histories.sort{|a,b| b.importance <=> a.importance},
+                     collection: @mission.integrated_histories.sort{ |a,b| b.importance <=> a.importance },
                      as: :integrated_history,
-                     locals: {range: @mission.duration.range} %>
+                     locals: { range: @mission.duration.range } %>
         </table>
       <% end %>
     </div>
