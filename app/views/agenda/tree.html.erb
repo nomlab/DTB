@@ -1,6 +1,6 @@
 <h1>Mission Tree</h1>
 <table class="table table-condensed table-treegrid">
-  <% @root_missions.each do |m| %>
-    <%= render :partial => "missions/tree_grid_item", :locals => {:mission => m} %>
-  <% end %>
+  <%= render partial: 'missions/tree_grid_item',
+             collection: @root_missions,
+             as: :mission %>
 </table>

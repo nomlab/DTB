@@ -18,10 +18,10 @@
             </td>
           </tr>
         <% end %>
-        <% @root_missions.each do |mission| %>
-          <%= render :partial => "missions/tree_grid_item_in_organize",
-              :locals => {:mission => mission, :unfold_task => true, :at => :time_entry} %>
-        <% end %>
+        <%= render partial: 'missions/tree_grid_item_in_organize',
+                   collection: @root_missions,
+                   as: :mission,
+                   locals: { unfold_task: false, at: :task } %>
       </tbody>
     </table>
   </div>
@@ -34,9 +34,9 @@
         </tr>
       </thead>
       <tbody class="time-entry-inbox">
-        <% @time_entries.each do |time_entry| %>
-          <%= render :partial => "time_entries/inbox_item", :locals => {:time_entry => time_entry} %>
-        <% end %>
+        <%= render partial: 'time_entries/inbox_item',
+                   collection: @time_entries,
+                   as: :time_entry %>
       </tbody>
     </table>
   </div>

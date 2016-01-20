@@ -17,11 +17,7 @@
         <td><%= colored_state(state) %></td>
         <td>
           <% icon = state.default ? (fa_icon "star") : (fa_icon "star-o") %>
-          <%= link_to icon,
-              :id         => state.id,
-              :controller => "states",
-              :action     => "update_default",
-              :method     => :put %>
+          <%= link_to icon, update_default_state_path(state), method: :put %>
         </td>
         <td><%= link_to (fa_icon "pencil"),
                 edit_state_path(state) %></td>

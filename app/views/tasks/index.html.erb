@@ -13,10 +13,8 @@
   </thead>
 
   <tbody>
-    <% @tasks.each do |task| %>
-      <tr>
-        <%= render :partial => "tasks/task_item", :locals => {:task => task} %>
-      </tr>
-    <% end %>
+    <%= render partial: 'tasks/task_item',
+               collection: @tasks,
+               as: :task %>
   </tbody>
 </table>

@@ -9,7 +9,8 @@
   </td>
   <td><%= time_entry.start_time %></td>
   <td><%= time_entry.end_time %></td>
-  <td><%= render :partial => "time_entries/start_or_stop_button", :locals => {:time_entry => time_entry} %></td>
+  <td><%= render partial: 'time_entries/start_or_stop_button',
+                 locals: { time_entry: time_entry } %></td>
   <td><%= link_to (fa_icon "pencil"),
           edit_time_entry_path(time_entry) %></td>
   <td><%= link_to (fa_icon "trash-o"),

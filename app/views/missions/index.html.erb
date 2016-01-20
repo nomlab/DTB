@@ -12,10 +12,8 @@
   </thead>
 
   <tbody>
-    <% @missions.each do |mission| %>
-      <tr>
-        <%= render :partial => "missions/mission_item", :locals => {:mission => mission} %>
-      </tr>
-    <% end %>
+    <%= render partial: 'missions/mission_item',
+               collection: @missions,
+               as: :mission %>
   </tbody>
 </table>

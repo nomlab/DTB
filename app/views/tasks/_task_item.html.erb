@@ -8,12 +8,8 @@
       <%= f.text_field :deadline , class: "datetimepicker form-control" %>
     <% end %>
   </td>
-  <td><%= link_to (fa_icon "play"),
-          :id         => task.id,
-          :controller => "tasks",
-          :action     => "continue" %></td>
-  <td><%= link_to (fa_icon "pencil"),
-          edit_task_path(task) %></td>
+  <td><%= link_to (fa_icon 'play'), continue_task_path(task) %></td>
+  <td><%= link_to (fa_icon 'pencil'), edit_task_path(task) %></td>
   <td><%= link_to (fa_icon "trash-o"),
           task, method: :delete, data: { confirm: 'Are you sure?' } %></td>
 </tr>

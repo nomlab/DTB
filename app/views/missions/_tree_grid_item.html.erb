@@ -5,7 +5,7 @@
 <% end %>
   <td>
     <%= colored_state(mission.state) %>
-    <%= link_to mission.name, {controller:"missions", action:"show", id: mission.id}, {class: "mission"} %>
+    <%= link_to mission.name, mission, class: 'mission' %>
   </td>
   <td>
     <%= mission.deadline %>
@@ -13,17 +13,16 @@
   <td>
   </td>
   <td>
-    <%= link_to (fa_icon "pencil"),
-        edit_mission_path(mission) %>
+    <%= link_to (fa_icon 'pencil'), edit_mission_path(mission) %>
   </td>
   <td>
-    <%= link_to (fa_icon "trash-o"),
+    <%= link_to (fa_icon 'trash-o'),
         mission, method: :delete, data: { confirm: 'Are you sure?' } %>
   </td>
 </tr>
-<% mission.children.each do |child| %>
-  <%= render :partial => "missions/tree_grid_item", :locals => {:mission => child} %>
-<% end %>
-<% mission.tasks.each do |task| %>
-  <%= render :partial => "tasks/tree_grid_item", :locals => {:task => task} %>
-<% end %>
+<%= render partial: 'missions/tree_grid_item',
+           collection: mission.children,
+           as: :mission %>
+<%= render partial: 'tasks/tree_grid_item',
+           collection: mission.tasks,
+           as: :task %>

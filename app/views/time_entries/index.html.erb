@@ -14,8 +14,8 @@
   </thead>
 
   <tbody>
-    <% @time_entries.each do |time_entry| %>
-      <%= render :partial => "time_entries/time_entry_item", :locals => {:time_entry => time_entry} %>
-    <% end %>
+    <%= render partial: 'time_entries/time_entry_item',
+               collection: @time_entries,
+               as: :time_entry %>
   </tbody>
 </table>

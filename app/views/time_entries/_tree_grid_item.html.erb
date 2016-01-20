@@ -4,13 +4,15 @@
   <tr class="treegrid-time-entry<%= time_entry.id %> treegrid-parent-task<%= time_entry.task_id %>">
 <% end %>
   <td>
-    <%= link_to time_entry.name, {controller:"time_entries", action:"show", id: time_entry.id}, {class: "time-entry"} %>
+    <%= link_to time_entry.name, time_entry, class: 'time-entry'  %>
   </td>
   <td>
     <%= time_entry.duration %>
   </td>
   <td>
-    <%= render :partial => "time_entries/start_or_stop_button", :locals => {:time_entry => time_entry} %></td>
+    <%= render partial: 'time_entries/start_or_stop_button',
+               locals: { time_entry: time_entry } %>
+  </td>
   <td>
     <%= link_to (fa_icon "pencil"),
         edit_time_entry_path(time_entry) %>

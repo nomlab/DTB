@@ -1,10 +1,7 @@
 <h1>
   <%= colored_state(@task.state) %>
   <span class="task"><%= @task.name %></span>
-  <%= link_to (fa_icon "play"),
-      :id         => @task.id,
-      :controller => "tasks",
-      :action     => "continue" %>
+  <%= link_to (fa_icon 'play'), continue_task_path(@task) %>
 </h1>
 
 <p>

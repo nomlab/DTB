@@ -4,8 +4,8 @@ class Mission < ActiveRecord::Base
   # If you choice acts_as_nested_set, activate following two line
   acts_as_nested_set
   after_save :rebuild_nested_set
-  # has_many :children, :class_name => "Mission", :foreign_key => :parent_id
-  # belongs_to :parent, :class_name => "Mission", :foreign_key => :parent_id
+  # has_many :children, class_name: 'Mission', foreign_key: :parent_id
+  # belongs_to :parent, class_name: 'Mission', foreign_key: :parent_id
   belongs_to :state
   default_scope { includes(:state, tasks: :time_entries).order(created_at: :desc) }
 

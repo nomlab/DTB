@@ -11,10 +11,10 @@
         <tr>
           <td class="droppable-mission-for-mission selected">Inbox</td>
         </tr>
-        <% @root_missions.each do |mission| %>
-          <%= render :partial => "missions/tree_grid_item_in_organize",
-              :locals => {:mission => mission, :unfold_task => false, :at => :mission} %>
-        <% end %>
+        <%= render partial: 'missions/tree_grid_item_in_organize',
+                   collection: @root_missions,
+                   as: :mission,
+                   locals: { unfold_task: false, at: :mission } %>
       </tbody>
     </table>
   </div>
@@ -27,9 +27,9 @@
         </tr>
       </thead>
       <tbody class="mission-inbox">
-        <% @missions.each do |mission| %>
-          <%= render :partial => "missions/inbox_item", :locals => {:mission => mission} %>
-        <% end %>
+        <%= render partial: 'missions/inbox_item',
+                   collection: @missions,
+                   as: :mission %>
       </tbody>
     </table>
   </div>
