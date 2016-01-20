@@ -7,8 +7,8 @@
     <% provide(:title, TimeEntry.current.name) if TimeEntry.recording? %>
     <title><%= content_for?(:title) ? "DTB - " + yield(:title) : "DTB" %></title>
     <%= csrf_meta_tags %>
-    <%= stylesheet_link_tag "application", :media => "all", "data-turbolinks-track" => true %>
-    <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': true %>
   </head>
   <body>
 
@@ -16,7 +16,7 @@
       <div class="container-fluid">
 
         <div class="navbar-header">
-          <%= link_to "DTB", root_path, :class => "navbar-brand" %>
+          <%= link_to 'DTB', root_path, class: 'navbar-brand' %>
           <%= button_tag (fa_icon "bars"), class: "navbar-toggle collapsed", data: {toggle: "collapse", target: "#bs-navbar-collapse-1"} %>
         </div>
 
@@ -166,7 +166,7 @@
     </footer>
 
     <!-- For modal windows -->
-    <%= render :partial => "missions/create_form_of_modal" %>
-    <%= render :partial => "tasks/create_form_of_modal" %>
+    <%= render partial: 'missions/create_form_of_modal' %>
+    <%= render partial: 'tasks/create_form_of_modal' %>
   </body>
 </html>
