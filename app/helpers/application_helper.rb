@@ -28,11 +28,7 @@ module ApplicationHelper
     content_tag :li do
       concat colored_state(mission.state)
       concat ' '
-      concat link_to(mission.name,
-                     { controller: 'missions',
-                       action:     'show',
-                       id:         mission.id },
-                     class:      'mission')
+      concat link_to(mission.name, mission, class: 'mission')
       concat treeview_mission_branch(mission) unless mission.leaf? && mission.tasks.blank?
     end
   end
@@ -48,11 +44,7 @@ module ApplicationHelper
     content_tag :li do
       concat colored_state(task.state)
       concat ' '
-      concat link_to(task.name,
-                     { controller: 'tasks',
-                       action:     'show',
-                       id:         task.id },
-                     class:      'task')
+      concat link_to(task.name, task, class: 'task')
       concat treeview_task_branch(task) unless task.time_entries.blank?
     end
   end
@@ -65,11 +57,7 @@ module ApplicationHelper
 
   def treeview_time_entry_node(time_entry)
     content_tag :li do
-      concat link_to(time_entry.name,
-                     { controller: 'time_entries',
-                       action:     'show',
-                       id:         time_entry.id },
-                     class:      'time-entry')
+      concat link_to(time_entry.name, time_entry, class: 'time-entry')
     end
   end
 end
