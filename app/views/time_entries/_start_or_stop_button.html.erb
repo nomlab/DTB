@@ -1,12 +1,9 @@
 <% if time_entry == TimeEntry.current %>
-  <%= link_to (fa_icon "stop"),
-      :controller => "time_entries",
-      :action     => "stop" %>
+  <%= link_to (fa_icon 'stop'), stop_time_entries_path, method: :post %>
 <% else %>
-  <%= link_to (fa_icon "play"),
-      :id         => time_entry.id,
-      :name       => time_entry.name,
-      :task_id    => time_entry.task_id,
-      :controller => "time_entries",
-      :action     => "continue" %>
+  <%= link_to (fa_icon 'play'),
+              continue_time_entry_path(time_entry,
+                                       name: time_entry.name,
+                                 task_id: time_entry.task_id),
+              method: :post %>
 <% end %>
