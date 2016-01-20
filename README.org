@@ -7,7 +7,7 @@
   activities grouping and connecting to TODO items.
 
 * Setup Ruby Environment
-  | Ruby  | 2.2.3 |
+  | Ruby  | 2.3.0 |
   | Rails | 4.2.5 |
 
   I recommend you to install new Ruby and Bundler on the top of Rbenv before install DTB.
@@ -21,12 +21,12 @@
 
   2) Install Ruby and Bundler
      #+BEGIN_SRC sh
-     # Install ruby 2.2.3
-     $ rbenv install 2.2.3
+     # Install ruby 2.3.0
+     $ rbenv install 2.3.0
 
      # Installation check
-     $ rbenv global 2.2.3
-     $ ruby -v # -> You will see: ruby 2.2.3...
+     $ rbenv global 2.3.0
+     $ ruby -v # -> You will see: ruby 2.3.0...
 
      # Install bundler for your new Ruby
      $ gem install bundler
@@ -49,7 +49,7 @@
    2) Setup to use installed ruby
       #+BEGIN_SRC sh
       $ cd ~/Programs/DTB
-      $ ruby -v # -> You will see: ruby 2.2.3...
+      $ ruby -v # -> You will see: ruby 2.3.0...
       #+END_SRC
 
 ** Setup config files
