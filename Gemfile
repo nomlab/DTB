@@ -81,6 +81,12 @@ gem 'nprogress-rails'
 
 # For test
 group :development, :test do
+  # test framework
   gem 'rspec-rails'
+
+  # Generate instance simply
   gem 'factory_girl_rails'
+
+  # Generate dummy data
+  gem 'faker'
 end
