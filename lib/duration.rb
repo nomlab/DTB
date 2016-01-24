@@ -79,6 +79,6 @@ class Duration
   end
 
   def calc_minutes_and_seconds(sec)
-    sec.divmod(3600)
+    sec.divmod(60)
   end
 end
