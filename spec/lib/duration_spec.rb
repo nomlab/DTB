@@ -15,7 +15,7 @@ RSpec.describe Duration do
     context 'negative case' do
       it 'throws TypeError when arguments are not time.' do
         obj = Faker::Time.between(Time.current - 1, Time.current)
-        except{ Duration.new(obj, obj) }.to raise_error(TypeError)
+        expect{ Duration.new(obj, obj) }.to raise_error(TypeError)
       end
     end
   end
