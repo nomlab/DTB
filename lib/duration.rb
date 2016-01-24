@@ -27,7 +27,7 @@ class Duration
   def slice(other)
     return nil unless overlap?(other)
     s_time = @start_time < other.start_time ? other.start_time : @start_time
-    e_time = other.end_time < @end_time ? other.start_time : @end_time
+    e_time = other.end_time < @end_time ? other.end_time : @end_time
     Duration.new(s_time, e_time)
   end
 
