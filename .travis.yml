@@ -1,0 +1,14 @@
+language: ruby
+
+rvm:
+  - 2.3.0
+
+bundler_args: --without development
+
+cache: bundler
+
+before_script:
+  - bin/install.sh
+
+script:
+  - bundle exec rspec spec
