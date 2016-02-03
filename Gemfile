@@ -1,19 +1,22 @@
 source 'http://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.5'
+gem 'rails', '4.2.5.1'
+
+# rack based asset packaging system
+gem 'sprockets-rails'
 
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
 
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 4.0.0'
+gem 'sass-rails'
 
 # Use Uglifier as compressor for JavaScript assets
-gem 'uglifier', '>= 1.3.0'
+gem 'uglifier'
 
 # Use CoffeeScript for .js.coffee assets and views
-gem 'coffee-rails', '~> 4.0.0'
+gem 'coffee-rails'
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 gem 'therubyracer', platforms: :ruby if RUBY_PLATFORM.match(/linux/)
@@ -26,7 +29,7 @@ gem 'jquery-ui-rails'
 gem 'turbolinks'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 1.2'
+gem 'jbuilder'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
@@ -45,14 +48,14 @@ gem 'awesome_nested_set'
 gem 'chosen-rails'
 
 # https://github.com/mbleigh/seed-fu
-gem 'seed-fu', '~> 2.3'
+gem 'seed-fu'
 
 # For pagenation
 # https://github.com/amatsuda/kaminari
 gem 'kaminari'
 
 # https://github.com/twbs/bootstrap-sass
-gem 'bootstrap-sass', '~> 3.3.5'
+gem 'bootstrap-sass'
 
 # https://github.com/bokmann/font-awesome-rails
 gem 'font-awesome-rails'
