@@ -244,7 +244,7 @@ RSpec.describe Duration do
 
     context 'negative case' do
       it 'throws ArgumentError when argument is unknown.' do
-        expect(@duration.to_s(:foo)).to eq(ArgumentError)
+        expect{ @duration.to_s(:foo) }.to raise_error(ArgumentError)
       end
     end
   end
