@@ -16,15 +16,18 @@ class Duration
   end
 
   def ==(other)
+    fail TypeError unless like_duration?(other)
     @start_time == other.start_time && @end_time == other.end_time
   end
 
   def in?(other)
+    fail TypeError unless like_duration?(other)
     other.start_time <= @start_time && @end_time <= other.end_time
   end
 
   # rertun partial duration sliced by other
   def slice(other)
+    fail TypeError unless like_duration?(other)
     return nil unless overlap?(other)
     s_time = @start_time < other.start_time ? other.start_time : @start_time
     e_time = other.end_time < @end_time ? other.end_time : @end_time
@@ -32,12 +35,14 @@ class Duration
   end
 
   def merge(other)
+    fail TypeError unless like_duration?(other)
     s_time = @start_time < other.start_time ? @start_time : other.start_time
     e_time = @end_time > other.end_time ? @end_time : other.end_time
     Duration.new(s_time, e_time)
   end
 
   def overlap?(other)
+    fail TypeError unless like_duration?(other)
     @start_time < other.end_time && other.start_time < @end_time
   end
 
@@ -62,7 +67,7 @@ class Duration
     when :second
       "#{to_seconds}"
     else
-      fail 'Unknown option.'
+      fail ArgumentError
     end
   end
 
@@ -71,6 +76,9 @@ class Duration
   alias_method :length, :to_seconds
 
   private
+  def like_duration?(obj)
+    obj.respond_to?(:start_time) && obj.respond_to?(:end_time)
+  end
 
   def calc_hour_minutes_and_seconds(sec)
     hour, mod = sec.divmod(3600)
