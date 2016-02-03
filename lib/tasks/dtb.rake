@@ -41,7 +41,7 @@ namespace :dtb do
     # setup variables required in template
     config = {
       description: 'This file is created by bundle exec rake dtb:install_application_settings.',
-      toggl_token: sh.ask('Toggl API token:')
+      toggl_token: ENV['TOGGL_TOKEN'] || sh.ask('Toggl API token:')
     }
 
     engine.create_file_from_template(path, binding)
