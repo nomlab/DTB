@@ -11,13 +11,6 @@ RSpec.describe Duration do
         expect(Duration.new.class).to eq(Duration)
       end
     end
-
-    context 'negative case' do
-      it 'throws TypeError when arguments are not time.' do
-        obj = Faker::Time.between(Time.current - 1, Time.current)
-        expect{ Duration.new(obj, obj) }.to raise_error(TypeError)
-      end
-    end
   end
 
   describe '.make_from_date' do
@@ -29,13 +22,6 @@ RSpec.describe Duration do
         tomorrow = date.tomorrow
         e_time = Time.zone.local(tomorrow.year, tomorrow.month, tomorrow.day)
         expect(duration).to eq(Duration.new(s_time, e_time))
-      end
-    end
-
-    context 'negative case' do
-      it 'throws TypeError when arguments are not time.' do
-        obj = Faker::Time.between(Time.current - 1, Time.current)
-        expect{ Duration.make_from_date(obj) }.to raise_error(TypeError)
       end
     end
   end
