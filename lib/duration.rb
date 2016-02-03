@@ -76,6 +76,7 @@ class Duration
   alias_method :length, :to_seconds
 
   private
+
   def like_duration?(obj)
     obj.respond_to?(:start_time) && obj.respond_to?(:end_time)
   end
