@@ -5,6 +5,7 @@
 [[https://travis-ci.org/nomlab/DTB][https://travis-ci.org/nomlab/DTB.svg?branch=master]]
 [[https://codeclimate.com/github/nomlab/DTB][https://codeclimate.com/github/nomlab/DTB/badges/gpa.svg]]
 [[https://gemnasium.com/nomlab/DTB][https://gemnasium.com/nomlab/DTB.svg]]
+[[https://coveralls.io/github/nomlab/DTB?branch=master][https://coveralls.io/repos/github/nomlab/DTB/badge.svg?branch=master]]
 
 * What is Desktop Bookmark (DTB)?
   Desktop Bookmark is a Rails application to collect your desktop

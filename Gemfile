@@ -62,6 +62,9 @@ gem 'thor'
 # application settings
 gem 'settingslogic'
 
+# Show progress bar
+gem 'nprogress-rails'
+
 group :development do
   # For Profiling
   gem 'rack-mini-profiler'
@@ -76,9 +79,6 @@ group :development do
   gem 'rubocop', require: false
 end
 
-# Show progress bar
-gem 'nprogress-rails'
-
 # For test
 group :development, :test do
   # test framework
@@ -89,4 +89,9 @@ group :development, :test do
 
   # Generate dummy data
   gem 'faker'
+end
+
+group :test do
+  # Check test coverage
+  gem 'coveralls', require: false
 end
