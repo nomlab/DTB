@@ -2,7 +2,7 @@
 #+DATE: <2015-09-02>
 #+AUTHOR: Takuya Okada / Nomura Laboratory
 
-[[https://travis-ci.org/nomlab/DTB.svg?branch=master]]
+[[https://travis-ci.org/nomlab/DTB][https://travis-ci.org/nomlab/DTB.svg?branch=master]]
 
 * What is Desktop Bookmark (DTB)?
   Desktop Bookmark is a Rails application to collect your desktop
