@@ -21,7 +21,7 @@
         <%= render partial: 'missions/tree_grid_item_in_organize',
                    collection: @root_missions,
                    as: :mission,
-                   locals: { unfold_task: false, at: :task } %>
+                   locals: { unfold_task: true, at: :task } %>
       </tbody>
     </table>
   </div>
