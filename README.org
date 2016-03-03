@@ -13,7 +13,7 @@
 
 * Setup Ruby Environment
   | Ruby  |   2.3.0 |
-  | Rails | 4.2.5.1 |
+  | Rails | 4.2.5.2 |
 
   I recommend you to install new Ruby and Bundler on the top of Rbenv before install DTB.
 
